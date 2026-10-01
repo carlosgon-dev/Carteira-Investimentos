@@ -1,0 +1,302 @@
+{
+  "posicoes": [
+    {
+      "id": "pos-001",
+      "tipo": "etf",
+      "nome": "S&P 500",
+      "tema": "Mercado - USA"
+    },
+    {
+      "id": "pos-002",
+      "tipo": "etf",
+      "nome": "MSCI World",
+      "tema": "Mercado - Global"
+    },
+    {
+      "id": "pos-003",
+      "tipo": "cripto",
+      "nome": "Bitcoin",
+      "tema": "Blockchain"
+    },
+    {
+      "id": "pos-004",
+      "tipo": "cripto",
+      "nome": "Solana",
+      "tema": "Blockchain"
+    },
+    {
+      "id": "pos-005",
+      "tipo": "reit",
+      "nome": "Realty Income",
+      "tema": "Retalho"
+    },
+    {
+      "id": "pos-006",
+      "tipo": "ouro",
+      "nome": "Bitcoin (cashback)",
+      "tema": "Reserva de ouro digital"
+    }
+  ],
+  "compras": [
+    {
+      "id": "com-001",
+      "id_posicao": "pos-001",
+      "data": "2025-02-10",
+      "montante": 400,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-002",
+      "id_posicao": "pos-001",
+      "data": "2025-09-05",
+      "montante": 250,
+      "origem": "Explicações"
+    },
+    {
+      "id": "com-003",
+      "id_posicao": "pos-002",
+      "data": "2025-06-20",
+      "montante": 300,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-004",
+      "id_posicao": "pos-003",
+      "data": "2024-11-15",
+      "montante": 500,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-005",
+      "id_posicao": "pos-004",
+      "data": "2025-03-12",
+      "montante": 200,
+      "origem": "Explicações"
+    },
+    {
+      "id": "com-006",
+      "id_posicao": "pos-005",
+      "data": "2026-01-15",
+      "montante": 50,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-007",
+      "id_posicao": "pos-006",
+      "data": "2025-12-31",
+      "montante": 40,
+      "origem": "Cashback"
+    }
+  ],
+  "rendibilidades": [
+    {
+      "id": "ren-001",
+      "id_posicao": "pos-001",
+      "data": "2026-08-31",
+      "valor": 52.3
+    },
+    {
+      "id": "ren-002",
+      "id_posicao": "pos-001",
+      "data": "2026-09-30",
+      "valor": 61.8
+    },
+    {
+      "id": "ren-003",
+      "id_posicao": "pos-002",
+      "data": "2026-09-30",
+      "valor": 24.1
+    },
+    {
+      "id": "ren-004",
+      "id_posicao": "pos-003",
+      "data": "2026-09-30",
+      "valor": 180
+    },
+    {
+      "id": "ren-005",
+      "id_posicao": "pos-005",
+      "data": "2026-09-30",
+      "valor": -1.2
+    }
+  ],
+  "vendas": [
+    {
+      "id": "ven-001",
+      "id_posicao": "pos-004",
+      "data": "2026-09-24",
+      "recebido": 260
+    }
+  ],
+  "saldos_fundos": [
+    {
+      "id": "sal-001",
+      "fundo": "sobrevivencia",
+      "data": "2026-08-31",
+      "saldo": 9500
+    },
+    {
+      "id": "sal-002",
+      "fundo": "sobrevivencia",
+      "data": "2026-09-30",
+      "saldo": 10000
+    },
+    {
+      "id": "sal-003",
+      "fundo": "maneio",
+      "data": "2026-09-30",
+      "saldo": 1800
+    }
+  ],
+  "depositos": [
+    {
+      "id": "dep-001",
+      "nome": "Depósito 6 meses",
+      "montante": 3000,
+      "data": "2026-01-15",
+      "origem": "Fundo de sobrevivência",
+      "prazo_meses": 6,
+      "vencimento": "2026-07-15",
+      "juros": 24.6
+    },
+    {
+      "id": "dep-002",
+      "nome": "Depósito 9 meses",
+      "montante": 4000,
+      "data": "2026-05-02",
+      "origem": "Fundo de sobrevivência",
+      "prazo_meses": 9,
+      "vencimento": "2027-02-02",
+      "juros": null
+    }
+  ],
+  "governo_recebido": [
+    {
+      "id": "rec-001",
+      "data": "2024-06-20",
+      "descricao": "Reembolso IRS 2023",
+      "valor": 850
+    },
+    {
+      "id": "rec-002",
+      "data": "2025-06-18",
+      "descricao": "Reembolso IRS 2024",
+      "valor": 1100
+    },
+    {
+      "id": "rec-003",
+      "data": "2026-06-22",
+      "descricao": "Reembolso IRS 2025",
+      "valor": 1300
+    }
+  ],
+  "governo_utilizado": [
+    {
+      "id": "uti-001",
+      "data": "2025-03-10",
+      "destino": "Reparação do carro",
+      "valor": 400
+    }
+  ],
+  "plano_ppr": {
+    "taxa": 0.04,
+    "idade_inicial": 30,
+    "estrategia": "O reembolso do IRS vai para o PPR no próprio ano. Depois, completar com dinheiro do salário.",
+    "anos": [
+      {
+        "ano": 2024,
+        "governo": 800,
+        "pessoal": 0,
+        "real": 815.4,
+        "real_data": "2024-12-31"
+      },
+      {
+        "ano": 2025,
+        "governo": 1000,
+        "pessoal": 200,
+        "real": 2075.9,
+        "real_data": "2025-12-31"
+      },
+      {
+        "ano": 2026,
+        "governo": 1000,
+        "pessoal": 500,
+        "real": 3620,
+        "real_data": "2026-09-30"
+      },
+      {
+        "ano": 2027,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2028,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      }
+    ]
+  },
+  "plano_ouro": {
+    "taxa": 0.2,
+    "anos": [
+      {
+        "ano": 2025,
+        "previsto": 40,
+        "cashback": 40,
+        "real": 46.5,
+        "real_data": "2025-12-31"
+      },
+      {
+        "ano": 2026,
+        "previsto": 36,
+        "cashback": null,
+        "real": 88,
+        "real_data": "2026-09-30"
+      },
+      {
+        "ano": 2027,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2028,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      }
+    ]
+  },
+  "eventos_economia": [
+    {
+      "id": "eve-001",
+      "data": "2026-10-14",
+      "tipo": "eua",
+      "titulo": "Inflação dos EUA (CPI)"
+    },
+    {
+      "id": "eve-002",
+      "data": "2026-10-28",
+      "tipo": "fed",
+      "titulo": "Fed decide as taxas de juro"
+    },
+    {
+      "id": "eve-003",
+      "data": "2026-10-29",
+      "tipo": "bce",
+      "titulo": "BCE decide as taxas de juro"
+    },
+    {
+      "id": "eve-004",
+      "data": "2027-04-01",
+      "tipo": "irs",
+      "titulo": "Começa a entrega do IRS"
+    }
+  ]
+}

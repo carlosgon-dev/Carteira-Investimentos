@@ -1,0 +1,137 @@
+/* ==========================================================
+   LAYOUT: a "moldura" da app (menu lateral + zona da página)
+   ========================================================== */
+
+/* Menu à esquerda, página à direita, rodapé a toda a largura */
+body {
+  display: grid;
+  grid-template-columns: 20rem 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    "menu pagina"
+    "rodape rodape";
+  min-height: 100vh;
+}
+
+/* ---------- Menu lateral ---------- */
+.menu_lateral {
+  grid-area: menu;              /* ← onde fica */
+  display: flex;                /* ← como é (daqui para baixo) */
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1.5rem 1rem;
+}
+
+/* Título no topo do menu, com uma linha por baixo */
+.marca {
+  margin: 0 0 0.5rem;
+  padding: 0 0.85rem 1rem;
+  border-bottom: 1px solid var(--cor_linha);
+}
+
+/* Um grupo de botões em coluna (o nav, cada details e as ações) */
+.menu_grupo { display: flex; flex-direction: column; gap: 0.3rem; }
+
+/* Botões principais: Carteira, Fundos, Calendário + "Rendimentos", "Investimentos" */
+.menu_botao,
+.menu_titulo {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid transparent;
+  border-radius: 0.55rem;
+  background: none;
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-align: left;
+  color: var(--cor_texto_secundario);
+  cursor: pointer;
+  &:hover { background: var(--cor_cartao); color: var(--cor_texto); }
+  &:focus-visible { outline: 2px solid var(--cor_destaque); outline-offset: 2px; }
+}
+
+/* A página que está aberta ("pinta" com recurso a JS")*/
+.menu_botao.ativo { 
+  background: var(--cor_texto); 
+  color: var(--cor_fundo); }
+
+/* "Rendimentos", "Investimentos": sem o triângulo do browser */
+.menu_titulo {
+  list-style: none;                                   /* Chrome, Edge, Firefox */
+  &::-webkit-details-marker { display: none; }        /* Safari */
+
+  /* A nossa seta, à direita do texto */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &::after {
+    content: "▸";
+    font-size: 0.85rem;
+    transition: transform 0.2s;                       /* roda devagar */
+  }
+}
+
+/* Grupo aberto: a seta roda para baixo */
+details[open] .menu_titulo::after { transform: rotate(90deg); }
+
+/* Os botões de dentro de um grupo: mais pequenos, com uma linha à esquerda */
+.submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin: 0.15rem 0 0.4rem 1rem;
+  padding-left: 0.7rem;
+  border-left: 2px solid var(--cor_linha);
+}
+
+/* Quando o grupo abre, o submenu aparece devagar (em vez de saltar) */
+/* ::details-content = a caixa com tudo o que está dentro do details, menos o summary */
+details[open]::details-content {animation: abrir_submenu 0.25s ease-out;}
+
+@keyframes abrir_submenu {
+  from { opacity: 0; transform: translateY(-0.5rem); }  /* começa invisível e um pouco acima */
+  to   { opacity: 1; transform: translateY(0); }        /* acaba visível, no sítio certo */
+}
+
+.submenu_botao {
+  padding: 0.5rem 0.85rem;
+  font-size: 0.93rem;
+  font-weight: 500;
+}
+
+/* As 3 ações em baixo: separadas por uma linha e com contorno */
+.acoes {
+  list-style: none;             /* a <menu> é uma lista: tira as bolinhas */
+  margin: 1rem 0 0;
+  padding: 1rem 0 0;
+  border-top: 1px solid var(--cor_linha);
+}
+
+.acao_botao {
+  font-size: 0.93rem;
+  font-weight: 500;
+  border-color: var(--cor_linha);
+}
+
+
+
+
+
+/* ==========================================================
+                              ZONA DA PÁGINA
+   ========================================================== */
+#pagina {
+  grid-area: pagina;
+  padding: calc(var(--espaco) * 2);
+}
+
+/* ==========================================================
+                              ZONA DO RODAPÉ
+   ========================================================== */
+.rodape {
+  grid-area: rodape;
+  padding: 0.5rem var(--espaco);
+  font-size: 0.8rem;
+  color: var(--cor_suave);
+  border-top: 1px solid var(--cor_linha);
+}

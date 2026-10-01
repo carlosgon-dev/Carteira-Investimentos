@@ -1,0 +1,240 @@
+{
+  "plano_ppr": {
+    "taxa": 0.04,
+    "idade_inicial": 28,
+    "estrategia": "Dinheiro recebido de IRS será reinvestido no PPR do próprio ano + ajudas \"pequenas\" do Estado. Depois, completar com dinheiro do salário.",
+    "anos": [
+      {
+        "ano": 2024,
+        "governo": 2000,
+        "pessoal": 0,
+        "real": 2031.23,
+        "real_data": "2024-12-31"
+      },
+      {
+        "ano": 2025,
+        "governo": 2000,
+        "pessoal": 0,
+        "real": 4315.58,
+        "real_data": "2025-12-31"
+      },
+      {
+        "ano": 2026,
+        "governo": 1500,
+        "pessoal": 500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2027,
+        "governo": 0,
+        "pessoal": 2000,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2028,
+        "governo": 0,
+        "pessoal": 2000,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2029,
+        "governo": 0,
+        "pessoal": 2000,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2030,
+        "governo": 0,
+        "pessoal": 2000,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2031,
+        "governo": 0,
+        "pessoal": 2000,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2032,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2033,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2034,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2035,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2036,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2037,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2038,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2039,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2040,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2041,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2042,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2043,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2044,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2045,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2046,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2047,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2048,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2049,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2050,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2051,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2052,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2053,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2054,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2055,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2056,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      }
+    ]
+  }
+}

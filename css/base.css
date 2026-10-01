@@ -1,0 +1,103 @@
+/* ==========================================================
+   BASE: variáveis, reset e o aspeto geral da página
+   ========================================================== */
+
+/* ---------- Cores e medidas (mudam-se só aqui) ---------- */
+:root {
+  font-size: 14px; /* tamanho base: todos os rem dependem daqui */
+
+  /* Fundos e linhas */
+  --cor_fundo: #f2f4f1;          /* fundo da página */
+  --cor_cartao: #fcfcfb;         /* cartões, menu, tabelas */
+  --cor_cartao_suave: #f7f8f6;   /* cabeçalhos de tabela, hover */
+  --cor_linha: #dde3de;          /* bordas */
+
+  /* Texto */
+  --cor_texto: #14201b;          /* texto principal */
+  --cor_texto_secundario: #4d5a53;
+  --cor_suave: #7a847e;          /* notas, rodapé */
+
+  /* Destaque (o verde da app) */
+  --cor_destaque: #0e6b5c;       /* botão ativo, botões principais */
+  --cor_destaque_texto: #ffffff; /* texto em cima do destaque */
+  --cor_destaque_suave: #e1eee8; /* fundos leves */
+
+  /* Estados: ganho, aviso, perda */
+  --cor_positivo: #0ca30c;
+  --cor_aviso: #fab219;
+  --cor_negativo: #d03b3b;
+  --cor_positivo_texto: #006300; /* versões mais escuras, para ler em texto */
+  --cor_aviso_texto: #946300;
+  --cor_negativo_texto: #b42f2f;
+
+  /* Gráficos (uma cor por fatia/barra) */
+  --cor_grafico_1: #2a78d6;
+  --cor_grafico_2: #eb6834;
+  --cor_grafico_3: #1baf7a;
+  --cor_grafico_4: #eda100;
+  --cor_grafico_5: #e87ba4;
+  --cor_grafico_6: #008300;
+  --cor_grafico_7: #4a3aa7;
+  --cor_grafico_8: #e34948;
+  --cor_grafico_outros: #a4a59c;
+
+  /* Sombra dos cartões */
+  --sombra: 0 1px 2px rgba(20, 32, 27, 0.06), 0 8px 24px rgba(20, 32, 27, 0.06);
+
+  /* Medidas */
+  --espaco: 0.5rem;
+}
+
+/* ---------- Modo escuro: segue o tema do computador ---------- */
+/* Só mudam as cores; os nomes das variáveis são os mesmos */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;          /* barras de scroll e campos também ficam escuros */
+
+    --cor_fundo: #0e1311;
+    --cor_cartao: #161c19;
+    --cor_cartao_suave: #1b2320;
+    --cor_linha: #2a332f;
+
+    --cor_texto: #eef2ef;
+    --cor_texto_secundario: #b7c1bb;
+    --cor_suave: #87918b;
+
+    --cor_destaque: #4bb89e;
+    --cor_destaque_texto: #062019;
+    --cor_destaque_suave: #1a2b25;
+
+    --cor_positivo_texto: #3fcf3f;
+    --cor_aviso_texto: #f2c14e;
+    --cor_negativo_texto: #f07d7d;
+
+    --cor_grafico_1: #3987e5;
+    --cor_grafico_2: #d95926;
+    --cor_grafico_3: #199e70;
+    --cor_grafico_4: #c98500;
+    --cor_grafico_5: #d55181;
+    --cor_grafico_7: #9085e9;
+    --cor_grafico_8: #e66767;
+    --cor_grafico_outros: #6c6d66;
+
+    --sombra: 0 1px 2px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* ---------- Reset ---------- */
+* {box-sizing: border-box;}
+
+/* ---------- Página ---------- */
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  color: var(--cor_texto);
+  background: var(--cor_fundo);
+}
+
+/* ---------- Títulos (um tamanho por nível) ---------- */
+h1, h2, h3 {margin: 0 0 var(--espaco);}
+
+h1 { font-size: 1.25rem; }   /* marca */
+h2 { font-size: 1.5rem; }    /* título da página */
+h3 { font-size: 1.1rem; }    /* título de cartão ou secção */

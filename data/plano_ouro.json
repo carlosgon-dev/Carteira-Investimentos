@@ -1,0 +1,259 @@
+{
+  "plano_ouro": {
+    "taxa": 0.2,
+    "anos": [
+      {
+        "ano": 2025,
+        "previsto": 59.35,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2026,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2027,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2028,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2029,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2030,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2031,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2032,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2033,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2034,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2035,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2036,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2037,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2038,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2039,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2040,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2041,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2042,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2043,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2044,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2045,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2046,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2047,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2048,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2049,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2050,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2051,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2052,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2053,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2054,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2055,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2056,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2057,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2058,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2059,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2060,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      }
+    ]
+  }
+}

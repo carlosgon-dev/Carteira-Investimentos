@@ -1,0 +1,325 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fluxos da Carteira</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --fundo: #f4f6f5;
+    --papel: #ffffff;
+    --tinta: #18231f;
+    --tinta-2: #45524d;
+    --apagado: #6f7c77;
+    --linha: #dbe2df;
+    --guardado: #1f7a6d;      /* o que escreves e fica guardado */
+    --guardado-suave: #e3f1ee;
+    --gerado: #a8660b;        /* o que a app calcula ou gera */
+    --gerado-suave: #f8eedd;
+    --pagina: #3c5a8a;        /* onde aparece */
+    --pagina-suave: #e6ecf6;
+    --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --fundo: #0f1513;
+      --papel: #172019;
+      --tinta: #e6efeb;
+      --tinta-2: #b5c3bd;
+      --apagado: #85948e;
+      --linha: #2a3631;
+      --guardado: #4fc2ae;
+      --guardado-suave: #17312c;
+      --gerado: #e2a54a;
+      --gerado-suave: #33270f;
+      --pagina: #8fb0e6;
+      --pagina-suave: #1c2738;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --fundo: #0f1513;
+    --papel: #172019;
+    --tinta: #e6efeb;
+    --tinta-2: #b5c3bd;
+    --apagado: #85948e;
+    --linha: #2a3631;
+    --guardado: #4fc2ae;
+    --guardado-suave: #17312c;
+    --gerado: #e2a54a;
+    --gerado-suave: #33270f;
+    --pagina: #8fb0e6;
+    --pagina-suave: #1c2738;
+  }
+
+  body { background: var(--fundo); color: var(--tinta); font-family: var(--sans); font-size: 15px; line-height: 1.55; padding: 32px 16px 64px; }
+  .pagina { max-width: 1040px; margin: 0 auto; display: grid; gap: 40px; }
+  h1, h2, h3 { margin: 0; text-wrap: balance; line-height: 1.2; }
+  h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.01em; }
+  h2 { font-size: 21px; font-weight: 600; }
+  h3 { font-size: 17px; font-weight: 600; }
+  p { margin: 0; }
+  code { font-family: var(--mono); font-size: 0.88em; background: var(--fundo); border: 1px solid var(--linha); border-radius: 4px; padding: 0 4px; }
+  .rotulo { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--apagado); }
+
+  /* Cabeçalho */
+  header { display: grid; gap: 12px; }
+  header p { max-width: 68ch; color: var(--tinta-2); }
+  .legenda { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 13px; color: var(--tinta-2); }
+  .legenda span { display: inline-flex; align-items: center; gap: 8px; }
+  .legenda i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+
+  /* Mapa geral: 3 colunas ligadas por setas */
+  .mapa { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 14px; align-items: stretch; }
+  .coluna { background: var(--papel); border: 1px solid var(--linha); border-radius: 12px; padding: 18px; display: grid; gap: 10px; align-content: start; }
+  .coluna h3 { font-size: 15px; }
+  .coluna ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .coluna li { font-size: 14px; padding: 6px 10px; border-radius: 6px; }
+  .guardado li { background: var(--guardado-suave); border-left: 3px solid var(--guardado); }
+  .gerado li { background: var(--gerado-suave); border-left: 3px solid var(--gerado); }
+  .aparece li { background: var(--pagina-suave); border-left: 3px solid var(--pagina); }
+  .seta { align-self: center; font-size: 26px; color: var(--apagado); }
+  @media (max-width: 760px) {
+    .mapa { grid-template-columns: 1fr; }
+    .seta { justify-self: center; transform: rotate(90deg); }
+  }
+
+  /* Princípios */
+  .principios { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+  .principio { background: var(--papel); border: 1px solid var(--linha); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; }
+  .principio b { font-size: 14px; }
+  .principio p { font-size: 14px; color: var(--tinta-2); }
+
+  /* Fluxos */
+  .fluxos { display: grid; gap: 16px; }
+  .fluxo { background: var(--papel); border: 1px solid var(--linha); border-radius: 12px; padding: 20px; display: grid; gap: 14px; }
+  .fluxo-cab { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; }
+  .fluxo-cab p { font-size: 13px; color: var(--apagado); }
+  /* Os passos de cada fluxo: Botão → Escreves → Guarda → Calcula → Aparece em */
+  .passos { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+  @media (max-width: 860px) { .passos { grid-template-columns: 1fr; } }
+  .passo { border-radius: 8px; padding: 10px 12px; display: grid; gap: 4px; align-content: start; font-size: 14px; }
+  .passo .rotulo { color: inherit; opacity: 0.8; }
+  .passo.botao { background: var(--fundo); border: 1px dashed var(--linha); }
+  .passo.escreves, .passo.guarda { background: var(--guardado-suave); }
+  .passo.calcula { background: var(--gerado-suave); }
+  .passo.aparece { background: var(--pagina-suave); }
+  .passo ul { margin: 0; padding-left: 16px; display: grid; gap: 2px; }
+  .notas { display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px; }
+  .nota { padding: 4px 10px; border-radius: 999px; border: 1px solid var(--linha); color: var(--tinta-2); }
+  .nota.regra { border-color: var(--guardado); color: var(--guardado); }
+  .nota.aberto { border-color: var(--gerado); color: var(--gerado); }
+
+  /* Só leitura */
+  .leitura { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+  .leitura div { background: var(--papel); border: 1px solid var(--linha); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; }
+  .leitura p { font-size: 14px; color: var(--tinta-2); }
+
+  footer { font-size: 13px; color: var(--apagado); max-width: 68ch; }
+</style>
+
+<div class="pagina">
+  <header>
+    <span class="rotulo">Carteira de Investimentos · guia para o código</span>
+    <h1>Fluxos de informação</h1>
+    <p>Como cada informação entra na app, o que fica guardado, o que a app calcula sozinha e onde aparece. A regra de ouro: cada informação escreve-se uma só vez, num só sítio. Tudo o resto é calculado.</p>
+    <div class="legenda">
+      <span><i style="background:var(--guardado)"></i>Escreves e fica guardado</span>
+      <span><i style="background:var(--gerado)"></i>A app calcula ou gera sozinha</span>
+      <span><i style="background:var(--pagina)"></i>Onde aparece</span>
+    </div>
+  </header>
+
+  <!-- ===== MAPA GERAL ===== -->
+  <section style="display:grid;gap:14px">
+    <h2>Mapa geral</h2>
+    <div class="mapa">
+      <div class="coluna guardado">
+        <span class="rotulo">Escreves</span>
+        <h3>O que fica guardado</h3>
+        <ul>
+          <li>Saldos dos fundos</li>
+          <li>Depósitos a prazo</li>
+          <li>Dinheiro do Estado recebido</li>
+          <li>Dinheiro do Estado utilizado (exceto PPR)</li>
+          <li>Compras de investimentos</li>
+          <li>Rendibilidades (ETF's, Cripto, REIT's…)</li>
+          <li>Vendas</li>
+          <li>Plano anual do PPR</li>
+          <li>Plano anual do Ouro digital</li>
+        </ul>
+      </div>
+      <span class="seta" aria-hidden="true">→</span>
+      <div class="coluna gerado">
+        <span class="rotulo">A app calcula</span>
+        <h3>O que nunca se escreve</h3>
+        <ul>
+          <li>Posições (soma das compras)</li>
+          <li>Saldo atual de cada fundo</li>
+          <li>Pote do Estado por utilizar</li>
+          <li>Compras do PPR e utilizações "PPR" do pote</li>
+          <li>Rendibilidade do PPR e do Ouro</li>
+          <li>Mais-valias</li>
+          <li>Juros por ano</li>
+          <li>Projeções dos planos</li>
+          <li>Datas pessoais do calendário</li>
+        </ul>
+      </div>
+      <span class="seta" aria-hidden="true">→</span>
+      <div class="coluna aparece">
+        <span class="rotulo">Onde aparece</span>
+        <h3>Páginas que só leem</h3>
+        <ul>
+          <li>Carteira (Fundos + Investimentos)</li>
+          <li>Fundos</li>
+          <li>Rendimentos</li>
+          <li>Investimentos (cards, mapa, gráficos)</li>
+          <li>Páginas de cada categoria</li>
+          <li>Histórico de rendibilidade</li>
+          <li>Calendário</li>
+          <li>Rodapé de notícias</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRINCÍPIOS ===== -->
+  <section style="display:grid;gap:14px">
+    <h2>Princípios gerais</h2>
+    <div class="principios">
+      <div class="principio"><span class="rotulo">Botões</span><b>Inserir só em 2 sítios</b><p>Cada botão de inserir existe no menu lateral e no separador respetivo, em mais nenhum lado.</p></div>
+      <div class="principio"><span class="rotulo">Navegação</span><b>Ao guardar, voltas atrás</b><p>Depois de guardar (ou cancelar) um formulário, a app volta à página onde estavas.</p></div>
+      <div class="principio"><span class="rotulo">Atos separados</span><b>Comprar, render e vender</b><p>Três botões e três formulários: + Novo registo/compra, + Registar rendibilidade, + Registar venda.</p></div>
+      <div class="principio"><span class="rotulo">Planos</span><b>PPR e Ouro editam-se na tabela</b><p>O valor de cada ano e o valor real escrevem-se no plano anual. A rendibilidade sai daí.</p></div>
+      <div class="principio"><span class="rotulo">Para depois</span><b>Restrições no JavaScript</b><p>Validações e condições definem-se ao escrever o código. Aqui só se fecha o fluxo.</p></div>
+    </div>
+  </section>
+
+  <!-- ===== FLUXO A FLUXO ===== -->
+  <section style="display:grid;gap:14px">
+    <h2>Fluxo a fluxo</h2>
+    <div class="fluxos">
+
+      <article class="fluxo">
+        <div class="fluxo-cab"><h3>Fundos de sobrevivência e de maneio</h3><p>Dinheiro em conta, pronto a usar</p></div>
+        <div class="passos">
+          <div class="passo botao"><span class="rotulo">Botão</span>+ Atualizar saldo (Fundos) ou + Novo registo/compra (menu)</div>
+          <div class="passo escreves"><span class="rotulo">Escreves</span><ul><li>Fundo</li><li>Saldo</li><li>Data (hoje)</li></ul></div>
+          <div class="passo guarda"><span class="rotulo">Guarda</span>O saldo, com a data</div>
+          <div class="passo calcula"><span class="rotulo">Calcula</span>Saldo atual = o mais recente; no mesmo dia, o último inserido</div>
+          <div class="passo aparece"><span class="rotulo">Aparece em</span>Fundos, Carteira</div>
+        </div>
+        <div class="notas"><span class="nota">Manual: o dinheiro de vendas e de depósitos vencidos</span></div>
+      </article>
+
+      <article class="fluxo">
+        <div class="fluxo-cab"><h3>Depósitos a prazo</h3><p>Não contam para a Carteira</p></div>
+        <div class="passos">
+          <div class="passo botao"><span class="rotulo">Botão</span>+ Novo registo/compra (menu ou Depósitos)</div>
+          <div class="passo escreves"><span class="rotulo">Escreves</span><ul><li>Nome, montante, data, origem</li><li>Prazo, vencimento</li><li>Juros (quando vencer)</li></ul></div>
+          <div class="passo guarda"><span class="rotulo">Guarda</span>O depósito</div>
+          <div class="passo calcula"><span class="rotulo">Calcula</span><ul><li>Estado na coluna Juros</li><li>Juros por ano</li><li>Vencimentos no calendário</li></ul></div>
+          <div class="passo aparece"><span class="rotulo">Aparece em</span>Depósitos, Rendimentos (juros já recebidos), Calendário</div>
+        </div>
+        <div class="notas"><span class="nota regra">Juros: verde = recebido · amarelo = ativo · vermelho = vencido sem valor</span></div>
+      </article>
+
+      <article class="fluxo">
+        <div class="fluxo-cab"><h3>Dinheiro recebido do Estado</h3><p>Um pote: tudo o que entra cai no mesmo sítio</p></div>
+        <div class="passos">
+          <div class="passo botao"><span class="rotulo">Botão</span>+ Novo registo/compra (menu ou Estado)</div>
+          <div class="passo escreves"><span class="rotulo">Escreves</span><ul><li>Recebido: descrição, valor, data</li><li>Utilizado: destino, valor, data</li></ul></div>
+          <div class="passo guarda"><span class="rotulo">Guarda</span>Cada entrada e cada saída do pote</div>
+          <div class="passo calcula"><span class="rotulo">Calcula</span><ul><li>Por utilizar = recebido − utilizado</li><li>Linhas "PPR" vêm do plano do PPR</li></ul></div>
+          <div class="passo aparece"><span class="rotulo">Aparece em</span>Estado, PPR, Rendimentos</div>
+        </div>
+        <div class="notas"><span class="nota regra">As linhas "PPR" não se editam aqui: mudam-se no PPR</span></div>
+      </article>
+
+      <article class="fluxo">
+        <div class="fluxo-cab"><h3>Compra de um investimento</h3><p>ETF's, Criptomoedas, REIT's, Ações, Fundos de investimento</p></div>
+        <div class="passos">
+          <div class="passo botao"><span class="rotulo">Botão</span>+ Novo registo/compra (menu ou página da categoria)</div>
+          <div class="passo escreves"><span class="rotulo">Escreves</span><ul><li>Tipo de ativo, nome</li><li>Tipo / tema</li><li>Montante, data, origem</li></ul></div>
+          <div class="passo guarda"><span class="rotulo">Guarda</span>A compra</div>
+          <div class="passo calcula"><span class="rotulo">Calcula</span><ul><li>Posição = soma das compras</li><li>Investido, gráficos por ativo, tipo e origem</li></ul></div>
+          <div class="passo aparece"><span class="rotulo">Aparece em</span>Página da categoria (acordeão), Investimentos, Carteira, rodapé</div>
+        </div>
+      </article>
+
+      <article class="fluxo">
+        <div class="fluxo-cab"><h3>Registar rendibilidade</h3><p>Valor em € consultado na corretora</p></div>
+        <div class="passos">
+          <div class="passo botao"><span class="rotulo">Botão</span>+ Registar rendibilidade (menu, ou página da categoria: só esses ativos)</div>
+          <div class="passo escreves"><span class="rotulo">Escreves</span><ul><li>Data da consulta</li><li>Valor de cada ativo (só os que quiseres)</li></ul></div>
+          <div class="passo guarda"><span class="rotulo">Guarda</span>Um registo por ativo preenchido</div>
+          <div class="passo calcula"><span class="rotulo">Calcula</span><ul><li>Último valor de cada ativo</li><li>Valor atual = investido + rendibilidade</li></ul></div>
+          <div class="passo aparece"><span class="rotulo">Aparece em</span>Investimentos (cards, mapa, barras, evolução), tabelas, Histórico de rendibilidade, rodapé</div>
+        </div>
+        <div class="notas"><span class="nota">Não se aplica ao PPR nem ao Ouro digital</span></div>
+      </article>
+
+      <article class="fluxo">
+        <div class="fluxo-cab"><h3>Venda</h3><p>Vende-se sempre a posição inteira</p></div>
+        <div class="passos">
+          <div class="passo botao"><span class="rotulo">Botão</span>+ Registar venda (menu, Mais-valias, ETF's, Cripto, REIT's)</div>
+          <div class="passo escreves"><span class="rotulo">Escreves</span><ul><li>Ativo (da lista)</li><li>Data</li><li>Valor recebido</li></ul></div>
+          <div class="passo guarda"><span class="rotulo">Guarda</span>A venda, com as compras e as rendibilidades da posição lá dentro</div>
+          <div class="passo calcula"><span class="rotulo">Calcula</span><ul><li>Mais-valia = recebido − investido</li><li>A posição sai da carteira</li></ul></div>
+          <div class="passo aparece"><span class="rotulo">Aparece em</span>Mais-valias, Rendimentos</div>
+        </div>
+        <div class="notas">
+          <span class="nota regra">Voltar a comprar o mesmo ativo abre uma posição nova, do zero</span>
+          <span class="nota regra">Apagar a venda (✕) desfaz-a: as compras e as rendibilidades voltam</span>
+          <span class="nota">Manual: o dinheiro recebido vai para o fundo de maneio</span>
+        </div>
+      </article>
+
+      <article class="fluxo">
+        <div class="fluxo-cab"><h3>PPR</h3><p>O plano anual é a única fonte</p></div>
+        <div class="passos">
+          <div class="passo botao"><span class="rotulo">Botão</span>Nenhum: edita-se a linha do ano (✎) no plano anual</div>
+          <div class="passo escreves"><span class="rotulo">Escreves</span><ul><li>Estado e Pessoal de cada ano</li><li>Real / previsão do ano atual</li></ul></div>
+          <div class="passo guarda"><span class="rotulo">Guarda</span>O plano anual</div>
+          <div class="passo calcula"><span class="rotulo">Calcula</span><ul><li>Compras de PPR até ao ano atual (origem Estado / Salário)</li><li>Linhas "PPR" no pote do Estado</li><li>Rendibilidade = real − acumulado</li><li>Projeção e rendibilidade do ano</li></ul></div>
+          <div class="passo aparece"><span class="rotulo">Aparece em</span>PPR, Estado, Investimentos, Carteira, Histórico de rendibilidade</div>
+        </div>
+        <div class="notas">
+          <span class="nota regra">O dinheiro do Estado de um ano não pode passar do que está por utilizar</span>
+          <span class="nota regra">Cores: ano fechado verde · ano atual amarelo · anos seguintes cinzento</span>
+          <span class="nota">Sem novo registo, sem venda, sem registar rendibilidade</span>
+        </div>
+      </article>
+
+      <article class="fluxo">
+        <div class="fluxo-cab"><h3>Ouro digital</h3><p>Cashback em Bitcoin da Trade Republic</p></div>
+        <div class="passos">
+          <div class="passo botao"><span class="rotulo">Botão</span>+ Novo registo/compra para o cashback; ✎ no plano anual</div>
+          <div class="passo escreves"><span class="rotulo">Escreves</span><ul><li>Compras de cashback</li><li>Cashback previsto e real de cada ano</li><li>Real / previsão do ano atual</li></ul></div>
+          <div class="passo guarda"><span class="rotulo">Guarda</span>As compras e o plano anual</div>
+          <div class="passo calcula"><span class="rotulo">Calcula</span><ul><li>Rendibilidade = real − compras até esse ano</li><li>Projeção e rendibilidade do ano</li></ul></div>
+          <div class="passo aparece"><span class="rotulo">Aparece em</span>Ouro digital, Investimentos, Carteira, Histórico de rendibilidade</div>
+        </div>
+        <div class="notas"><span class="nota">Sem registar rendibilidade: vem da tabela</span></div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===== SÓ LEITURA ===== -->
+  <section style="display:grid;gap:14px">
+    <h2>Páginas sem entrada de dados</h2>
+    <div class="leitura">
+      <div><span class="rotulo">Carteira</span><p>Fundo de sobrevivência + Fundo de maneio + Investimentos = Carteira.</p></div>
+      <div><span class="rotulo">Rendimentos</span><p>Dinheiro já recebido: juros de depósitos vencidos + dinheiro do Estado + mais-valias.</p></div>
+      <div><span class="rotulo">Calendário</span><p>Datas da economia (ficheiro <code>dados.json</code>) + datas pessoais geradas: vencimentos, reforço do PPR, lembrete de rendibilidade.</p></div>
+      <div><span class="rotulo">Rodapé de notícias</span><p>Indicadores com <code>fetch</code> (Fear &amp; Greed, Bitcoin, Ethereum, Ouro, EUR/USD), próximos eventos e os teus ativos.</p></div>
+      <div><span class="rotulo">Em manutenção</span><p>Questionários e Programas de fidelidade. Ações e Fundos de investimento ainda sem investimentos.</p></div>
+    </div>
+  </section>
+
+  <footer>Fechado a 1 de outubro de 2026, a partir do protótipo (versão 123). Serve de guia para a base de dados e para os módulos do projeto real.</footer>
+</div>

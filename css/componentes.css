@@ -1,0 +1,14 @@
+/* ==========================================================
+   COMPONENTES: as peças que se repetem em várias páginas
+   ========================================================== */
+
+/* ---------- Cartão ---------- */
+.cartao {
+  padding: var(--espaco);
+  border-radius: 0.5rem;
+  background: var(--cor_cartao);
+  border: 1px solid var(--cor_linha);
+}
+
+/* ---------- Mensagens ---------- */
+.erro {color: var(--cor_negativo_texto);}

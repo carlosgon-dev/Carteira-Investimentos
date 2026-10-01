@@ -1,0 +1,2850 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carteira de Investimentos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --bg: #f2f4f1;
+    --surface: #fcfcfb;
+    --surface-2: #f7f8f6;
+    --ink: #14201b;
+    --ink-2: #4d5a53;
+    --muted: #7a847e;
+    --line: #dde3de;
+    --accent: #0e6b5c;
+    --accent-ink: #ffffff;
+    --accent-soft: #e1eee8;
+    --c1: #2a78d6; --c2: #eb6834; --c3: #1baf7a; --c4: #eda100; --c5: #e87ba4; --c6: #008300; --c7: #4a3aa7; --c8: #e34948;
+    --c-outros: #a4a59c;
+    --good: #0ca30c; --warn: #fab219; --crit: #d03b3b;
+    --good-text: #006300; --crit-text: #b42f2f;
+    --amarelo-text: #946300;
+    --shadow: 0 1px 2px rgba(20, 32, 27, 0.06), 0 8px 24px rgba(20, 32, 27, 0.06);
+    --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #0e1311; --surface: #161c19; --surface-2: #1b2320;
+      --ink: #eef2ef; --ink-2: #b7c1bb; --muted: #87918b; --line: #2a332f;
+      --accent: #4bb89e; --accent-ink: #062019; --accent-soft: #1a2b25;
+      --c1: #3987e5; --c2: #d95926; --c3: #199e70; --c4: #c98500; --c5: #d55181; --c6: #008300; --c7: #9085e9; --c8: #e66767;
+      --c-outros: #6c6d66;
+      --good-text: #3fcf3f; --crit-text: #f07d7d;
+      --amarelo-text: #f2c14e;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0e1311; --surface: #161c19; --surface-2: #1b2320;
+    --ink: #eef2ef; --ink-2: #b7c1bb; --muted: #87918b; --line: #2a332f;
+    --accent: #4bb89e; --accent-ink: #062019; --accent-soft: #1a2b25;
+    --c1: #3987e5; --c2: #d95926; --c3: #199e70; --c4: #c98500; --c5: #d55181; --c6: #008300; --c7: #9085e9; --c8: #e66767;
+    --c-outros: #6c6d66;
+    --good-text: #3fcf3f; --crit-text: #f07d7d;
+    --amarelo-text: #f2c14e;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.5;
+    padding-inline: 16px;
+    padding-block: 24px 90px; /* espaço em baixo para a barra de indicadores */
+  }
+  .wrap { max-width: 1600px; margin: 0 auto; display: grid; gap: 20px; } /* ocupa o ecrã até 1600px de largura */
+  .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  h1, h2, h3 { margin: 0; text-wrap: balance; }
+
+  /* Cabeçalho */
+  .brand small { display: block; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .brand h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; }
+  .chip { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+
+  /* Título no topo do menu lateral */
+  .menu-lateral .brand { padding: 4px 12px 16px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
+  .menu-lateral .brand h1 { font-size: 19px; line-height: 1.2; }
+  /* Rodapé do menu: letra pequena */
+  .menu-rodape { display: grid; gap: 8px; justify-items: start; margin-top: 14px; padding: 14px 12px 0;
+    border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+
+  /* Menu lateral à esquerda + conteúdo à direita */
+  .layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 28px; align-items: start; }
+  .menu-lateral { position: sticky; top: 12px; display: flex; flex-direction: column; gap: 4px; }
+  .menu-lateral .tab { text-align: left; width: 100%; }
+  .menu-principal { font-size: 15px !important; font-weight: 700 !important; padding: 10px 12px !important;
+    display: flex; justify-content: space-between; align-items: center; }
+  .menu-principal .seta { transition: transform 0.2s; font-size: 12px; }
+  .menu-grupo.aberto .seta { transform: rotate(90deg); }
+  /* Acordeão: o submenu só aparece quando o grupo está aberto */
+  .submenu { display: none; gap: 2px; margin: 2px 0 6px 14px; padding-left: 10px; border-left: 2px solid var(--line); }
+  .menu-grupo.aberto .submenu { display: grid; }
+  .menu-acoes { display: grid; gap: 6px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .conteudo { min-width: 0; }
+  /* Ecrã estreito (telemóvel): o menu fica em cima do conteúdo */
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: 1fr; }
+    .menu-lateral { position: static; }
+  }
+  /* Página "em manutenção" */
+  /* Barra de indicadores gerais: fixa no fundo do ecrã */
+  .barra-indicadores { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; display: flex; align-items: center;
+    background: var(--surface); border-top: 1px solid var(--line); white-space: nowrap; font-size: 13px; }
+  /* Etiqueta fixa à esquerda ("Ao vivo" / "Exemplo") */
+  .ticker-estado { flex: none; padding: 10px 16px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    background: var(--ink); color: var(--bg); }
+  /* Rodapé de notícias: a faixa anda da direita para a esquerda sem parar */
+  .ticker { flex: 1; overflow: hidden; }
+  .ticker-faixa { display: inline-flex; gap: 32px; padding: 10px 0 10px 32px; animation: correr linear infinite; }
+  .ticker:hover .ticker-faixa { animation-play-state: paused; } /* pára com o rato por cima, para ler */
+  @keyframes correr { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .ticker { overflow-x: auto; } .ticker-faixa { animation: none; } }
+  .ticker-titulo { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: var(--accent); align-self: center; }
+  .indicador { display: flex; align-items: baseline; gap: 8px; }
+  .indicador span { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .indicador strong { font-weight: 600; }
+  .indicador .dot { display: inline-block; align-self: center; }
+  .indicador em { font-style: normal; font-size: 12px; }
+  .mes-titulo { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 18px 0 6px; }
+  .mes-titulo:first-of-type { margin-top: 0; }
+  .saldo-atual td { font-weight: 600; } /* nos fundos, o saldo mais recente (o que conta) */
+  .manutencao { text-align: center; padding: 70px 20px; }
+  .manutencao b { display: block; font-size: 28px; letter-spacing: 0.08em; margin-bottom: 8px; }
+
+  /* Separadores */
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+  .tab {
+    font: inherit; font-size: 13px; font-weight: 500;
+    border: 1px solid transparent; background: transparent; color: var(--ink-2);
+    padding: 7px 12px; border-radius: 8px; cursor: pointer;
+  }
+  .tab:hover { background: var(--surface); color: var(--ink); }
+  .tab[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+  .tab.primary:not([aria-selected="true"]) { border-color: var(--line); }
+  .tab:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .sep { width: 1px; background: var(--line); margin-inline: 4px; }
+
+  /* Blocos */
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+  .panel-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 14px; }
+  .panel-head h2 { font-size: 16px; font-weight: 600; }
+  .panel-head p { margin: 0; font-size: 12px; color: var(--muted); }
+
+  /* KPIs */
+  /* 4 cards lado a lado; 2 por linha em ecrãs médios; 1 no telemóvel */
+  .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  @media (max-width: 760px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 420px) { .kpis { grid-template-columns: 1fr; } }
+  .kpi { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 4px; align-content: start; }
+  .kpi .label { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .kpi .value { font-size: clamp(16px, 1.7vw, 21px); font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; }
+  .kpi .sub { font-size: 12px; color: var(--ink-2); }
+  .kpi .value.nome { white-space: normal; font-size: 16px; line-height: 1.3; }
+  .kpi.hero { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .kpi.hero .label, .kpi.hero .sub { color: color-mix(in srgb, var(--bg) 72%, transparent); }
+
+  /* Gráficos circulares */
+  /* 3 gráficos circulares lado a lado; num ecrã estreito ficam uns por baixo dos outros */
+  .charts.tres { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  @media (max-width: 900px) { .charts.tres { grid-template-columns: 1fr; } }
+  /* 2 gráficos lado a lado; um por baixo do outro só no telemóvel */
+  .charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 640px) { .charts { grid-template-columns: 1fr; } }
+  .donut-wrap { display: grid; grid-template-columns: 1fr; gap: 18px; justify-items: center; position: relative; }
+  .donut { width: 100%; max-width: 190px; height: auto; display: block; }
+  .donut path { stroke: var(--surface); stroke-width: 2; cursor: pointer; transition: opacity 0.15s; }
+  .donut.hovering path:not(.on) { opacity: 0.35; }
+  .donut .center-v { font-family: var(--mono); font-size: 15px; font-weight: 500; fill: var(--ink); }
+  .donut .center-l { font-size: 10px; fill: var(--muted); letter-spacing: 0.08em; }
+  .legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; width: 100%; }
+  .legend li { display: grid; grid-template-columns: 12px 1fr auto auto; gap: 10px; align-items: center; font-size: 12px; }
+  .legend .sw { width: 12px; height: 12px; border-radius: 3px; }
+  .legend .v { color: var(--ink-2); }
+  .legend .p { color: var(--ink); font-weight: 500; min-width: 48px; text-align: right; }
+  .tooltip {
+    position: absolute; pointer-events: none; z-index: 5;
+    background: var(--ink); color: var(--bg); font-size: 12px; line-height: 1.4;
+    padding: 8px 10px; border-radius: 8px; box-shadow: var(--shadow); white-space: nowrap;
+  }
+  .tooltip b { display: block; font-weight: 600; }
+  .switch { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-2); cursor: pointer; }
+  .switch input { accent-color: var(--accent); width: 16px; height: 16px; }
+
+  /* Meta */
+  .meter { display: grid; gap: 8px; }
+  .meter-track { height: 10px; background: var(--accent-soft); border-radius: 999px; overflow: hidden; }
+  .meter-fill { height: 100%; background: var(--accent); border-radius: 999px; }
+  .meter-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 13px; color: var(--ink-2); }
+
+  /* Tabelas */
+  .table-scroll { overflow-x: auto; }
+  /* Botões Editar / Apagar / Guardar e campos da linha em edição */
+  .nowrap { white-space: nowrap; }
+  .acoes { display: inline-flex; gap: 6px; justify-content: flex-end; white-space: nowrap; }
+  .cell-input { padding: 5px 8px; font-size: 13px; min-width: 90px; background: var(--surface); border-color: var(--accent); }
+  input[type="number"].cell-input { width: 110px; text-align: right; }
+  input[type="date"].cell-input { width: 140px; }
+  /* PPR */
+  .resumo-lista { margin: 0; display: grid; }
+  .resumo-lista > div { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .resumo-lista > div:last-child { border-bottom: none; }
+  .resumo-lista dt { color: var(--ink-2); }
+  .resumo-lista dd { margin: 0; text-align: right; white-space: nowrap; }
+  .resumo-lista .forte dt, .resumo-lista .forte dd { color: var(--ink); font-weight: 600; }
+  .resumo-lista input.cell-input { width: 80px; }
+  .texto { margin: 0; color: var(--ink-2); max-width: 65ch; }
+  .valor-grande { margin: 0 0 8px; font-size: 28px; font-weight: 600; color: var(--accent); }
+  tr.ano-atual td { background: var(--accent-soft); }
+  .valor-real { color: var(--good-text); font-weight: 600; }
+  .valor-projetado { color: var(--amarelo-text); }
+  /* Dinheiro do Estado: cards como nos depósitos + tabelas compactas */
+  /* Duas colunas sempre lado a lado (só empilham no telemóvel) */
+  .lado-a-lado { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 640px) { .lado-a-lado { grid-template-columns: 1fr; } }
+  .lado-a-lado .panel { padding: 16px; }
+  .years:last-child { margin-bottom: 0; }
+  /* Card em destaque: fundo claro, igual ao card "hero" das páginas principais */
+  .year.destaque { border-color: var(--ink); background: var(--ink); color: var(--bg); }
+  .year.destaque span { color: color-mix(in srgb, var(--bg) 72%, transparent); }
+  .year.destaque strong { font-weight: 600; }
+  .tabela-compacta th, .tabela-compacta td { padding: 8px 8px; }
+  .tabela-compacta th { font-size: 11px; }
+  .btn-icone {
+    font: inherit; font-size: 13px; width: 28px; height: 28px; padding: 0; cursor: pointer;
+    display: inline-grid; place-items: center; border-radius: 7px;
+    border: 1px solid var(--line); background: transparent; color: var(--ink-2);
+  }
+  .btn-icone:hover { background: var(--surface-2); color: var(--ink); }
+  .btn-icone.perigo { color: var(--crit-text); }
+  .btn-icone.perigo.armed { background: var(--crit); border-color: var(--crit); color: #fff; }
+
+  /* Barras de rendibilidade (a partir do zero) */
+  .barras { display: grid; gap: 10px; }
+  .barra-linha { display: grid; grid-template-columns: minmax(120px, 260px) 1fr 96px; gap: 12px; align-items: center; font-size: 12px; }
+  .botoes-grafico { display: flex; flex-wrap: wrap; gap: 8px; }
+  .alternar { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .alternar button { font: inherit; font-size: 13px; font-weight: 600; padding: 5px 14px; border: none; background: transparent; color: var(--ink-2); cursor: pointer; }
+  .alternar button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  .barra-nome { overflow-wrap: anywhere; }
+  .barra-nome .dot { display: inline-block; margin-right: 8px; vertical-align: 1px; }
+  .barra-pista { position: relative; height: 22px; }
+  .barra-zero { position: absolute; top: -4px; bottom: -4px; width: 1px; background: var(--muted); }
+  .barra { position: absolute; top: 2px; height: 18px; }
+
+  /* Mapa de calor: tamanho = investido, cor = rendibilidade */
+  .mapa { position: relative; height: 380px; border-radius: 10px; overflow: hidden; }
+  @media (max-width: 640px) { .mapa { height: 300px; } }
+  .mapa-bloco { position: absolute; box-sizing: border-box; border: 2px solid var(--surface); border-radius: 8px;
+    padding: 8px 10px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: 2px;
+    color: var(--ink); transition: filter 0.15s; }
+  .mapa-bloco:hover { filter: brightness(1.15); }
+  .mapa-bloco b { font-size: 13px; line-height: 1.2; }
+  .mapa-bloco .mapa-pct { font-size: 16px; font-weight: 700; }
+  .mapa-bloco small { font-size: 12px; opacity: 0.8; }
+  .mapa-legenda { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); margin-top: 10px; }
+  .mapa-legenda i { display: inline-block; width: 18px; height: 12px; border-radius: 3px; }
+
+  .barra.pos { background: var(--good); border-radius: 0 4px 4px 0; }
+  .barra.neg { background: var(--crit); border-radius: 4px 0 0 4px; }
+  .barra-valor { text-align: right; }
+  @media (max-width: 560px) {
+    .barra-linha { grid-template-columns: 1fr 96px; }
+    .barra-nome { grid-column: 1 / -1; }
+  }
+  /* Acordeão das posições */
+  .acordeao { font: inherit; font-weight: 600; color: var(--ink); background: none; border: none; padding: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-align: left; }
+  .acordeao .seta { display: inline-block; color: var(--muted); transition: transform 0.15s; }
+  .acordeao[aria-expanded="true"] .seta { transform: rotate(90deg); }
+  tr.posicao:hover td { background: var(--surface-2); }
+  tr.compra td, tr.compra-cab td { background: var(--surface-2); }
+  tr.compra td:first-child, tr.compra-cab td:first-child { padding-left: 32px; }
+  tr.compra-cab td { font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding-block: 6px; }
+  tr.compra td { font-size: 12px; }
+  /* Tabela com scroll vertical e cabeçalho fixo */
+  .table-alta { max-height: 440px; overflow-y: auto; border: 1px solid var(--line); border-radius: 10px; }
+  .table-alta thead th { position: sticky; top: 0; background: var(--surface); z-index: 1; }
+  /* Planos do PPR e do Ouro: as colunas do que PUSESTE têm um fundo ligeiramente diferente */
+  .puseste { background: color-mix(in srgb, var(--accent) 8%, var(--surface)); }
+  .table-alta thead th.puseste { background: color-mix(in srgb, var(--accent) 14%, var(--surface)); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  td.r, th.r { text-align: right; }
+  tfoot td { font-weight: 600; border-top: 1px solid var(--ink-2); border-bottom: none; }
+  .cat-cell { display: flex; align-items: center; gap: 10px; }
+  .dot { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+  .muted { color: var(--muted); }
+  .empty { padding: 28px; text-align: center; color: var(--muted); font-size: 14px; }
+
+  .badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line); white-space: nowrap; color: var(--ink); }
+  .badge i { width: 8px; height: 8px; border-radius: 50%; }
+  .badge.good i { background: var(--good); }
+  .badge.warn i { background: var(--warn); }
+  .badge.done { color: var(--muted); }
+  .badge.done i { background: var(--c-outros); }
+
+  .btn {
+    font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+    padding: 9px 16px; border-radius: 8px; border: 1px solid var(--accent);
+    background: var(--accent); color: var(--accent-ink);
+  }
+  .btn.ghost { background: transparent; color: var(--ink-2); border-color: var(--line); font-weight: 500; }
+  .btn.small { padding: 5px 10px; font-size: 12px; }
+  .btn.danger { background: transparent; color: var(--crit-text); border-color: var(--line); font-weight: 500; }
+  .btn.danger.armed { background: var(--crit); color: #fff; border-color: var(--crit); }
+
+  /* Resumos por ano */
+  .years { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 16px; }
+  .year { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: var(--surface-2); }
+  .year span { display: block; font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: 0.05em; }
+  .year strong { font-size: 16px; font-weight: 500; }
+
+  /* Formulário */
+  form { display: grid; gap: 18px; }
+  .grid-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px 16px; }
+  .field { display: grid; gap: 6px; }
+  [hidden] { display: none !important; } /* o atributo hidden esconde sempre, mesmo com display: grid */
+  .field label { font-size: 12px; font-weight: 600; color: var(--ink-2); }
+  .field .hint { font-size: 12px; color: var(--muted); }
+  input, select, textarea {
+    font: inherit; font-size: 13px; color: var(--ink); background: var(--surface-2);
+    border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; width: 100%;
+  }
+  textarea { resize: vertical; min-height: 64px; }
+  /* Tira as setinhas dos campos numéricos */
+  input[type="number"] { appearance: textfield; -moz-appearance: textfield; }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  .form-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .error { color: var(--crit-text); font-size: 13px; margin: 0; }
+  .toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(20px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-size: 14px; box-shadow: var(--shadow); z-index: 20; }
+
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+
+  /* Rendibilidade */
+  .aviso { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; font-size: 13px; padding: 12px 16px; border-radius: 10px; background: var(--accent-soft); color: var(--ink); }
+  .chart-toolbar { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .chart-toolbar select { width: auto; min-width: 200px; padding: 6px 10px; }
+  .line-chart { position: relative; }
+  .line-chart svg { width: 100%; height: auto; display: block; }
+  .line-chart .grid { stroke: var(--line); stroke-width: 1; }
+  .line-chart .zero { stroke: var(--muted); stroke-width: 1; }
+  .line-chart .eixo { fill: var(--muted); font-family: var(--mono); font-size: 11px; }
+  .line-chart .serie { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .line-chart .ponto { stroke: var(--surface); stroke-width: 2; }
+  .line-chart .cruz { stroke: var(--ink-2); stroke-width: 1; stroke-dasharray: 3 3; }
+  .chart-legend { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 12px; }
+  .chart-legend li { display: flex; align-items: center; gap: 8px; }
+  .chart-legend .sw { width: 14px; height: 3px; border-radius: 2px; }
+  .up { color: var(--good-text); }
+  .down { color: var(--crit-text); }
+  .rend-grupo { margin-top: 16px; }
+  .rend-grupo h3 { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 8px; }
+  .rend-campos { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px 16px; }
+  .rend-campos .field label { font-weight: 500; color: var(--ink); }
+  details.panel summary { cursor: pointer; font-weight: 600; font-size: 14px; }
+  details.panel[open] summary { margin-bottom: 12px; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <!-- Menu lateral (esquerda, com o título no topo) + conteúdo (direita). Já não há cabeçalho. -->
+  <div class="layout">
+  <nav class="menu-lateral" aria-label="Menu">
+    <div class="brand">
+      <small>Protótipo · projeto final JS</small>
+      <h1>Carteira de Investimentos</h1>
+    </div>
+
+    <button class="tab menu-principal" data-tab="dashboard" id="tab-dashboard">Carteira</button>
+    <button class="tab menu-principal" data-tab="fundos" id="tab-fundos">Fundos</button>
+
+    <!-- Cada grupo abre como acordeão quando estás num dos seus separadores -->
+    <div class="menu-grupo">
+      <button class="tab menu-principal" data-tab="rendimentos" id="tab-rendimentos">Rendimentos <span class="seta" aria-hidden="true">▸</span></button>
+      <div class="submenu">
+        <button class="tab" data-tab="deposito" id="tab-deposito">Depósitos a prazo</button>
+        <button class="tab" data-tab="apoio" id="tab-apoio">Dinheiro recebido do Estado</button>
+        <button class="tab" data-tab="maisvalias" id="tab-maisvalias">Mais-valias</button>
+        <button class="tab" data-tab="questionarios" id="tab-questionarios">Questionários</button>
+        <button class="tab" data-tab="fidelidade" id="tab-fidelidade">Programas de fidelidade</button>
+      </div>
+    </div>
+
+    <div class="menu-grupo">
+      <button class="tab menu-principal" data-tab="rendibilidade" id="tab-rendibilidade">Investimentos <span class="seta" aria-hidden="true">▸</span></button>
+      <div class="submenu">
+        <button class="tab" data-tab="etf" id="tab-etf">ETF's</button>
+        <button class="tab" data-tab="cripto" id="tab-cripto">Criptomoedas</button>
+        <button class="tab" data-tab="reit" id="tab-reit">REIT's</button>
+        <button class="tab" data-tab="ppr" id="tab-ppr">PPR</button>
+        <button class="tab" data-tab="ouro" id="tab-ouro">Ouro digital</button>
+        <button class="tab" data-tab="acoes" id="tab-acoes">Ações</button>
+        <button class="tab" data-tab="fundosinv" id="tab-fundosinv">Fundos de investimento</button>
+        <button class="tab" data-tab="historico-rend" id="tab-historico-rend">Histórico de rendibilidade</button>
+      </div>
+    </div>
+
+    <button class="tab menu-principal" data-tab="calendario" id="tab-calendario">Calendário</button>
+
+    <div class="menu-acoes">
+      <button class="tab primary" data-tab="novo" id="tab-novo">+ Novo registo/compra</button>
+      <button class="tab primary" data-tab="registar-rend" id="tab-registar-rend">+ Registar rendibilidade</button>
+      <button class="tab primary" data-tab="registar-venda" id="tab-registar-venda">+ Registar venda</button>
+    </div>
+
+    <!-- Rodapé do menu: aviso do armazenamento + repor os dados -->
+    <div class="menu-rodape">
+      <span class="chip" id="chip-exemplo">Dados da folha Excel</span>
+      <span>Os registos ficam guardados só neste browser.</span>
+      <button class="btn ghost small" id="btn-repor" type="button">Repor dados da folha</button>
+    </div>
+  </nav>
+
+  <main class="conteudo">
+
+  <!-- ===== DASHBOARD ===== -->
+  <section id="view-dashboard" role="tabpanel" class="wrap">
+
+    <div class="kpis" id="kpis"></div>
+
+    <div class="charts tres">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Investimentos por categoria</h2>
+        </div>
+        <div class="donut-wrap" id="chart-risco"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Investimentos por tipo</h2>
+        </div>
+        <div class="donut-wrap" id="chart-risco-tipo"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Investimentos por origem</h2>
+        </div>
+        <div class="donut-wrap" id="chart-risco-origem"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== NOVO REGISTO ===== -->
+  <section id="view-novo" role="tabpanel" hidden>
+    <div class="panel">
+      <div class="panel-head">
+        <h2>Novo registo/compra</h2>
+        <p>Os campos extra mudam conforme o tipo de ativo.</p>
+      </div>
+      <form id="form" novalidate>
+        <div class="grid-form">
+          <div class="field">
+            <label for="f-categoria">Tipo de ativo</label>
+            <select id="f-categoria"></select>
+          </div>
+          <div class="field" id="campo-nome">
+            <label for="f-nome">Nome</label>
+            <input id="f-nome" type="text" list="lista-nome" autocomplete="off" placeholder="Ex.: MSCI World, Bitcoin, DP 6 meses">
+          </div>
+          <div class="field">
+            <label for="f-montante">Montante (€)</label>
+            <input id="f-montante" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0,00">
+          </div>
+          <div class="field">
+            <label for="f-data">Data</label>
+            <input id="f-data" type="date">
+          </div>
+          <div class="field" id="campo-origem">
+            <label for="f-origem">Origem do dinheiro</label>
+            <input id="f-origem" type="text" list="lista-origem" autocomplete="off" placeholder="Ex.: salário, explicações, cashback">
+          </div>
+
+          <!-- Campos que só aparecem em alguns tipos (data-cats). Ficam na mesma grelha, a seguir aos outros. -->
+          <div class="field" data-cats="etf reit cripto ouro" hidden>
+            <label for="f-subtipo">Tipo / tema</label>
+            <input id="f-subtipo" type="text" list="lista-subtipo" autocomplete="off" placeholder="Ex.: Geral, Bancos, Imobiliário">
+          </div>
+          <div class="field" data-cats="deposito" hidden>
+            <label for="f-prazo">Prazo</label>
+            <select id="f-prazo">
+              <option value="3">3 meses</option>
+              <option value="4">4 meses</option>
+              <option value="6" selected>6 meses</option>
+              <option value="9">9 meses</option>
+              <option value="12">1 ano</option>
+            </select>
+          </div>
+          <div class="field" data-cats="deposito" hidden>
+            <label for="f-vencimento">Data de vencimento</label>
+            <input id="f-vencimento" type="date">
+          </div>
+          <div class="field" data-cats="deposito" hidden>
+            <label for="f-juros">Juros recebidos (€)</label>
+            <input id="f-juros" type="number" step="0.01" min="0" placeholder="Preenche quando vencer">
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn" type="submit">Guardar registo</button>
+          <button class="btn ghost" type="reset">Limpar</button>
+          <p class="error" id="form-erro" role="alert"></p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== RENDIBILIDADE ===== -->
+  <section id="view-rendibilidade" role="tabpanel" hidden class="wrap">
+    <div class="aviso" id="rend-aviso" hidden>
+      <span>Os valores de rendibilidade que vês são <strong>de exemplo</strong>, para veres o gráfico a funcionar.</span>
+      <button class="btn ghost small" type="button" id="btn-apagar-rend-exemplo">Apagar valores de exemplo</button>
+    </div>
+
+    <div class="kpis" id="rend-kpis"></div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h2>Mapa dos investimentos</h2>
+        <p>Tamanho = quanto investiste · Cor = como está a correr</p>
+      </div>
+      <div class="mapa" id="rend-mapa"></div>
+      <div class="mapa-legenda">
+        <span>Perda</span><i style="background:var(--crit)"></i>
+        <i style="background:var(--surface-2)"></i>
+        <i style="background:color-mix(in srgb, var(--good) 45%, var(--surface))"></i>
+        <i style="background:var(--good)"></i><span>Ganho</span>
+        <span style="margin-left:auto">Cinzento = sem registo</span>
+      </div>
+    </div>
+
+    <!-- Lado a lado: à esquerda as barras (categoria ou tipo), à direita a evolução -->
+    <div class="lado-a-lado">
+      <div class="panel" id="rend-comparar"></div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Evolução da rendibilidade</h2>
+          <div class="chart-toolbar">
+            <label for="rend-filtro" class="muted">Mostrar</label>
+            <select id="rend-filtro"></select>
+          </div>
+        </div>
+        <div class="line-chart" id="rend-grafico"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== REGISTAR VENDA (página própria: vender é um ato diferente de registar uma compra) ===== -->
+  <section id="view-registar-venda" role="tabpanel" hidden class="wrap">
+    <div class="panel">
+      <div class="panel-head">
+        <h2 id="venda-form-titulo">Registar venda</h2>
+        <p>Vende-se sempre a posição inteira. A mais-valia é calculada sozinha.</p>
+      </div>
+      <form id="venda-form" novalidate>
+        <div class="grid-form">
+          <div class="field">
+            <label for="venda-ativo">Ativo vendido</label>
+            <select id="venda-ativo"></select>
+          </div>
+          <div class="field">
+            <label for="venda-data">Data da venda</label>
+            <input id="venda-data" type="date">
+          </div>
+          <div class="field">
+            <label for="venda-recebido">Valor recebido (€)</label>
+            <input id="venda-recebido" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0,00">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn" type="submit">Guardar venda</button>
+          <button class="btn ghost" type="button" id="btn-cancelar-venda">Cancelar</button>
+          <p class="error" id="venda-erro" role="alert"></p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== REGISTAR RENDIBILIDADE (página própria, como o "+ Novo registo") ===== -->
+  <section id="view-registar-rend" role="tabpanel" hidden class="wrap">
+    <div class="panel">
+      <div class="panel-head">
+        <h2 id="rend-form-titulo">Registar rendibilidade</h2>
+        <p>Consulta as corretoras e preenche só os ativos que quiseres. Valores negativos com "−".</p>
+      </div>
+      <form id="rend-form" novalidate>
+        <div class="grid-form">
+          <div class="field">
+            <label for="rend-data">Data da consulta</label>
+            <input id="rend-data" type="date">
+          </div>
+        </div>
+        <div id="rend-campos"></div>
+        <div class="form-actions">
+          <button class="btn" type="submit">Guardar rendibilidade</button>
+          <button class="btn ghost" type="button" id="btn-cancelar-rend">Cancelar</button>
+          <p class="error" id="rend-erro" role="alert"></p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== SEPARADORES POR CATEGORIA ===== -->
+  <section id="view-categoria" role="tabpanel" hidden class="wrap"></section>
+  </main>
+  </div>
+</div>
+
+<!-- Sugestões com os valores que já existem no histórico (preenchidas pelo JavaScript) -->
+<datalist id="lista-nome"></datalist>
+<datalist id="lista-origem"></datalist>
+<datalist id="lista-subtipo"></datalist>
+
+<div class="tooltip" id="tooltip" hidden></div>
+
+<!-- Barra de indicadores gerais (fixa em baixo) -->
+<footer class="barra-indicadores" aria-label="Indicadores gerais e os meus ativos">
+  <div class="ticker-estado" id="ticker-estado"></div>
+  <!-- A faixa leva o conteúdo 2 vezes seguidas: ao chegar a meio, recomeça sem se notar o salto -->
+  <div class="ticker"><div class="ticker-faixa" id="ticker-faixa"></div></div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+  // ---------- Categorias ----------
+  // A cor segue a categoria (nunca a posição), para ser igual em todos os gráficos.
+  const CATEGORIAS = {
+    deposito:   { nome: "Depósitos a prazo",       cor: "--c1",       risco: false, carteira: true },
+    emergencia: { nome: "Fundo de sobrevivência",  cor: "--c2",       risco: false, carteira: true, saldo: true },
+    ppr:        { nome: "PPR",                     cor: "--c3",       risco: true,  carteira: true },
+    etf:        { nome: "ETF's",                   cor: "--c4",       risco: true,  carteira: true },
+    cripto:     { nome: "Criptomoedas",            cor: "--c5",       risco: true,  carteira: true },
+    maneio:     { nome: "Fundo de maneio",         cor: "--c6",       risco: false, carteira: true, saldo: true },
+    ouro:       { nome: "Reserva de ouro digital", cor: "--c-outros", risco: true,  carteira: true, outros: true },
+    reit:       { nome: "REIT's",                  cor: "--c-outros", risco: true,  carteira: true, outros: true },
+    apoio:      { nome: "Dinheiro recebido do Estado", cor: "--c-outros", risco: false, carteira: false },
+    apoioUso:   { nome: "Dinheiro do Estado utilizado", cor: "--c-outros", risco: false, carteira: false },
+    venda:      { nome: "Venda de um investimento", cor: "--c-outros", risco: false, carteira: false },
+  };
+  // Categorias que entram na carteira (os depósitos a prazo ficam de fora)
+  const ORDEM = ["emergencia", "ppr", "etf", "cripto", "maneio", "ouro", "reit"];
+
+  // ---------- Dados iniciais (da folha de Excel) ----------
+  // ETF's, Cripto e REIT's: o total de cada ativo (da folha) dividido em várias compras
+  // SIMULADAS, para testar o acordeão. A soma das compras é igual ao valor da folha.
+  const COMPRAS_SIMULADAS = {
+    etf: {
+      "S&P 500": { subtipo: "Mercado - USA", compras: [
+        ["2024-03-15", 150, "Explicações"], ["2024-09-10", 192.3, "Explicações"],
+        ["2025-02-12", 400, "Explicações"], ["2025-06-18", 437.95, "Explicações"], ["2025-11-05", 400, "Explicações"]] },
+      "EUR STOXX Banks 30-15 DE": { subtipo: "Bancos", compras: [
+        ["2025-01-20", 300, "Juros bancários"], ["2025-05-14", 286.85, "Juros bancários"],
+        ["2025-07-02", 14.53, "Dividendos"], ["2025-09-15", 8.85, "Lucro ETF"], ["2026-01-10", 34.54, "Lucro ETF"]] },
+      "iShares Core MSCI World UCITS ETF USD (Acc)": { subtipo: "Mercado - Global", compras: [
+        ["2022-04-08", 200, "Explicações"], ["2022-10-21", 240, "Explicações"]] },
+      "FTSE All-World": { subtipo: "Mercado - Global", compras: [
+        ["2023-02-01", 100, "Trocos de universidade"], ["2023-06-15", 80, "Trocos de universidade"], ["2023-11-30", 100, "Trocos de universidade"]] },
+      "VanEck Quantum Computing UCITS ETF A": { subtipo: "Tecnologia quântica", compras: [
+        ["2026-03-31", 32.4, "Arredondamentos (roundup)"], ["2026-05-31", 35.1, "Arredondamentos (roundup)"], ["2026-07-31", 33, "Arredondamentos (roundup)"]] },
+    },
+    cripto: {
+      "Bitcoin": { subtipo: "Blockchain", compras: [
+        ["2024-11-15", 600, "Salário"], ["2025-04-22", 700, "Salário"], ["2026-01-10", 500, "Salário"]] },
+      "Ethereum": { subtipo: "Contratos inteligentes", compras: [
+        ["2025-01-10", 400, "Salário"], ["2025-10-03", 600, "Salário"]] },
+      "Solana": { subtipo: "Blockchain", compras: [
+        ["2025-03-10", 300, "Salário"], ["2026-06-17", 300, "Salário"]] },
+      "Bittensor": { subtipo: "Inteligência artificial", compras: [
+        ["2025-08-12", 250, "Salário"], ["2026-02-05", 200, "Salário"]] },
+      "Chainlink": { subtipo: "Oráculos", compras: [
+        ["2025-05-20", 200, "Salário"], ["2026-03-12", 200, "Salário"]] },
+      "Render": { subtipo: "Inteligência artificial", compras: [
+        ["2025-03-10", 60, "Salário"], ["2025-09-01", 60, "Salário"]] },
+      "Ondo": { subtipo: "Ativos reais (RWA)", compras: [
+        ["2025-06-15", 40, "Salário"], ["2026-04-02", 40, "Salário"]] },
+    },
+    reit: {
+      "Realty Income": { subtipo: "Retalho", compras: [
+        ["2026-01-15", 5, "Salário"], ["2026-04-15", 5, "Salário"]] },
+      "Invesco Real Estate S&P US Select Sector UCITS ETF": { subtipo: "Mercado - USA", compras: [
+        ["2026-01-15", 5, "Salário"], ["2026-04-15", 5, "Salário"]] },
+      "iShares US Property Yield UCITS ETF": { subtipo: "Mercado - USA", compras: [
+        ["2026-02-15", 4, "Salário"], ["2026-05-15", 3, "Salário"], ["2026-08-15", 3, "Salário"]] },
+      "iShares Developed Markets Property Yield UCITS ETF": { subtipo: "Mercado - Global", compras: [
+        ["2026-02-15", 5, "Salário"], ["2026-06-15", 5, "Salário"]] },
+      "iShares European Property Yield UCITS ETF": { subtipo: "Mercado - Europa", compras: [
+        ["2026-03-15", 4, "Salário"], ["2026-06-15", 3, "Salário"], ["2026-09-15", 3, "Salário"]] },
+    },
+  };
+  // Transforma a tabela acima em registos (um por compra)
+  function comprasSimuladas() {
+    return Object.entries(COMPRAS_SIMULADAS).flatMap(([categoria, ativos]) =>
+      Object.entries(ativos).flatMap(([nome, { subtipo, compras }]) =>
+        compras.map(([data, montante, origem]) => ({ categoria, nome, subtipo, data, montante, origem }))));
+  }
+
+  // ---------- PPR: plano de reforma (da folha de Excel) ----------
+  // Por ano: IRS + outros apoios + dinheiro pessoal = montante investido.
+  // "real" é o valor que o PPR tinha no fim desse ano (só para os anos que já passaram).
+  function planoPprInicial() {
+    const pessoalDe = (ano) => (ano <= 2025 ? 0 : ano === 2026 ? 500 : ano <= 2031 ? 2000 : ano <= 2046 ? 1750 : 1500);
+    const anos = [];
+    for (let ano = 2024; ano <= 2056; ano++) {
+      anos.push({ ano, governamental: 0, pessoal: pessoalDe(ano), real: null });
+    }
+    const conhecidos = { 2024: { governamental: 2000, real: 2031.23 }, 2025: { governamental: 2000, real: 4315.58 }, 2026: { governamental: 1500 } };
+    return {
+      taxa: 0.04,           // rendibilidade média anual
+      idadeInicial: 28,     // idade em 2024
+      estrategia: 'Dinheiro recebido de IRS será reinvestido no PPR do próprio ano + ajudas "pequenas" do Estado. Depois, completar com dinheiro do salário.',
+      emFalta: [
+        { descricao: "IRS 2024 retroativos", valor: 892.03 },
+        { descricao: "IRS 2021", valor: 48.83 },
+        { descricao: "IRS 2025", valor: 1343.32 },
+      ],
+      anos: anos.map((a) => ({ ...a, ...(conhecidos[a.ano] || {}) })),
+    };
+  }
+
+  // ---------- Ouro digital: plano do cashback em Bitcoin (da folha de Excel) ----------
+  // Por ano: cashback previsto (3 €/mês = 36 €/ano) e, quando o souberes, o cashback real
+  // e o valor real que o Bitcoin tinha no fim do ano.
+  function planoOuroInicial() {
+    const anos = [];
+    for (let ano = 2025; ano <= 2060; ano++) {
+      anos.push({ ano, previsto: ano === 2025 ? 59.35 : 36, cashback: null, real: null });
+    }
+    return { taxa: 0.2, anos };
+  }
+
+  // ---------- Dinheiro do Estado (da folha de Excel) ----------
+  // Funciona como um POTE: tudo o que é recebido entra no mesmo pote (apoio),
+  // e cada utilização tira dinheiro do pote (apoioUso). Por utilizar = recebido − utilizado.
+  function recebidoDoEstado() {
+    const recebidos = [
+      ["2020-12-01", "Outro apoio", 275],
+      ["2021-05-01", "IRS 2020", 392.06],
+      ["2022-05-01", "IRS 2021", 200.24],
+      ["2023-05-01", "IRS 2022", 954.57],
+      ["2024-05-01", "IRS 2023", 341.34],
+      ["2024-09-01", "Prémio qualificações", 1500],
+      ["2024-10-01", "Não cobrança do IRS", 185],
+      ["2024-11-01", "Não cobrança do IRS", 185],
+      ["2025-05-01", "IRS 2024", 520.35],
+      ["2025-08-01", "Não cobrança do IRS", 124],
+      ["2025-09-01", "Não cobrança do IRS", 165],
+      ["2026-01-01", "Retroativos IRS 2023", 706.26],
+      ["2026-01-01", "Retroativos IRS 2024", 892.03],
+      ["2026-05-01", "IRS 2025", 1343.12],
+    ].map(([data, nome, montante]) => ({ categoria: "apoio", data, nome, montante }));
+    const utilizados = [
+      ["2024-09-01", "Abate do crédito do carro", 1500],
+    ].map(([data, nome, montante]) => ({ categoria: "apoioUso", data, nome, montante }));
+    return [...recebidos, ...utilizados];
+  }
+
+  const BANCO_DP = "Juros Caixa Geral de Depósitos";
+  const DP = (vencimento, prazo, montante, juros, nome) => ({
+    categoria: "deposito", nome: nome || BANCO_DP,
+    montante, vencimento, prazo, data: vencimento, origem: "Fundo emergência", ...(juros ? { juros } : {}),
+  });
+  const EXEMPLO = [
+    { categoria: "emergencia", nome: "Fundo de sobrevivência", montante: 16700, data: "2026-09-30" },
+    { categoria: "maneio", nome: "Fundo de maneio", montante: 2500, data: "2026-09-30" },
+    ...comprasSimuladas(),
+    { categoria: "ouro", nome: "Bitcoin", montante: 49.37, origem: "Cashback Trade Republic", subtipo: "Reserva de ouro digital" },
+    ...recebidoDoEstado(),
+    // Depósitos a prazo: DP(vencimento, prazo em meses, montante, juros)
+    DP("2024-06-13", 6, 0, 53.22),
+    DP("2024-08-30", 3, 10242.75, 53.22),
+    DP("2024-10-12", 6, 1000, 10.98),
+    DP("2024-11-18", 3, 5000, 27.14),
+    DP("2024-11-25", 3, 3000, 16.29),
+    DP("2024-12-11", 6, 0, 4.18),
+    DP("2025-02-18", 3, 5068.12, 25.65),
+    DP("2025-02-25", 3, 3000, 15.18),
+    DP("2025-03-01", 6, 10354.4, 113.69),
+    DP("2025-05-18", 3, 4000, 11.75),
+    DP("2025-05-18", 3, 2000, 5.88),
+    DP("2025-05-29", 3, 10000, 29.73),
+    DP("2025-06-10", 6, 0, 4.72),
+    DP("2025-08-23", 3, 4000, 9.94),
+    DP("2025-08-23", 3, 2000, 4.97),
+    DP("2025-11-29", 6, 10000, 47.84),
+    DP("2025-12-08", 6, 0, 1.09),
+    DP("2025-12-31", 12, 0, 3.41, "Juros Trade Republic"),
+    DP("2025-12-31", 12, 0, 4.74, "Juros Trading 212"),
+    DP("2026-02-23", 6, 6000, 29.81),
+    DP("2026-04-23", 3, 700, 2.02),
+    DP("2026-05-23", 3, 6000, 16.02),
+    DP("2026-05-29", 6, 3000, 17.37),
+    DP("2026-05-29", 6, 7000, 34.21),
+    DP("2026-06-08", 6, 0, 5.16),
+    DP("2026-08-31", 3, 6000, 16.56),
+    DP("2027-01-05", 4, 6000, 0),
+    DP("2027-02-25", 9, 6700, 0),
+    DP("2027-03-01", 9, 4000, 0),
+  ];
+
+  // ---------- Rendibilidade de exemplo (valores inventados, para veres o gráfico) ----------
+  const CATS_RENDIBILIDADE = ["etf", "cripto", "ppr", "reit", "ouro"];
+  const DATAS_EXEMPLO = ["2026-06-30", "2026-07-31", "2026-08-31", "2026-09-28"];
+  const REND_EXEMPLO = {
+    "S&P 500": [96.4, 131.2, 118.7, 162.9],
+    "EUR STOXX Banks 30-15 DE": [58.1, 71.6, 66.0, 84.3],
+    "iShares Core MSCI World UCITS ETF USD (Acc)": [52.7, 61.9, 58.3, 70.4],
+    "FTSE All-World": [18.2, 22.5, 20.9, 26.1],
+    "VanEck Quantum Computing UCITS ETF A": [-8.4, 4.1, 12.7, 19.8],
+    "cripto:Bitcoin": [120.5, 188.3, 142.7, 215.4],
+    "Ethereum": [-35.2, 22.8, -12.4, 48.9],
+    "Solana": [44.1, 71.5, 38.2, 62.0],
+    "Bittensor": [-60.3, -22.7, 15.4, 58.6],
+    "Chainlink": [12.2, -8.5, 20.1, 31.7],
+    "Render": [-18.4, -9.1, -14.6, -6.2],
+    "Ondo": [5.3, 9.8, 2.1, -3.4],
+    "PPR": [142.0, 158.3, 151.9, 171.6],
+    "ouro:Bitcoin": [6.1, 8.4, 5.2, 7.9],
+    "Realty Income": [0.4, -0.3, 0.6, 0.9],
+    "Invesco Real Estate S&P US Select Sector UCITS ETF": [0.2, 0.5, -0.1, 0.7],
+    "iShares US Property Yield UCITS ETF": [-0.4, 0.1, 0.3, 0.6],
+    "iShares Developed Markets Property Yield UCITS ETF": [0.3, 0.4, 0.2, 0.5],
+    "iShares European Property Yield UCITS ETF": [-0.6, -0.2, -0.5, -0.3],
+  };
+  // Procura primeiro pela chave com categoria (ex.: "cripto:Bitcoin") e depois só pelo nome
+  const exemploDe = (p) => REND_EXEMPLO[chaveAtivo(p)] || REND_EXEMPLO[p.nome];
+  function rendibilidadesExemplo(registos) {
+    return posicoes(registos) // uma vez por posição, mesmo que tenha várias compras
+      .filter((r) => CATS_RENDIBILIDADE.includes(r.categoria) && exemploDe(r))
+      .flatMap((r) => exemploDe(r).map((valor, i) => ({
+        id: Math.random().toString(36).slice(2, 10), ativoId: chaveAtivo(r), data: DATAS_EXEMPLO[i], valor, exemplo: true,
+      })));
+  }
+
+  // ---------- Posições ----------
+  // Cada registo é uma COMPRA. As compras com o mesmo nome e categoria formam uma POSIÇÃO.
+  function chaveAtivo(r) {
+    return `${r.categoria}:${r.nome}`;
+  }
+  function posicoes(registos) {
+    const mapa = registos.reduce((acc, r) => {
+      const k = chaveAtivo(r);
+      const p = acc[k] || { id: k, categoria: r.categoria, nome: r.nome, subtipo: r.subtipo, montante: 0, compras: [] };
+      return { ...acc, [k]: { ...p, montante: p.montante + r.montante, compras: [...p.compras, r] } };
+    }, {});
+    return Object.values(mapa);
+  }
+
+  // ---------- Utilitários ----------
+  const euro = new Intl.NumberFormat("pt-PT", { style: "currency", currency: "EUR" });
+  const pct = new Intl.NumberFormat("pt-PT", { style: "percent", maximumFractionDigits: 1, minimumFractionDigits: 1 });
+  const formatarEuro = (v) => euro.format(v);
+  const formatarData = (iso) => (iso ? new Date(iso + "T00:00:00").toLocaleDateString("pt-PT") : "—");
+  const hojeISO = () => new Date().toISOString().slice(0, 10);
+  const diasAte = (iso) => Math.ceil((new Date(iso + "T00:00:00") - new Date(hojeISO() + "T00:00:00")) / 86400000);
+  const escapar = (t) => String(t ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const cor = (cat) => `var(${CATEGORIAS[cat].cor})`;
+  const idCampo = (texto) => texto.replace(/[^a-zA-Z0-9]/g, "_"); // texto seguro para usar num id HTML
+  const novoId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+
+  // ---------- Armazenamento (closure: os registos ficam privados) ----------
+  function criarCarteira() {
+    const CHAVE = "carteira-registos-v2";
+    let registos = [];
+    let exemplo = true;
+    let rendibilidades = null; // histórico: { ativoId, data, valor }
+    let ppr = null; // plano do PPR (taxa, anos, estratégia...)
+    let ouro = null; // plano do Ouro digital (cashback em Bitcoin)
+
+    try {
+      const guardado = JSON.parse(localStorage.getItem(CHAVE));
+      if (guardado && Array.isArray(guardado.registos)) {
+        registos = guardado.registos;
+        exemplo = guardado.exemplo;
+        if (Array.isArray(guardado.rendibilidades)) rendibilidades = guardado.rendibilidades;
+        if (guardado.ppr && Array.isArray(guardado.ppr.anos)) ppr = guardado.ppr;
+        if (guardado.ouro && Array.isArray(guardado.ouro.anos)) ouro = guardado.ouro;
+        // Migração (uma só vez): depósitos antigos passam a ter o nome do banco
+        if ((guardado.versao || 1) < 2) {
+          registos = registos.map((r) =>
+            r.categoria === "deposito" && !/Trade Republic|Trading 212/.test(r.nome) ? { ...r, nome: BANCO_DP } : r);
+        }
+        // Migração (uma só vez): apaga as linhas de juros futuros sem valor (31/12/2026)
+        if ((guardado.versao || 1) < 3) {
+          registos = registos.filter((r) => !(r.categoria === "deposito" && r.vencimento === "2026-12-31" && !r.montante && !r.juros));
+        }
+        // Migração (uma só vez): a rendibilidade passa a estar ligada à posição (ex.: "etf:S&P 500")
+        if ((guardado.versao || 1) < 6 && Array.isArray(rendibilidades)) {
+          rendibilidades = rendibilidades
+            .map((h) => {
+              if (String(h.ativoId).includes(":")) return h;
+              const r = registos.find((x) => x.id === h.ativoId);
+              return r ? { ...h, ativoId: chaveAtivo(r) } : null;
+            })
+            .filter(Boolean);
+        }
+        // Migração (uma só vez): volta a pôr os ETF's da folha que tenham sido apagados
+        if ((guardado.versao || 1) < 7) {
+          const existentes = new Set(registos.map(chaveAtivo));
+          const emFalta = EXEMPLO.filter((r) => r.categoria === "etf" && !existentes.has(chaveAtivo(r)));
+          registos = [...registos, ...emFalta.map((r) => ({ ...r, id: novoId() }))];
+        }
+        // Migração: cada ativo da folha (ETF's, Cripto, REIT's) que ainda tenha só a compra
+        // original passa a ter as compras simuladas (a soma fica igual)
+        if ((guardado.versao || 1) < 9) {
+          const simuladas = comprasSimuladas();
+          Object.entries(COMPRAS_SIMULADAS).forEach(([categoria, ativos]) => {
+            Object.entries(ativos).forEach(([nome, { compras }]) => {
+              const doAtivo = registos.filter((r) => r.categoria === categoria && r.nome === nome);
+              const soma = compras.reduce((s, c) => s + c[1], 0);
+              if (doAtivo.length === 1 && Math.abs(doAtivo[0].montante - soma) < 0.01) {
+                const novas = simuladas.filter((r) => r.categoria === categoria && r.nome === nome).map((r) => ({ ...r, id: novoId() }));
+                registos = [...registos.filter((r) => r !== doAtivo[0]), ...novas];
+              }
+            });
+          });
+        }
+        // Migração (uma só vez): novos tipos para os ETF's de mercado
+        if ((guardado.versao || 1) < 10) {
+          const novosTipos = {
+            "S&P 500": "Mercado - USA",
+            "iShares Core MSCI World UCITS ETF USD (Acc)": "Mercado - Global",
+            "FTSE All-World": "Mercado - Global",
+          };
+          registos = registos.map((r) => (r.categoria === "etf" && novosTipos[r.nome] ? { ...r, subtipo: novosTipos[r.nome] } : r));
+        }
+        // Migração (uma só vez): ativos sem nenhum registo de rendibilidade recebem os valores de exemplo
+        if ((guardado.versao || 1) < 11 && Array.isArray(rendibilidades)) {
+          const comHistorico = new Set(rendibilidades.map((h) => h.ativoId));
+          const emFalta = rendibilidadesExemplo(registos).filter((h) => !comHistorico.has(h.ativoId));
+          rendibilidades = [...rendibilidades, ...emFalta];
+        }
+        // Migração (uma só vez): troca "Render, Ondo" e "Variado" pelas 7 criptomoedas de exemplo
+        if ((guardado.versao || 1) < 12) {
+          const antigos = ["cripto:Render, Ondo", "cripto:Variado"];
+          registos = registos.filter((r) => !antigos.includes(chaveAtivo(r)));
+          if (Array.isArray(rendibilidades)) rendibilidades = rendibilidades.filter((h) => !antigos.includes(h.ativoId));
+          const existentes = new Set(registos.map(chaveAtivo));
+          const novas = comprasSimuladas().filter((r) => r.categoria === "cripto" && !existentes.has(chaveAtivo(r)));
+          registos = [...registos, ...novas.map((r) => ({ ...r, id: novoId() }))];
+          if (Array.isArray(rendibilidades)) {
+            const comHistorico = new Set(rendibilidades.map((h) => h.ativoId));
+            rendibilidades = [...rendibilidades,
+              ...rendibilidadesExemplo(registos).filter((h) => h.ativoId.startsWith("cripto:") && !comHistorico.has(h.ativoId))];
+          }
+        }
+        // Migração (uma só vez): REIT's com tipos diferentes e rendibilidade de exemplo para todos
+        if ((guardado.versao || 1) < 13) {
+          const tiposReit = Object.fromEntries(Object.entries(COMPRAS_SIMULADAS.reit).map(([nome, { subtipo }]) => [nome, subtipo]));
+          registos = registos.map((r) => (r.categoria === "reit" && tiposReit[r.nome] ? { ...r, subtipo: tiposReit[r.nome] } : r));
+          if (Array.isArray(rendibilidades)) {
+            const comHistorico = new Set(rendibilidades.map((h) => h.ativoId));
+            rendibilidades = [...rendibilidades,
+              ...rendibilidadesExemplo(registos).filter((h) => h.ativoId.startsWith("reit:") && !comHistorico.has(h.ativoId))];
+          }
+        }
+        // Migração (uma só vez): se ainda não houver dinheiro recebido do Estado, põe o da folha
+        if ((guardado.versao || 1) < 15 && !registos.some((r) => r.categoria === "apoio")) {
+          registos = [...registos, ...recebidoDoEstado().map((r) => ({ ...r, id: novoId() }))];
+        }
+        // Migração (uma só vez): o "valor utilizado" passa a ser um registo à parte (apoioUso)
+        if ((guardado.versao || 1) < 16) {
+          const usos = registos
+            .filter((r) => r.categoria === "apoio" && r.utilizado > 0)
+            .map((r) => ({ id: novoId(), categoria: "apoioUso", data: r.data, nome: r.destino || "Não indicado", montante: r.utilizado }));
+          registos = [
+            ...registos.map((r) => {
+              if (r.categoria !== "apoio") return r;
+              const { utilizado, destino, ...resto } = r; // tira os campos que passaram para o outro registo
+              return resto;
+            }),
+            ...usos,
+          ];
+        }
+        // Migração (uma só vez): no PPR, IRS + outros apoios passam a ser só "governamental"
+        if ((guardado.versao || 1) < 17 && ppr) {
+          ppr = {
+            ...ppr,
+            anos: ppr.anos.map(({ irs = 0, apoios = 0, ...resto }) => ({ ...resto, governamental: resto.governamental ?? irs + apoios })),
+          };
+        }
+        // Migração (uma só vez): as vendas antigas ("realizado", só com o ganho) dão lugar ao registo "venda"
+        if ((guardado.versao || 1) < 21) {
+          registos = registos.filter((r) => r.categoria !== "realizado");
+        }
+        // Migração (uma só vez): os fundos passam a ser saldos com data (conta o mais recente)
+        if ((guardado.versao || 1) < 20) {
+          registos = registos.map((r) => (["emergencia", "maneio"].includes(r.categoria) && !r.data ? { ...r, data: hojeISO() } : r));
+        }
+        // Migração (uma só vez): o fundo de emergência passa a "Fundo de sobrevivência", com 16 700 €
+        if ((guardado.versao || 1) < 19) {
+          const fundo = registos.find((r) => r.categoria === "emergencia");
+          registos = [
+            ...registos.filter((r) => r.categoria !== "emergencia"),
+            { ...(fundo || { id: novoId(), categoria: "emergencia" }), nome: "Fundo de sobrevivência", montante: 16700 },
+          ];
+        }
+        // Migração (uma só vez): a origem dos depósitos passa a "Fundo emergência"
+        if ((guardado.versao || 1) < 5) {
+          registos = registos.map((r) => (r.categoria === "deposito" && (!r.origem || r.origem === "Juros bancários") ? { ...r, origem: "Fundo emergência" } : r));
+        }
+        // Migração (uma só vez): o PLANO do PPR passa a ser a fonte. As utilizações "PPR" do pote passam para o
+        // governamental do plano, e apagam-se as compras de PPR e essas utilizações (agora são geradas pelo plano).
+        if ((guardado.versao || 1) < 22) {
+          const ePpr = (r) => r.categoria === "apoioUso" && r.nome.trim().toLowerCase() === "ppr";
+          const usoPorAno = registos.filter(ePpr).reduce((acc, r) => {
+            const ano = Number((r.data || "").slice(0, 4));
+            return { ...acc, [ano]: (acc[ano] || 0) + r.montante };
+          }, {});
+          if (ppr) ppr = { ...ppr, anos: ppr.anos.map((a) => (usoPorAno[a.ano] !== undefined ? { ...a, governamental: usoPorAno[a.ano] } : a)) };
+          registos = registos.filter((r) => r.categoria !== "ppr" && !ePpr(r));
+        }
+      }
+    } catch (e) { /* storage indisponível: usa o exemplo */ }
+
+    // PPR: o plano anual é a fonte. Estes registos NÃO se guardam: são gerados a partir do plano sempre que são
+    // precisos, para o PPR entrar nas contas como os outros investimentos. Só contam os anos até ao atual.
+    //   - uma "compra" de PPR por ano e por origem (governamental = Dinheiro do Estado; pessoal = Salário)
+    //   - uma utilização do pote do Estado com destino "PPR" (o dinheiro governamental desse ano)
+    function registosDoPpr() {
+      const anoAtual = new Date().getFullYear();
+      return ppr.anos.filter((a) => a.ano <= anoAtual).flatMap((a) => {
+        const data = `${a.ano}-12-31`;
+        const base = { categoria: "ppr", nome: "PPR", data, automatico: true };
+        return [
+          a.governamental > 0 && { ...base, id: `auto-ppr-g-${a.ano}`, montante: a.governamental, origem: "Dinheiro do Estado" },
+          a.pessoal > 0 && { ...base, id: `auto-ppr-p-${a.ano}`, montante: a.pessoal, origem: "Salário" },
+          a.governamental > 0 && { id: `auto-uso-${a.ano}`, categoria: "apoioUso", nome: "PPR", data, montante: a.governamental, automatico: true },
+        ].filter(Boolean);
+      });
+    }
+
+    // Rendibilidade do PPR, também gerada a partir do plano: em cada ano (até ao atual) com valor real escrito,
+    // rendibilidade = valor real − tudo o que se pôs até esse ano. A data é a do dia em que o valor foi escrito
+    // (ou o fim do ano, nos anos antigos).
+    function rendibilidadesDoPpr() {
+      const hoje = hojeISO();
+      const anoAtual = Number(hoje.slice(0, 4));
+      let acumulado = 0;
+      return ppr.anos.flatMap((a) => {
+        acumulado += (a.governamental || 0) + (a.pessoal || 0);
+        if (a.ano > anoAtual || a.real === null || a.real === undefined) return [];
+        const data = a.realData || `${a.ano}-12-31`;
+        return [{ id: `auto-rend-ppr-${a.ano}`, ativoId: "ppr:PPR", data: data > hoje ? hoje : data, valor: a.real - acumulado, automatico: true }];
+      });
+    }
+
+    // Rendibilidade do Ouro digital, gerada da mesma forma a partir do plano: em cada ano (até ao atual) com valor
+    // real escrito, rendibilidade = valor real − o que foi comprado em ouro digital até ao fim desse ano.
+    function rendibilidadesDoOuro() {
+      const hoje = hojeISO();
+      const anoAtual = Number(hoje.slice(0, 4));
+      const compras = registos.filter((r) => r.categoria === "ouro");
+      if (!compras.length) return [];
+      const chave = chaveAtivo(compras[0]); // ex.: "ouro:Bitcoin"
+      return ouro.anos.flatMap((a) => {
+        if (a.ano > anoAtual || a.real === null || a.real === undefined) return [];
+        const investido = compras.filter((r) => !r.data || r.data <= `${a.ano}-12-31`).reduce((s, r) => s + r.montante, 0);
+        const data = a.realData || `${a.ano}-12-31`;
+        return [{ id: `auto-rend-ouro-${a.ano}`, ativoId: chave, data: data > hoje ? hoje : data, valor: a.real - investido, automatico: true }];
+      });
+    }
+
+    if (registos.length === 0 && exemplo) registos = EXEMPLO.map((r) => ({ ...r, id: novoId() }));
+    if (ppr === null) ppr = planoPprInicial();
+    if (rendibilidades === null) rendibilidades = rendibilidadesExemplo([...registos, ...registosDoPpr()]);
+    if (ouro === null) ouro = planoOuroInicial();
+
+    const guardar = () => {
+      try { localStorage.setItem(CHAVE, JSON.stringify({ versao: 22, registos, exemplo, rendibilidades, ppr, ouro })); } catch (e) {}
+    };
+    guardar();
+
+    return {
+      todos: () => [...registos, ...registosDoPpr()], // os do PPR são gerados a partir do plano
+      eExemplo: () => exemplo,
+      adicionar(registo) {
+        registos = [...registos, { ...registo, id: novoId() }];
+        exemplo = false;
+        guardar();
+      },
+      // Cria um objeto novo com as alterações (não altera o original)
+      atualizar(id, alteracoes) {
+        registos = registos.map((r) => (r.id === id ? { ...r, ...alteracoes } : r));
+        exemplo = false;
+        guardar();
+      },
+      remover(id) {
+        const registo = registos.find((r) => r.id === id);
+        registos = registos.filter((r) => r.id !== id);
+        // Apagar uma venda desfaz a venda: as compras e as rendibilidades voltam para a carteira
+        if (registo?.categoria === "venda") {
+          registos = [...registos, ...registo.compras];
+          rendibilidades = [...rendibilidades, ...(registo.rendibilidades || [])];
+        }
+        exemplo = false;
+        guardar();
+      },
+      // Vender uma posição INTEIRA (ex.: "cripto:Solana"). As compras E as rendibilidades dessa posição saem da
+      // carteira e ficam guardadas dentro do registo da venda. Assim:
+      //   - se voltares a comprar o mesmo ativo, a posição nova começa do zero (sem herdar rendibilidades antigas);
+      //   - a venda pode ser desfeita, e o histórico não se perde.
+      vender(chave, data, recebido) {
+        const compras = registos.filter((r) => chaveAtivo(r) === chave);
+        if (!compras.length) return;
+        const investido = compras.reduce((s, r) => s + r.montante, 0);
+        const rendDaPosicao = rendibilidades.filter((h) => h.ativoId === chave);
+        const venda = { id: novoId(), categoria: "venda", nome: compras[0].nome, categoriaAtivo: compras[0].categoria,
+          data, recebido, investido, compras, rendibilidades: rendDaPosicao };
+        registos = [...registos.filter((r) => chaveAtivo(r) !== chave), venda];
+        rendibilidades = rendibilidades.filter((h) => h.ativoId !== chave);
+        exemplo = false;
+        guardar();
+      },
+      repor() {
+        registos = EXEMPLO.map((r) => ({ ...r, id: novoId() }));
+        exemplo = true;
+        ppr = planoPprInicial();
+        rendibilidades = rendibilidadesExemplo([...registos, ...registosDoPpr()]);
+        ouro = planoOuroInicial();
+        guardar();
+      },
+      // PPR
+      ppr: () => ({ ...ppr, anos: [...ppr.anos] }),
+      atualizarPpr(alteracoes) {
+        ppr = { ...ppr, ...alteracoes };
+        guardar();
+      },
+      atualizarAnoPpr(ano, alteracoes) {
+        ppr = { ...ppr, anos: ppr.anos.map((a) => (a.ano === ano ? { ...a, ...alteracoes } : a)) };
+        guardar();
+      },
+      // Ouro digital (mesma ideia do PPR)
+      ouro: () => ({ ...ouro, anos: [...ouro.anos] }),
+      atualizarOuro(alteracoes) {
+        ouro = { ...ouro, ...alteracoes };
+        guardar();
+      },
+      atualizarAnoOuro(ano, alteracoes) {
+        ouro = { ...ouro, anos: ouro.anos.map((a) => (a.ano === ano ? { ...a, ...alteracoes } : a)) };
+        guardar();
+      },
+      // A rendibilidade do PPR e do Ouro não se regista: vem do plano anual (ver rendibilidadesDoPpr / DoOuro)
+      rendibilidades: () => [
+        ...rendibilidades.filter((h) => !h.ativoId.startsWith("ppr:") && !h.ativoId.startsWith("ouro:")),
+        ...rendibilidadesDoPpr(), ...rendibilidadesDoOuro(),
+      ],
+      adicionarRendibilidades(lista) {
+        rendibilidades = [...rendibilidades, ...lista.map((r) => ({ ...r, id: novoId() }))];
+        guardar();
+      },
+      atualizarRendibilidade(id, alteracoes) {
+        rendibilidades = rendibilidades.map((r) => (r.id === id ? { ...r, ...alteracoes } : r));
+        guardar();
+      },
+      removerRendibilidade(id) {
+        rendibilidades = rendibilidades.filter((r) => r.id !== id);
+        guardar();
+      },
+      removerRendibilidadesExemplo() {
+        rendibilidades = rendibilidades.filter((r) => !r.exemplo);
+        guardar();
+      },
+    };
+  }
+  const carteira = criarCarteira();
+
+  // Um depósito só conta para a carteira enquanto não vencer
+  const valorAtual = (r) => (r.categoria === "deposito" ? (diasAte(r.vencimento) >= 0 ? r.montante : 0) : r.montante);
+
+  // Fundos (sobrevivência, maneio): cada registo é o SALDO numa data. Conta só o mais recente.
+  // Do mais recente para o mais antigo. No mesmo dia, ganha o último que foi inserido:
+  // o reverse() põe os últimos inseridos primeiro, e o sort mantém essa ordem quando as datas são iguais.
+  const saldosDe = (cat) => carteira.todos().filter((r) => r.categoria === cat)
+    .reverse()
+    .sort((a, b) => (b.data || "").localeCompare(a.data || ""));
+  const saldoAtual = (cat) => saldosDe(cat)[0]?.montante ?? 0;
+
+  function totaisPorCategoria() {
+    const totais = carteira.todos().reduce((acc, r) => {
+      const info = CATEGORIAS[r.categoria];
+      if (!info.carteira || info.saldo) return acc; // os fundos tratam-se em baixo
+      acc[r.categoria] = (acc[r.categoria] || 0) + valorAtual(r);
+      return acc;
+    }, {});
+    Object.keys(CATEGORIAS).filter((c) => CATEGORIAS[c].saldo).forEach((c) => { totais[c] = saldoAtual(c); });
+    return totais;
+  }
+
+  // ---------- Separadores ----------
+  const views = {
+    dashboard: document.getElementById("view-dashboard"),
+    novo: document.getElementById("view-novo"),
+    categoria: document.getElementById("view-categoria"),
+    rendibilidade: document.getElementById("view-rendibilidade"),
+    registarRend: document.getElementById("view-registar-rend"),
+    registarVenda: document.getElementById("view-registar-venda"),
+  };
+  let tabAtual = "dashboard";
+  try { tabAtual = localStorage.getItem("carteira-tab") || "dashboard"; } catch (e) {}
+  if (location.hash && document.querySelector(`[data-tab="${location.hash.slice(1)}"]`)) tabAtual = location.hash.slice(1);
+
+  // Os formulários lembram-se da página de onde vieste, para voltares lá depois de guardar
+  const FORMULARIOS = ["novo", "registar-rend", "registar-venda"];
+  let paginaAntesDoFormulario = null;
+
+  function mostrarTab(tab) {
+    if (FORMULARIOS.includes(tab) && !FORMULARIOS.includes(tabAtual)) paginaAntesDoFormulario = tabAtual;
+    if (tab !== "registar-rend") categoriaFormRend = null; // ao sair do formulário, deixa de filtrar
+    if (tab !== "registar-venda") categoriaFormVenda = null;
+    tabAtual = tab;
+    emEdicao = null; // ao mudar de separador, sai do modo de edição
+    try { localStorage.setItem("carteira-tab", tab); } catch (e) {}
+    document.querySelectorAll(".tab").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === tab)));
+    // Acordeão do menu: abre o grupo onde está o separador atual (e fecha os outros)
+    document.querySelectorAll(".menu-grupo").forEach((grupo) => {
+      const temTab = [...grupo.querySelectorAll("[data-tab]")].some((b) => b.dataset.tab === tab);
+      grupo.classList.toggle("aberto", temTab);
+    });
+    views.dashboard.hidden = tab !== "dashboard";
+    views.novo.hidden = tab !== "novo";
+    views.rendibilidade.hidden = tab !== "rendibilidade";
+    views.registarRend.hidden = tab !== "registar-rend";
+    views.registarVenda.hidden = tab !== "registar-venda";
+    views.categoria.hidden = ["dashboard", "novo", "rendibilidade", "registar-rend", "registar-venda"].includes(tab);
+    esconderTooltip();
+    renderizar();
+  }
+  // Só os botões com data-tab mudam de separador (os "+ Registar…" têm o seu próprio clique)
+  document.querySelectorAll(".tab[data-tab]").forEach((b) => b.addEventListener("click", () => mostrarTab(b.dataset.tab)));
+
+  // ---------- Gráfico circular (SVG) ----------
+  const tooltip = document.getElementById("tooltip");
+  function esconderTooltip() { tooltip.hidden = true; }
+
+  function arco(cx, cy, rExt, rInt, a0, a1) {
+    const p = (r, a) => [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+    const grande = a1 - a0 > Math.PI ? 1 : 0;
+    const [x0, y0] = p(rExt, a0), [x1, y1] = p(rExt, a1);
+    const [x2, y2] = p(rInt, a1), [x3, y3] = p(rInt, a0);
+    return `M${x0} ${y0} A${rExt} ${rExt} 0 ${grande} 1 ${x1} ${y1} L${x2} ${y2} A${rInt} ${rInt} 0 ${grande} 0 ${x3} ${y3}Z`;
+  }
+
+  // Máximo de 6 fatias: as categorias pequenas juntam-se em "Outros"
+  function fatias(totais, categorias) {
+    const lista = [];
+    let outros = 0;
+    categorias.forEach((c) => {
+      const v = totais[c] || 0;
+      if (v <= 0) return;
+      if (CATEGORIAS[c].outros) outros += v;
+      else lista.push({ nome: CATEGORIAS[c].nome, valor: v, cor: cor(c) });
+    });
+    const outrosFatia = outros > 0 ? [{ nome: "Outros (ouro, REIT's)", valor: outros, cor: "var(--c-outros)" }] : [];
+    return lista.sort((a, b) => b.valor - a.valor).concat(outrosFatia); // do maior para o menor; "Outros" no fim
+  }
+
+  function desenharDonut(contentor, dados, rotulo) {
+    const total = dados.reduce((s, d) => s + d.valor, 0);
+    if (total === 0) {
+      contentor.innerHTML = `<p class="empty">Ainda não há registos para este gráfico.</p>`;
+      return;
+    }
+    let angulo = -Math.PI / 2;
+    const paths = dados.map((d, i) => {
+      const fatia = (d.valor / total) * Math.PI * 2;
+      const fim = angulo + (fatia >= Math.PI * 2 ? fatia - 0.0001 : fatia);
+      const path = `<path d="${arco(100, 100, 92, 60, angulo, fim)}" fill="${d.cor}" data-i="${i}"></path>`;
+      angulo += fatia;
+      return path;
+    }).join("");
+
+    contentor.innerHTML = `
+      <svg class="donut" viewBox="0 0 200 200" role="img" aria-label="${escapar(rotulo)}">
+        ${paths}
+        <text class="center-l" x="100" y="94" text-anchor="middle">TOTAL</text>
+        <text class="center-v" x="100" y="114" text-anchor="middle">${formatarEuro(total).replace(/,\d\d/, "")}</text>
+      </svg>
+      <ul class="legend">
+        ${dados.map((d) => `
+          <li><span class="sw" style="background:${d.cor}"></span><span>${escapar(d.nome)}</span>
+          <span class="v num">${formatarEuro(d.valor)}</span><span class="p num">${pct.format(d.valor / total)}</span></li>`).join("")}
+      </ul>`;
+
+    const svg = contentor.querySelector("svg");
+    svg.querySelectorAll("path").forEach((p) => {
+      p.addEventListener("pointermove", (e) => {
+        const d = dados[p.dataset.i];
+        svg.classList.add("hovering");
+        svg.querySelectorAll("path").forEach((q) => q.classList.toggle("on", q === p));
+        tooltip.innerHTML = `<b>${escapar(d.nome)}</b>${formatarEuro(d.valor)} · ${pct.format(d.valor / total)}`;
+        tooltip.hidden = false;
+        const x = Math.min(e.clientX + 14, window.innerWidth - tooltip.offsetWidth - 8);
+        tooltip.style.left = x + window.scrollX + "px";
+        tooltip.style.top = e.clientY + window.scrollY + 14 + "px";
+      });
+      p.addEventListener("pointerleave", () => {
+        svg.classList.remove("hovering");
+        esconderTooltip();
+      });
+    });
+  }
+
+  // ---------- Separador Carteira (o antigo dashboard) ----------
+  function renderizarDashboard() {
+    const totais = totaisPorCategoria();
+    const catsCarteira = ORDEM; // os depósitos a prazo não contam para a carteira
+    const catsRisco = ORDEM.filter((c) => CATEGORIAS[c].risco);
+
+    const soma = (cats) => cats.reduce((s, c) => s + (totais[c] || 0), 0);
+    const totalCarteira = soma(catsCarteira);
+    const totalRisco = soma(catsRisco);
+
+    // Onde está o dinheiro: fundo de sobrevivência + fundo de maneio + investimentos = carteira
+    const parte = (v) => (totalCarteira ? pct.format(v / totalCarteira) : "—");
+    const card = (nome, valor, sub = `${parte(valor)} da carteira`, classe = "") => `
+      <div class="kpi ${classe}"><span class="label">${nome}</span>
+        <span class="value num">${formatarEuro(valor)}</span>
+        <span class="sub">${sub}</span></div>`;
+    document.getElementById("kpis").innerHTML =
+      card("Carteira", totalCarteira, "Sem depósitos a prazo", "hero") +
+      card(CATEGORIAS.emergencia.nome, totais.emergencia || 0) +
+      card(CATEGORIAS.maneio.nome, totais.maneio || 0) +
+      card("Investimentos", totalRisco);
+    desenharDonut(document.getElementById("chart-risco"), fatias(totais, catsRisco), "Investimentos por categoria");
+    // Por tipo: as posições de todos os investimentos, agrupadas pelo tipo (reutiliza o fatiasPor dos ETF's).
+    // Quem não tem tipo (ex.: PPR) aparece com o nome da categoria.
+    const comprasInvest = carteira.todos().filter((r) => catsRisco.includes(r.categoria));
+    const posicoesInvest = posicoes(comprasInvest);
+    desenharDonut(document.getElementById("chart-risco-tipo"),
+      fatiasPor(posicoesInvest, (p) => p.subtipo || CATEGORIAS[p.categoria].nome), "Investimentos por tipo");
+    // Por origem: cada compra tem a sua origem (salário, explicações…), por isso agrupa as compras e não as posições
+    desenharDonut(document.getElementById("chart-risco-origem"),
+      fatiasPor(comprasInvest, (r) => r.origem || "Sem origem indicada"), "Investimentos por origem");
+  }
+
+  // ---------- Botão "+ Novo registo" (reutilizável) ----------
+  // Mesmo aspeto do botão da barra principal. Abre o formulário já com o tipo escolhido.
+  function botaoNovoRegisto(categoria, texto = "+ Novo registo/compra") {
+    return `<button class="tab primary" type="button" data-novo-registo="${categoria}">${texto}</button>`;
+  }
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-novo-registo]");
+    if (!btn) return;
+    mostrarTab("novo");
+    selCategoria.value = btn.dataset.novoRegisto;
+    atualizarCampos();
+    atualizarSugestoes(selCategoria.value);
+  });
+
+  // ---------- Separadores por categoria ----------
+  let emEdicao = null; // id da linha que está a ser editada (só uma de cada vez)
+  const abertos = new Set(); // posições com as compras abertas (acordeão)
+  let agrupBarras = "ativo"; // gráfico de rendibilidade por "ativo" ou por "tipo" (fica lembrado)
+  try { agrupBarras = localStorage.getItem("carteira-agrup-barras") || "ativo"; } catch (e) {}
+  let modoBarras = "pct"; // gráfico de rendibilidade em "pct" ou "eur" (fica lembrado)
+  try { modoBarras = localStorage.getItem("carteira-modo-barras") || "pct"; } catch (e) {}
+
+  // Apagar em dois cliques: o 1.º clique "arma" o botão (✕ passa a ✓), o 2.º apaga.
+  // Devolve true no 1.º clique (ainda não é para apagar). Usado em todas as tabelas.
+  function primeiroCliqueApagar(btn) {
+    if (btn.classList.contains("armed")) return false;
+    btn.classList.add("armed");
+    btn.textContent = "✓";
+    btn.title = "Clica outra vez para apagar";
+    setTimeout(() => { btn.classList.remove("armed"); btn.textContent = "✕"; btn.title = "Apagar"; }, 3500);
+    return true;
+  }
+
+  // Coluna de ações, igual em todas as tabelas: ✎ (editar) + ✕ (apagar),
+  // ou só "Guardar" quando a linha está em edição
+  function acoes(r, { apagar = true } = {}) {
+    if (r.id === emEdicao) {
+      return `<div class="acoes"><button class="btn small" type="button" data-guardar="${r.id}">Guardar</button></div>`;
+    }
+    return `<div class="acoes">
+      <button class="btn-icone" type="button" data-editar="${r.id}" title="Editar" aria-label="Editar">✎</button>
+      ${apagar ? `<button class="btn-icone perigo" type="button" data-apagar="${r.id}" title="Apagar" aria-label="Apagar">✕</button>` : ""}</div>`;
+  }
+
+  // Célula reutilizável: mostra o valor normal, ou um campo editável se a linha estiver em edição
+  function celula(r, campo, tipo, textoNormal, classe = "") {
+    if (r.id !== emEdicao) return `<td class="${classe}">${textoNormal}</td>`;
+    const valor = r[campo] ?? "";
+    const extra = tipo === "number" ? ` step="0.01" inputmode="decimal"`
+      : CAMPOS_SUGESTAO.includes(campo) ? ` list="lista-${campo}" autocomplete="off"` : "";
+    return `<td class="${classe}"><input class="cell-input" data-campo="${campo}" type="${tipo}"${extra} value="${escapar(valor)}" aria-label="${campo}"></td>`;
+  }
+
+  function celulaPrazo(r) {
+    const texto = r.prazo === 12 ? "1 ano" : r.prazo + " meses";
+    if (r.id !== emEdicao) return `<td>${texto}</td>`;
+    const opcoes = [3, 4, 6, 9, 12].map((p) => `<option value="${p}"${p === r.prazo ? " selected" : ""}>${p === 12 ? "1 ano" : p + " meses"}</option>`).join("");
+    return `<td><select class="cell-input" data-campo="prazo" aria-label="prazo">${opcoes}</select></td>`;
+  }
+
+  const vazio = `<span class="muted">—</span>`;
+
+  function resumoPorAno(registos, campoData, valor) {
+    const porAno = registos.reduce((acc, r) => {
+      const ano = (r[campoData] || "").slice(0, 4);
+      if (!ano) return acc;
+      acc[ano] = (acc[ano] || 0) + valor(r);
+      return acc;
+    }, {});
+    const total = Object.values(porAno).reduce((s, v) => s + v, 0);
+    return `<div class="years">
+      <div class="year destaque"><span>TOTAL</span><strong class="num">${formatarEuro(total)}</strong></div>
+      ${Object.keys(porAno).sort().map((a) => `<div class="year"><span>${a}</span><strong class="num">${formatarEuro(porAno[a])}</strong></div>`).join("")}
+    </div>`;
+  }
+
+  // ---------- PPR ----------
+  // ---------- Planos anuais (reutilizado pelo PPR e pelo Ouro digital) ----------
+  // Calcula as duas projeções, ano a ano:
+  //  - previsão inicial: valor do ano anterior × (1 + taxa) + montante do ano
+  //  - real / previsão: usa o valor real quando existe; senão projeta a partir do anterior
+  // montanteDe(ano) diz quanto entra nesse ano; prefixo serve para o id das linhas ("ppr-2027").
+  function projetarPlano(anos, taxa, montanteDe, prefixo) {
+    let previsao = 0;
+    let real = 0;
+    let acumulado = 0;
+    return anos.map((a, i) => {
+      const montante = montanteDe(a);
+      const eReal = a.real !== null && a.real !== undefined;
+      acumulado += montante;
+      previsao = i === 0 ? montante : previsao * (1 + taxa) + montante;
+      real = eReal ? a.real : i === 0 ? montante : real * (1 + taxa) + montante;
+      return { ...a, id: `${prefixo}-${a.ano}`, montante, acumulado, previsao, realOuPrevisao: real, eReal };
+    });
+  }
+
+  // PPR: entra o dinheiro governamental + o pessoal (os dois escritos no plano anual)
+  function calcularPpr(plano) {
+    const anos = plano.anos.map((a, i) => ({ ...a, idade: plano.idadeInicial + i, governamental: a.governamental || 0 }));
+    return projetarPlano(anos, plano.taxa, (a) => a.governamental + a.pessoal, "ppr");
+  }
+
+  // Dinheiro do Estado ainda por utilizar = recebido − utilizado (o utilizado já inclui o que foi para o PPR)
+  const porUtilizarEstado = () => {
+    const soma = (cat) => carteira.todos().filter((r) => r.categoria === cat).reduce((s, r) => s + r.montante, 0);
+    return soma("apoio") - soma("apoioUso");
+  };
+
+  // Ouro digital: entra o cashback (o real, se já o souberes; senão o previsto)
+  function calcularOuro(plano) {
+    const cashbackDe = (a) => (a.cashback !== null && a.cashback !== undefined ? a.cashback : a.previsto);
+    return projetarPlano(plano.anos, plano.taxa, cashbackDe, "ouro");
+  }
+
+  // Rendibilidade de um ano do plano (PPR e Ouro): quanto vale − o que puseste até aí, em € e em %
+  // Até o ano fechar (ano atual e seguintes) é só uma previsão: fica a amarelo. Nos anos fechados: verde ou vermelho.
+  //   - acumulada: quanto vale − tudo o que puseste até esse ano
+  //   - do ano:    o que o dinheiro rendeu SÓ nesse ano = valor no fim − valor no fim do ano anterior − o que puseste nesse ano
+  //                (a % é sobre o que lá estava: valor do ano anterior + o que puseste; compara-se com a taxa do plano)
+  function celulasRendPlano(a, anterior) {
+    const fase = faseDoAno(a.ano);
+    const classeDe = (v) => (fase === "atual" ? "valor-projetado" : fase === "futuro" ? "muted" : v >= 0 ? "up" : "down");
+    const pctDe = (v, base) => (base ? (v >= 0 ? "+" : "") + pct.format(v / base) : "—");
+    const celulas = (v, base) => `<td class="r num ${classeDe(v)}">${comSinal(v)}</td><td class="r num ${classeDe(v)}">${pctDe(v, base)}</td>`;
+
+    const acumulada = a.realOuPrevisao - a.acumulado;
+    const valorAntes = anterior ? anterior.realOuPrevisao : 0;
+    const doAno = a.realOuPrevisao - valorAntes - a.montante;
+    return celulas(acumulada, a.acumulado) + celulas(doAno, valorAntes + a.montante);
+  }
+
+  // Cores dos planos (PPR e Ouro), conforme o ano:
+  //   anos fechados → verde (real) · ano atual → amarelo (ainda a decorrer) · anos seguintes → cinzento (só previsão)
+  // Quando o ano muda, as cores mudam sozinhas (2026 passa a verde, 2027 a amarelo).
+  function faseDoAno(ano) {
+    const atual = new Date().getFullYear();
+    return ano < atual ? "fechado" : ano === atual ? "atual" : "futuro";
+  }
+
+  // Cor do valor na coluna "Real / previsão"
+  function classeReal(a) {
+    const fase = faseDoAno(a.ano);
+    if (fase === "futuro") return "muted";
+    if (fase === "atual") return "valor-projetado";
+    return a.eReal ? "valor-real" : "valor-projetado"; // ano fechado sem valor real escrito: fica a amarelo (falta escrever)
+  }
+
+  function renderizarPpr(el) {
+    const plano = carteira.ppr();
+    const anos = calcularPpr(plano);
+    const ultimo = anos[anos.length - 1];
+    const soma = (campo) => anos.reduce((s, a) => s + a[campo], 0);
+    const governamental = soma("governamental"), pessoal = soma("pessoal");
+    const porUtilizarPote = porUtilizarEstado();
+    const anoAtual = new Date().getFullYear();
+
+    el.innerHTML = `
+      <!-- Só os 4 cards de investimento: os números do plano já estão no painel "Resumo" -->
+      <div class="kpis">${cardsInvestimento(posicoes(carteira.todos().filter((r) => r.categoria === "ppr")), historicoValido())}</div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>Projeção até aos ${ultimo.idade} anos</h2></div>
+        <div class="line-chart" id="ppr-grafico"></div>
+      </div>
+
+      <div class="two">
+        <div class="panel">
+          <div class="panel-head"><h2>Origem do dinheiro</h2></div>
+          <div class="donut-wrap" id="ppr-origem"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h2>Resumo</h2></div>
+          <dl class="resumo-lista">
+            <div class="forte"><dt>Dinheiro do Estado</dt><dd class="num">${formatarEuro(governamental)}</dd></div>
+            <div><dt>Dinheiro pessoal a investir</dt><dd class="num">${formatarEuro(pessoal)}</dd></div>
+            <div class="forte"><dt>Total a investir</dt><dd class="num">${formatarEuro(governamental + pessoal)}</dd></div>
+            <div><dt><label for="ppr-taxa">Rendibilidade média anual</label></dt>
+              <dd><input id="ppr-taxa" class="cell-input" type="number" step="0.1" value="${Math.round(plano.taxa * 1000) / 10}"> %</dd></div>
+            <div><dt>Perspetiva de rendimento teórica</dt><dd class="num">${formatarEuro(ultimo.previsao)}</dd></div>
+            <div class="forte"><dt>Perspetiva de rendimento real</dt><dd class="num">${formatarEuro(ultimo.realOuPrevisao)}</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="two">
+        <div class="panel">
+          <div class="panel-head"><h2>Estratégia</h2></div>
+          <p class="texto">${escapar(plano.estrategia)}</p>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h2>Dinheiro do Estado por utilizar</h2></div>
+          <p class="valor-grande num">${formatarEuro(porUtilizarPote)}</p>
+          <p class="texto">Está no pote, no separador <strong>Dinheiro recebido do Estado</strong>. Para o aplicar no PPR, escreve-o na coluna <strong>Dinheiro do Estado</strong> do plano anual: sai do pote sozinho (até ao ano atual).</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>Plano anual</h2><p>O valor que o PPR tem agora escreve-se na coluna Real / previsão do ano atual (✎)</p></div>
+        <div class="table-scroll table-alta"><table>
+          <thead><tr><th>Ano · idade</th><th class="r puseste">Estado</th><th class="r puseste">Pessoal</th><th class="r puseste">Total</th><th class="r puseste">Acumulado</th>
+            <th class="r">Plano inicial</th><th class="r">Real / previsão</th><th class="r">Rend. acumulada</th><th class="r">% acum.</th><th class="r">Rend. do ano</th><th class="r">% do ano</th><th></th></tr></thead>
+          <tbody>${anos.map((a, i) => `<tr class="${a.ano === anoAtual ? "ano-atual" : ""}">
+            <td class="num nowrap">${a.ano} <span class="muted">· ${a.idade} anos</span></td>
+            ${celula(a, "governamental", "number", a.governamental ? formatarEuro(a.governamental) : vazio, "r num puseste")}
+            ${celula(a, "pessoal", "number", a.pessoal ? formatarEuro(a.pessoal) : vazio, "r num puseste")}
+            <td class="r num puseste">${formatarEuro(a.montante)}</td>
+            <td class="r num puseste">${formatarEuro(a.acumulado)}</td>
+            <td class="r num muted">${formatarEuro(a.previsao)}</td>
+            ${celula(a, "real", "number", `<span class="${classeReal(a)}">${formatarEuro(a.realOuPrevisao)}</span>`, "r num")}
+            ${celulasRendPlano(a, anos[i - 1])}
+            <td class="r">${acoes(a, { apagar: false })}</td></tr>`).join("")}</tbody>
+        </table></div>
+      </div>`;
+
+    // Gráfico de linhas: plano inicial vs real (reutiliza o desenharLinhas)
+    desenharLinhas(el.querySelector("#ppr-grafico"), [
+      { nome: "Previsão inicial", cor: "var(--c1)", pontos: anos.map((a) => ({ data: `${a.ano}-01-01`, valor: a.previsao })) },
+      { nome: "Real / previsão", cor: "var(--c2)", pontos: anos.map((a) => ({ data: `${a.ano}-01-01`, valor: a.realOuPrevisao })) },
+    ], { porAno: true, sinal: false });
+
+    // Gráfico circular: dinheiro governamental vs salarial (reutiliza o desenharDonut)
+    desenharDonut(el.querySelector("#ppr-origem"), [
+      { nome: "Dinheiro do Estado", valor: governamental, cor: "var(--c1)" },
+      { nome: "Dinheiro salarial", valor: pessoal, cor: "var(--c2)" },
+    ], "Origem do dinheiro investido no PPR");
+
+    // Mudar a taxa recalcula tudo
+    el.querySelector("#ppr-taxa").addEventListener("change", (e) => {
+      const valor = parseFloat(e.target.value);
+      if (Number.isNaN(valor)) return;
+      carteira.atualizarPpr({ taxa: valor / 100 });
+      mostrarToast(`Rendibilidade média alterada para ${valor} %`);
+      renderizar();
+    });
+  }
+
+  // ---------- Ouro digital (mesma estrutura do PPR) ----------
+  function renderizarOuro(el) {
+    const plano = carteira.ouro();
+    const anos = calcularOuro(plano);
+    const ultimo = anos[anos.length - 1];
+    const anoAtual = new Date().getFullYear();
+
+    // Mesma estrutura do PPR: 4 cards, projeção, origem do dinheiro + resumo, plano anual
+    el.innerHTML = `
+      <div class="kpis">${cardsInvestimento(posicoes(carteira.todos().filter((r) => r.categoria === "ouro")), historicoValido())}</div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>Projeção até ${ultimo.ano}</h2></div>
+        <div class="line-chart" id="ouro-grafico"></div>
+      </div>
+
+      <div class="two">
+        <div class="panel">
+          <div class="panel-head"><h2>Origem do dinheiro</h2></div>
+          <div class="donut-wrap" id="ouro-origem"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h2>Resumo</h2></div>
+          <dl class="resumo-lista">
+            <div class="forte"><dt>Cashback previsto até ${ultimo.ano}</dt><dd class="num">${formatarEuro(ultimo.acumulado)}</dd></div>
+            <div><dt><label for="ouro-taxa">Rendibilidade média anual</label></dt>
+              <dd><input id="ouro-taxa" class="cell-input" type="number" step="0.1" value="${Math.round(plano.taxa * 1000) / 10}"> %</dd></div>
+            <div><dt>Perspetiva de rendimento teórica</dt><dd class="num">${formatarEuro(ultimo.previsao)}</dd></div>
+            <div class="forte"><dt>Perspetiva de rendimento real</dt><dd class="num">${formatarEuro(ultimo.realOuPrevisao)}</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>Plano anual</h2><p>O valor que o Bitcoin tem agora escreve-se na coluna Real / previsão do ano atual (✎)</p></div>
+        <div class="table-scroll table-alta"><table>
+          <thead><tr><th>Ano</th><th class="r puseste">Cashback previsto</th><th class="r puseste">Cashback real</th><th class="r puseste">Acumulado</th>
+            <th class="r">Plano inicial</th><th class="r">Real / previsão</th><th class="r">Rend. acumulada</th><th class="r">% acum.</th><th class="r">Rend. do ano</th><th class="r">% do ano</th><th></th></tr></thead>
+          <tbody>${anos.map((a, i) => `<tr class="${a.ano === anoAtual ? "ano-atual" : ""}">
+            <td class="num">${a.ano}</td>
+            ${celula(a, "previsto", "number", formatarEuro(a.previsto), "r num puseste")}
+            ${celula(a, "cashback", "number", a.cashback !== null && a.cashback !== undefined ? `<span class="valor-real">${formatarEuro(a.cashback)}</span>` : vazio, "r num puseste")}
+            <td class="r num puseste">${formatarEuro(a.acumulado)}</td>
+            <td class="r num muted">${formatarEuro(a.previsao)}</td>
+            ${celula(a, "real", "number", `<span class="${classeReal(a)}">${formatarEuro(a.realOuPrevisao)}</span>`, "r num")}
+            ${celulasRendPlano(a, anos[i - 1])}
+            <td class="r">${acoes(a, { apagar: false })}</td></tr>`).join("")}</tbody>
+        </table></div>
+      </div>`;
+
+    // Reutiliza o mesmo gráfico de linhas do PPR
+    desenharLinhas(el.querySelector("#ouro-grafico"), [
+      { nome: "Previsão inicial", cor: "var(--c1)", pontos: anos.map((a) => ({ data: `${a.ano}-01-01`, valor: a.previsao })) },
+      { nome: "Real / previsão", cor: "var(--c2)", pontos: anos.map((a) => ({ data: `${a.ano}-01-01`, valor: a.realOuPrevisao })) },
+    ], { porAno: true, sinal: false });
+
+    // Origem: 100 % cashback da Trade Republic (investido automaticamente em Bitcoin)
+    desenharDonut(el.querySelector("#ouro-origem"),
+      [{ nome: "Cashback Trade Republic", valor: ultimo.acumulado, cor: "var(--c2)" }], "Origem do dinheiro do ouro digital");
+
+    el.querySelector("#ouro-taxa").addEventListener("change", (e) => {
+      const valor = parseFloat(e.target.value);
+      if (Number.isNaN(valor)) return;
+      carteira.atualizarOuro({ taxa: valor / 100 });
+      mostrarToast(`Rendibilidade anual alterada para ${valor} %`);
+      renderizar();
+    });
+  }
+
+  function renderizarCategoria(cat) {
+    if (cat === "ppr") return renderizarPpr(views.categoria);
+    if (cat === "ouro") return renderizarOuro(views.categoria);
+    if (cat === "rendimentos") return renderizarRendimentos(views.categoria);
+    if (cat === "fundos") return renderizarFundos(views.categoria);
+    if (cat === "calendario") return renderizarCalendario(views.categoria);
+    if (cat === "historico-rend") return renderizarHistoricoRend(views.categoria);
+    if (cat === "maisvalias") return renderizarMaisValias(views.categoria);
+    // Páginas só com uma mensagem (ainda por construir, ou sem nada lá dentro). A mesma função para todas.
+    const PAGINAS_AVISO = {
+      questionarios: ["🚧 EM MANUTENÇÃO", "A página dos questionários ainda está a ser construída."],
+      fidelidade: ["🚧 EM MANUTENÇÃO", "A página dos programas de fidelidade (app da Moeve, Lidl, farmácia, saldo devolvido em talão) ainda está a ser construída."],
+      acoes: ["SEM INVESTIMENTOS", "Ainda não tens investimentos em ações."],
+      fundosinv: ["SEM INVESTIMENTOS", "Ainda não tens investimentos em fundos de investimento."],
+    };
+    if (PAGINAS_AVISO[cat]) {
+      const [titulo, texto] = PAGINAS_AVISO[cat];
+      views.categoria.innerHTML = `<div class="panel manutencao"><b>${titulo}</b><p class="muted">${texto}</p></div>`;
+      return;
+    }
+    const info = CATEGORIAS[cat];
+    const registos = carteira.todos().filter((r) => r.categoria === cat);
+    const el = views.categoria;
+
+    if (registos.length === 0) {
+      el.innerHTML = `<div class="panel"><div class="panel-head"><h2>${info.nome}</h2>${botaoNovoRegisto(cat)}</div>
+        <p class="empty">Ainda não tens registos de ${info.nome}. Adiciona o primeiro com o botão <strong>+ Novo registo/compra</strong>.</p></div>`;
+      return;
+    }
+
+    if (cat === "deposito") {
+      const ordenados = [...registos].sort((a, b) => b.vencimento.localeCompare(a.vencimento));
+      // A coluna Juros também mostra o estado:
+      //   com valor  → verde se já venceu (recebido), amarelo se ainda está ativo (a receber)
+      //   sem valor  → "Vencido" a vermelho, ou "Ativo" a amarelo
+      const textoJuros = (r) => {
+        const vencido = diasAte(r.vencimento) < 0;
+        if (r.juros) return `<span class="${vencido ? "valor-real" : "valor-projetado"}">${formatarEuro(r.juros)}</span>`;
+        return vencido ? `<span class="down">Vencido</span>` : `<span class="valor-projetado">Ativo</span>`;
+      };
+      // Igual ao separador do Estado: em cima um painel só com os cards, em baixo a tabela
+      el.innerHTML = `
+        <div class="panel">
+          <div class="panel-head"><h2>Juros por ano</h2></div>
+          ${resumoPorAno(registos.filter((r) => r.juros), "vencimento", (r) => r.juros)}
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h2>Depósitos</h2>${botaoNovoRegisto("deposito")}</div>
+          <div class="table-scroll table-alta"><table>
+            <thead><tr><th>Vencimento</th><th>Prazo</th><th>Nome</th><th>Origem do dinheiro</th><th class="r">Montante</th><th class="r">Juros</th><th></th></tr></thead>
+            <tbody>${ordenados.map((r) => `<tr>
+              ${celula(r, "vencimento", "date", formatarData(r.vencimento), "num")}
+              ${celulaPrazo(r)}
+              ${celula(r, "nome", "text", escapar(r.nome))}
+              ${celula(r, "origem", "text", escapar(r.origem) || vazio)}
+              ${celula(r, "montante", "number", r.montante ? formatarEuro(r.montante) : vazio, "r num")}
+              ${celula(r, "juros", "number", textoJuros(r), "r num")}
+              <td class="r">${acoes(r)}</td></tr>`).join("")}</tbody>
+          </table></div>
+        </div>`;
+      return;
+    }
+
+    if (cat === "apoio") {
+      // Dinheiro do Estado: à esquerda o que foi recebido, à direita onde foi aplicado
+      const porData = (a, b) => (a.data || "").localeCompare(b.data || "");
+      const recebidos = [...registos].sort(porData);
+      const usos = carteira.todos().filter((r) => r.categoria === "apoioUso").sort(porData);
+      const recebido = recebidos.reduce((s, r) => s + r.montante, 0);
+      const utilizado = usos.reduce((s, r) => s + r.montante, 0);
+
+      // Data curta, como na folha: "mai 2021"
+      const mesAno = (iso) => {
+        const d = new Date(iso + "T00:00:00");
+        return `${d.toLocaleDateString("pt-PT", { month: "short" }).replace(".", "")} ${d.getFullYear()}`;
+      };
+
+      // Tabela compacta reutilizável: Data | (Descrição ou Destino) | Valor | ✎ ✕
+      const tabela = (lista, tituloNome, tituloValor, total) => `
+        <div class="table-scroll table-alta"><table class="tabela-compacta">
+          <thead><tr><th>Data</th><th>${tituloNome}</th><th class="r">${tituloValor}</th><th></th></tr></thead>
+          <tbody>${lista.length ? lista.map((r) => `<tr>
+            ${celula(r, "data", "date", r.data ? mesAno(r.data) : vazio, "num nowrap")}
+            ${celula(r, "nome", "text", escapar(r.nome))}
+            ${celula(r, "montante", "number", formatarEuro(r.montante), "r num nowrap")}
+            <td class="r">${r.automatico ? '<span class="muted" title="Vem do plano anual do PPR (muda-se lá)">do PPR</span>' : acoes(r)}</td></tr>`).join("") : `<tr><td colspan="4" class="empty">Ainda sem registos.</td></tr>`}</tbody>
+          <tfoot><tr><td colspan="2">Total</td><td class="r num nowrap">${formatarEuro(total)}</td><td></td></tr></tfoot>
+        </table></div>`;
+
+      el.innerHTML = `
+        <div class="panel">
+          <div class="panel-head"><h2>${info.nome}</h2></div>
+          <div class="years">
+            <div class="year destaque"><span>POR UTILIZAR</span><strong class="num">${formatarEuro(recebido - utilizado)}</strong></div>
+            <div class="year"><span>RECEBIDO</span><strong class="num">${formatarEuro(recebido)}</strong></div>
+            <div class="year"><span>UTILIZADO</span><strong class="num">${formatarEuro(utilizado)}</strong></div>
+          </div>
+        </div>
+        <div class="lado-a-lado">
+          <div class="panel">
+            <div class="panel-head"><h2>Recebido</h2>${botaoNovoRegisto("apoio")}</div>
+            ${tabela(recebidos, "Descrição", "Valor recebido", recebido)}
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h2>Utilizado</h2>${botaoNovoRegisto("apoioUso")}</div>
+            ${tabela(usos, "Destino", "Valor utilizado", utilizado)}
+          </div>
+        </div>`;
+      return;
+    }
+
+    // ETF's, Cripto, REIT's, PPR, Ouro: uma linha por posição, com as compras em acordeão
+    const lista = posicoes(registos).sort((a, b) => b.montante - a.montante);
+    const total = lista.reduce((s, p) => s + p.montante, 0);
+    // Rendibilidade: o último valor registado de cada posição
+    const ultimaRend = ultimoPorAtivo(historicoValido());
+    const rendDe = (p) => (ultimaRend[p.id] ? ultimaRend[p.id].valor : null);
+    // Rendibilidade em € e em %, com sinal e cor (ex.: +162,90 € e +10,3 %)
+    const corRend = (valor) => (valor >= 0 ? "up" : "down");
+    const rendEuro = (valor) => (valor === null ? vazio : `<span class="${corRend(valor)} num">${comSinal(valor)}</span>`);
+    const rendPct = (valor, base) => (valor === null || !base ? vazio
+      : `<span class="${corRend(valor)} num">${valor > 0 ? "+" : ""}${pct.format(valor / base)}</span>`);
+    const comRend = lista.filter((p) => rendDe(p) !== null);
+    const totalRend = comRend.reduce((s, p) => s + rendDe(p), 0);
+    const baseRend = comRend.reduce((s, p) => s + p.montante, 0);
+
+    const linhasCompras = (p) => {
+      if (!abertos.has(p.id)) return "";
+      const compras = [...p.compras].sort((a, b) => (b.data || "").localeCompare(a.data || ""));
+      return `
+        <tr class="compra-cab"><td>Data</td><td>Origem do dinheiro</td><td class="r">Montante</td><td></td><td></td><td></td><td></td><td></td></tr>
+        ${compras.map((r) => `<tr class="compra">
+          ${celula(r, "data", "date", r.data ? formatarData(r.data) : vazio, "num")}
+          ${celula(r, "origem", "text", escapar(r.origem) || vazio)}
+          ${celula(r, "montante", "number", formatarEuro(r.montante), "r num")}
+          <td></td><td></td><td></td><td></td>
+          <td class="r">${acoes(r)}</td></tr>`).join("")}`;
+    };
+
+    el.innerHTML = `
+      <div class="kpis">${cardsInvestimento(lista, historicoValido())}</div>
+      <div class="charts">
+        <div class="panel"><div class="panel-head"><h2>Por ativo</h2></div><div class="donut-wrap" id="chart-por-ativo"></div></div>
+        <div class="panel"><div class="panel-head"><h2>Por tipo</h2><p>Exposição a cada setor</p></div><div class="donut-wrap" id="chart-por-tipo"></div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h2>Rendibilidade por ${agrupBarras === "tipo" ? "tipo" : "ativo"}</h2>
+          <div class="botoes-grafico">
+            <div class="alternar" role="group" aria-label="Agrupar por">
+              <button type="button" data-agrup-barras="ativo" aria-pressed="${agrupBarras === "ativo"}">Ativo</button>
+              <button type="button" data-agrup-barras="tipo" aria-pressed="${agrupBarras === "tipo"}">Tipo</button>
+            </div>
+            <div class="alternar" role="group" aria-label="Mostrar em">
+              <button type="button" data-modo-barras="pct" aria-pressed="${modoBarras === "pct"}">%</button>
+              <button type="button" data-modo-barras="eur" aria-pressed="${modoBarras === "eur"}">€</button>
+            </div>
+          </div>
+        </div>
+        <div class="barras" id="chart-rend-ativos"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h2>Posições</h2><div class="botoes-grafico">${botaoNovoRegisto(cat)}${botaoRegistarRend(cat)}${CATS_VENDA.includes(cat) ? botaoRegistarVenda(cat) : ""}</div></div>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Nome</th><th>Tipo</th><th class="r">Montante</th><th class="r">% ${escapar(info.nome)}</th><th class="r">Rendibilidade (€)</th><th class="r">% Rendibilidade</th><th class="r">Total</th><th></th></tr></thead>
+          <tbody>${lista.map((p) => `<tr class="posicao">
+            <td><button class="acordeao" type="button" data-acordeao="${escapar(p.id)}" aria-expanded="${abertos.has(p.id)}">
+              <span class="seta" aria-hidden="true">▸</span>${escapar(p.nome)}</button></td>
+            <td>${escapar(p.subtipo) || vazio}</td>
+            <td class="r num">${formatarEuro(p.montante)}</td>
+            <td class="r num">${total ? pct.format(p.montante / total) : "—"}</td>
+            <td class="r nowrap">${rendEuro(rendDe(p))}</td>
+            <td class="r nowrap">${rendPct(rendDe(p), p.montante)}</td>
+            <td class="r num"><strong>${formatarEuro(p.montante + (rendDe(p) ?? 0))}</strong></td>
+            <td></td></tr>${linhasCompras(p)}`).join("")}</tbody>
+          <tfoot><tr><td colspan="2">Total</td><td class="r num">${formatarEuro(total)}</td><td class="r num">${pct.format(1)}</td><td class="r nowrap">${comRend.length ? rendEuro(totalRend) : vazio}</td><td class="r nowrap">${comRend.length ? rendPct(totalRend, baseRend) : vazio}</td><td class="r num">${formatarEuro(total + totalRend)}</td><td></td></tr></tfoot>
+        </table></div>
+      </div>`;
+
+    // Os dois gráficos circulares (reutilizam o desenharDonut do Dashboard)
+    desenharDonut(el.querySelector("#chart-por-ativo"), fatiasPor(lista, (p) => p.nome), `${info.nome} por ativo`);
+    desenharDonut(el.querySelector("#chart-por-tipo"), fatiasPor(lista, (p) => p.subtipo || "Sem tipo"), `${info.nome} por tipo`);
+
+    // Barras de rendibilidade: todos os ativos (os que não têm registo ficam no fim, sem barra)
+    const porAtivo = lista.map((p) => {
+      const valor = rendDe(p);
+      return { nome: p.nome, valor, pct: valor !== null && p.montante ? valor / p.montante : null };
+    });
+    const porTipo = rendPorGrupo(lista, (p) => p.subtipo || "Sem tipo", rendDe);
+    desenharBarrasRend(el.querySelector("#chart-rend-ativos"), agrupBarras === "tipo" ? porTipo : porAtivo, modoBarras);
+  }
+
+  // Junta as posições em grupos (por tipo, por categoria…) e soma a rendibilidade e o montante de cada grupo.
+  // Só entram na soma as posições que têm rendibilidade registada. A % é sobre o montante dessas posições.
+  function rendPorGrupo(lista, grupoDe, rendDe) {
+    const grupos = lista.reduce((acc, p) => {
+      const nome = grupoDe(p);
+      const g = acc[nome] || { nome, valor: null, base: 0 };
+      const valor = rendDe(p);
+      return { ...acc, [nome]: valor === null ? g : { ...g, valor: (g.valor || 0) + valor, base: g.base + p.montante } };
+    }, {});
+    return Object.values(grupos).map((g) => ({ nome: g.nome, valor: g.valor, pct: g.valor !== null && g.base ? g.valor / g.base : null }));
+  }
+
+  // Barras horizontais a partir do zero: verde para a direita (ganho), vermelho para a esquerda (perda).
+  // modo "pct" mostra a percentagem; modo "eur" mostra o valor em euros.
+  function desenharBarrasRend(contentor, itens, modo = "pct") {
+    const sinal = (v) => (v > 0 ? "+" : "");
+    const medida = (it) => (modo === "eur" ? it.valor : it.pct);
+    const texto = (it) => (medida(it) === null ? "—" : modo === "eur" ? comSinal(it.valor) : sinal(it.pct) + pct.format(it.pct));
+
+    // Do melhor para o pior; os que não têm valor vão para o fim
+    const ordenados = [...itens].sort((a, b) =>
+      medida(a) === null ? 1 : medida(b) === null ? -1 : medida(b) - medida(a));
+    const comValor = ordenados.filter((it) => medida(it) !== null);
+
+    const min = Math.min(0, ...comValor.map(medida));
+    const max = Math.max(0, ...comValor.map(medida));
+    const escala = max - min || 1;
+    const zero = (-min / escala) * 100; // posição do zero, em % da largura
+
+    contentor.innerHTML = ordenados.map((it, i) => {
+      const v = medida(it);
+      const barra = v === null ? "" : (() => {
+        const largura = (Math.abs(v) / escala) * 100;
+        const esquerda = v >= 0 ? zero : zero - largura;
+        return `<span class="barra ${v >= 0 ? "pos" : "neg"}" style="left:${esquerda}%;width:${largura}%"></span>`;
+      })();
+      const classe = v === null ? "muted" : v >= 0 ? "up" : "down";
+      return `<div class="barra-linha" data-i="${i}">
+        <span class="barra-nome">${it.cor ? `<span class="dot" style="background:${it.cor}"></span>` : ""}${escapar(it.nome)}</span>
+        <div class="barra-pista"><span class="barra-zero" style="left:${zero}%"></span>${barra}</div>
+        <span class="barra-valor num ${classe}">${texto(it)}</span>
+      </div>`;
+    }).join("");
+
+    // Caixinha ao passar o rato, com os dois valores
+    contentor.onpointermove = (e) => {
+      const linha = e.target.closest(".barra-linha");
+      if (!linha) return esconderTooltip();
+      const it = ordenados[linha.dataset.i];
+      tooltip.innerHTML = it.valor === null
+        ? `<b>${escapar(it.nome)}</b>Sem rendibilidade registada`
+        : `<b>${escapar(it.nome)}</b>${comSinal(it.valor)} · ${sinal(it.pct)}${pct.format(it.pct)}`;
+      tooltip.hidden = false;
+      tooltip.style.left = Math.min(e.clientX + 14, window.innerWidth - tooltip.offsetWidth - 8) + window.scrollX + "px";
+      tooltip.style.top = e.clientY + window.scrollY + 14 + "px";
+    };
+    contentor.onpointerleave = esconderTooltip;
+  }
+
+  // Agrupa as posições (por nome ou por tipo) e prepara as fatias do gráfico circular.
+  // A cor segue o nome (ordem alfabética), por isso não muda quando os valores mudam.
+  // Com mais de 6 grupos, os mais pequenos juntam-se em "Outros".
+  function fatiasPor(lista, chaveDe) {
+    const grupos = lista.reduce((acc, p) => {
+      const k = chaveDe(p);
+      acc[k] = (acc[k] || 0) + p.montante;
+      return acc;
+    }, {});
+    let nomes = Object.keys(grupos).filter((k) => grupos[k] > 0).sort((a, b) => grupos[b] - grupos[a]); // do maior para o menor
+    let outros = 0;
+    if (nomes.length > 6) {
+      const maiores = nomes.slice(0, 5); // já estão ordenados, por isso os 5 primeiros são os maiores
+      outros = nomes.filter((n) => !maiores.includes(n)).reduce((s, n) => s + grupos[n], 0);
+      nomes = nomes.filter((n) => maiores.includes(n));
+    }
+    const fatias = nomes.map((n, i) => ({ nome: n, valor: grupos[n], cor: `var(${CORES_LINHAS[i]})` }));
+    return outros > 0 ? [...fatias, { nome: "Outros", valor: outros, cor: "var(--c-outros)" }] : fatias;
+  }
+
+  // Guarda o que está nos campos da linha em edição
+  function guardarLinha(linha, id) {
+    const alteracoes = {};
+    for (const campo of linha.querySelectorAll("[data-campo]")) {
+      const nome = campo.dataset.campo;
+      const texto = campo.value.trim();
+      if (["real", "cashback"].includes(nome) && texto === "") {
+        alteracoes[nome] = null; // sem valor real: o ano volta a ser projetado
+      } else if (["montante", "juros", "utilizado", "governamental", "pessoal", "real", "previsto", "cashback", "recebido"].includes(nome)) {
+        const n = texto === "" ? 0 : parseFloat(texto);
+        if (Number.isNaN(n) || n < 0) { mostrarToast("O montante tem de ser um número igual ou maior que zero"); campo.focus(); return; }
+        alteracoes[nome] = n;
+      } else if (nome === "valor") {
+        // Rendibilidade: pode ser negativa
+        const n = parseFloat(texto);
+        if (Number.isNaN(n)) { mostrarToast("A rendibilidade tem de ser um número"); campo.focus(); return; }
+        alteracoes.valor = n;
+      } else if (nome === "prazo") {
+        alteracoes.prazo = Number(texto);
+      } else {
+        alteracoes[nome] = texto;
+      }
+    }
+    if ("nome" in alteracoes && !alteracoes.nome) { mostrarToast("O nome não pode ficar vazio"); return; }
+    // As linhas dos planos têm ids "ppr-2027" ou "ouro-2027" e são guardadas no plano respetivo
+    if (String(id).startsWith("ppr-")) {
+      const ano = Number(id.slice(4));
+      // O governamental de um ano (até ao atual) sai do pote do Estado: não pode passar do que está por utilizar.
+      // (O valor antigo desse ano já tinha saído do pote, por isso volta a contar como disponível.)
+      if ("governamental" in alteracoes && ano <= new Date().getFullYear()) {
+        const antigo = carteira.ppr().anos.find((a) => a.ano === ano)?.governamental || 0;
+        const disponivel = porUtilizarEstado() + antigo;
+        if (alteracoes.governamental > disponivel + 0.005) {
+          mostrarToast(`Só tens ${formatarEuro(disponivel)} do Estado por utilizar`);
+          linha.querySelector('[data-campo="governamental"]')?.focus();
+          return;
+        }
+      }
+      // Guarda o dia em que se escreveu o valor real (é a data da rendibilidade do PPR)
+      if ("real" in alteracoes && alteracoes.real !== null) alteracoes.realData = hojeISO();
+      carteira.atualizarAnoPpr(ano, alteracoes);
+    }
+    else if (String(id).startsWith("ouro-")) {
+      if ("real" in alteracoes && alteracoes.real !== null) alteracoes.realData = hojeISO(); // data da rendibilidade do Ouro
+      carteira.atualizarAnoOuro(Number(id.slice(5)), alteracoes);
+    }
+    else if (String(id).startsWith("rend-")) carteira.atualizarRendibilidade(id.slice(5), { ...alteracoes, exemplo: false });
+    else carteira.atualizar(id, alteracoes);
+    emEdicao = null;
+    mostrarToast("Alterações guardadas");
+    renderizar();
+  }
+
+  views.categoria.addEventListener("click", (e) => {
+    // Botão Ativo / Tipo do gráfico de rendibilidade
+    const btnAgrup = e.target.closest("[data-agrup-barras]");
+    if (btnAgrup) {
+      agrupBarras = btnAgrup.dataset.agrupBarras;
+      try { localStorage.setItem("carteira-agrup-barras", agrupBarras); } catch (err) {}
+      renderizar();
+      return;
+    }
+    // Botão % / € do gráfico de rendibilidade
+    const btnModo = e.target.closest("[data-modo-barras]");
+    if (btnModo) {
+      modoBarras = btnModo.dataset.modoBarras;
+      try { localStorage.setItem("carteira-modo-barras", modoBarras); } catch (err) {}
+      renderizar();
+      return;
+    }
+    // Acordeão: abre ou fecha as compras de uma posição
+    const btnAcordeao = e.target.closest("[data-acordeao]");
+    if (btnAcordeao) {
+      const id = btnAcordeao.dataset.acordeao;
+      abertos.has(id) ? abertos.delete(id) : abertos.add(id);
+      renderizar();
+      return;
+    }
+    // Editar: a linha passa a ter campos editáveis
+    const btnEditar = e.target.closest("[data-editar]");
+    if (btnEditar) {
+      emEdicao = btnEditar.dataset.editar;
+      renderizar();
+      views.categoria.querySelector(".cell-input")?.focus();
+      return;
+    }
+    // Guardar
+    const btnGuardar = e.target.closest("[data-guardar]");
+    if (btnGuardar) {
+      guardarLinha(btnGuardar.closest("tr"), btnGuardar.dataset.guardar);
+      return;
+    }
+    // Apagar em dois cliques (o viewer não mostra confirm())
+    const btn = e.target.closest("[data-apagar]");
+    if (!btn || primeiroCliqueApagar(btn)) return;
+    const id = btn.dataset.apagar;
+    if (id.startsWith("rend-")) carteira.removerRendibilidade(id.slice(5)); // uma rendibilidade (histórico)
+    else carteira.remover(id);                                            // um registo normal
+    mostrarToast("Registo apagado");
+    renderizar();
+  });
+
+  // Enter guarda, Escape cancela
+  views.categoria.addEventListener("keydown", (e) => {
+    // Só para as caixas de uma linha em edição (a caixa da taxa também usa .cell-input)
+    if (!e.target.matches(".cell-input") || !emEdicao || !e.target.closest("tr")) return;
+    if (e.key === "Enter") {
+      e.preventDefault();
+      guardarLinha(e.target.closest("tr"), emEdicao);
+    } else if (e.key === "Escape") {
+      emEdicao = null;
+      renderizar();
+    }
+  });
+
+  // ---------- Rendibilidade ----------
+  const euroInteiro = new Intl.NumberFormat("pt-PT", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+  const comSinal = (v) => (v > 0 ? "+" : "") + formatarEuro(v);
+  const setaValor = (v) => `<span class="${v >= 0 ? "up" : "down"} num"><span aria-hidden="true">${v >= 0 ? "▲" : "▼"}</span> ${comSinal(v)}</span>`;
+  const mesCurto = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("pt-PT", { month: "short", year: "2-digit" });
+  const CORES_LINHAS = ["--c1", "--c2", "--c3", "--c4", "--c5", "--c6"];
+
+  // Os "ativos" da rendibilidade são as posições (compras do mesmo ETF somadas)
+  const ativosRendibilidade = () => posicoes(carteira.todos().filter((r) => CATS_RENDIBILIDADE.includes(r.categoria)));
+
+  function historicoValido() {
+    const ids = new Set(ativosRendibilidade().map((a) => a.id));
+    return carteira.rendibilidades()
+      .filter((h) => ids.has(h.ativoId))
+      .sort((a, b) => a.data.localeCompare(b.data));
+  }
+
+  // Último valor de cada ativo (o histórico está ordenado por data, por isso o último ganha)
+  const ultimoPorAtivo = (hist) => hist.reduce((acc, h) => ({ ...acc, [h.ativoId]: h }), {});
+
+  // Valor de um ativo numa data: o último registo até essa data (ou 0 se ainda não havia)
+  function valorAte(hist, ativoId, data) {
+    const antes = hist.filter((h) => h.ativoId === ativoId && h.data <= data);
+    return antes.length ? antes[antes.length - 1].valor : 0;
+  }
+
+  // Uma linha que soma vários ativos: em cada data, soma o último valor de cada um
+  function linhaSomada(nome, hist, ids) {
+    const doGrupo = hist.filter((h) => ids.includes(h.ativoId));
+    const datas = [...new Set(doGrupo.map((h) => h.data))];
+    return { nome, pontos: datas.map((d) => ({ data: d, valor: ids.reduce((s, id) => s + valorAte(doGrupo, id, d), 0) })) };
+  }
+
+  function seriesDoFiltro(filtro, hist) {
+    const ativos = ativosRendibilidade();
+    if (filtro === "total") {
+      const ids = [...new Set(hist.map((h) => h.ativoId))];
+      return [{ ...linhaSomada("Rendibilidade total", hist, ids), cor: "var(--c1)" }];
+    }
+    const tipo = filtro.slice(0, filtro.indexOf(":"));
+    const chave = filtro.slice(filtro.indexOf(":") + 1); // a chave também pode ter ":"
+    const escolhidos = tipo === "cat" ? ativos.filter((a) => a.categoria === chave) : ativos.filter((a) => a.id === chave);
+    return escolhidos
+      .map((a) => ({ nome: a.nome, pontos: hist.filter((h) => h.ativoId === a.id).map((h) => ({ data: h.data, valor: h.valor })) }))
+      .filter((s) => s.pontos.length)
+      .slice(0, CORES_LINHAS.length)
+      .map((s, i) => ({ ...s, cor: `var(${CORES_LINHAS[i]})` }));
+  }
+
+  function escalaBonita(min, max, n = 4) {
+    if (min === max) { min -= 10; max += 10; }
+    const passoBruto = (max - min) / n;
+    const mag = 10 ** Math.floor(Math.log10(passoBruto));
+    const norm = passoBruto / mag;
+    const passo = (norm < 1.5 ? 1 : norm < 3 ? 2 : norm < 7 ? 5 : 10) * mag;
+    const ticks = [];
+    for (let v = Math.floor(min / passo) * passo; v <= Math.ceil(max / passo) * passo + passo / 2; v += passo) ticks.push(Math.round(v * 100) / 100);
+    return ticks;
+  }
+
+  // Opções: porAno (eixo e caixinha só com o ano) e sinal (mostrar "+" nos valores positivos)
+  function desenharLinhas(contentor, series, { porAno = false, sinal = true } = {}) {
+    const rotuloData = (d) => (porAno ? d.slice(0, 4) : mesCurto(d));
+    const formatarValor = (v) => (sinal ? comSinal(v) : formatarEuro(v));
+    if (!series.length) {
+      contentor.innerHTML = `<p class="empty">Ainda não há registos de rendibilidade para mostrar. Usa o botão <strong>+ Registar rendibilidade</strong>.</p>`;
+      return;
+    }
+    // Largura = a largura real do painel; altura fixa. Assim o gráfico não "estica" nos ecrãs largos
+    // (antes era sempre 680 de largura, e num ecrã grande ficava altíssimo e com letras enormes).
+    const W = Math.max(320, contentor.clientWidth || 680), H = 260, E = 70, D = 18, T = 14, B = 30; // largura, altura e margens
+    const datas = [...new Set(series.flatMap((s) => s.pontos.map((p) => p.data)))].sort();
+    const valores = series.flatMap((s) => s.pontos.map((p) => p.valor));
+    const ticks = escalaBonita(Math.min(0, ...valores), Math.max(0, ...valores));
+    const yMin = ticks[0], yMax = ticks[ticks.length - 1];
+    const tempo = (d) => new Date(d + "T00:00:00").getTime();
+    const t0 = tempo(datas[0]), t1 = tempo(datas[datas.length - 1]);
+    const x = (d) => (t1 === t0 ? E + (W - E - D) / 2 : E + ((tempo(d) - t0) / (t1 - t0)) * (W - E - D));
+    const y = (v) => T + (1 - (v - yMin) / (yMax - yMin)) * (H - T - B);
+
+    const grelha = ticks.map((v) => `
+      <line class="${v === 0 ? "zero" : "grid"}" x1="${E}" x2="${W - D}" y1="${y(v)}" y2="${y(v)}"></line>
+      <text class="eixo" x="${E - 8}" y="${y(v) + 4}" text-anchor="end">${euroInteiro.format(v)}</text>`).join("");
+    const passoRotulos = Math.ceil(datas.length / 6);
+    const rotulosX = datas.filter((_, i) => i % passoRotulos === 0 || i === datas.length - 1)
+      .map((d) => `<text class="eixo" x="${x(d)}" y="${H - 8}" text-anchor="middle">${rotuloData(d)}</text>`).join("");
+    const linhas = series.map((s) => `
+      <path class="serie" stroke="${s.cor}" d="${s.pontos.map((p, i) => `${i ? "L" : "M"}${x(p.data)} ${y(p.valor)}`).join(" ")}"></path>
+      ${s.pontos.length > 12 ? "" : s.pontos.map((p) => `<circle class="ponto" cx="${x(p.data)}" cy="${y(p.valor)}" r="4.5" fill="${s.cor}"></circle>`).join("")}`).join("");
+
+    contentor.innerHTML = `
+      <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Evolução da rendibilidade">
+        ${grelha}${rotulosX}${linhas}
+        <line class="cruz" id="cruz" x1="0" x2="0" y1="${T}" y2="${H - B}" visibility="hidden"></line>
+        <rect x="${E}" y="0" width="${W - E - D}" height="${H}" fill="transparent" id="zona-hover"></rect>
+      </svg>
+      ${series.length > 1 ? `<ul class="chart-legend">${series.map((s) => `<li><span class="sw" style="background:${s.cor}"></span>${escapar(s.nome)}</li>`).join("")}</ul>` : ""}`;
+
+    const svg = contentor.querySelector("svg");
+    const cruz = svg.querySelector("#cruz");
+    const zona = svg.querySelector("#zona-hover");
+    zona.addEventListener("pointermove", (e) => {
+      const r = svg.getBoundingClientRect();
+      const px = ((e.clientX - r.left) / r.width) * W;
+      const data = datas.reduce((melhor, d) => (Math.abs(x(d) - px) < Math.abs(x(melhor) - px) ? d : melhor), datas[0]);
+      cruz.setAttribute("x1", x(data));
+      cruz.setAttribute("x2", x(data));
+      cruz.setAttribute("visibility", "visible");
+      const linhasTip = series.map((s) => {
+        const p = s.pontos.find((q) => q.data === data);
+        return `<div>${series.length > 1 ? escapar(s.nome) + ": " : ""}${p ? formatarValor(p.valor) : "—"}</div>`;
+      }).join("");
+      tooltip.innerHTML = `<b>${porAno ? data.slice(0, 4) : formatarData(data)}</b>${linhasTip}`;
+      tooltip.hidden = false;
+      const left = Math.min(e.clientX + 14, window.innerWidth - tooltip.offsetWidth - 8);
+      tooltip.style.left = left + window.scrollX + "px";
+      tooltip.style.top = e.clientY + window.scrollY + 14 + "px";
+    });
+    zona.addEventListener("pointerleave", () => {
+      cruz.setAttribute("visibility", "hidden");
+      esconderTooltip();
+    });
+  }
+
+  const selFiltro = document.getElementById("rend-filtro");
+  selFiltro.addEventListener("change", () => {
+    try { localStorage.setItem("carteira-rend-filtro", selFiltro.value); } catch (e) {}
+    desenharLinhas(document.getElementById("rend-grafico"), seriesDoFiltro(selFiltro.value, historicoValido()));
+  });
+
+  // ---------- Mapa de calor (treemap) ----------
+  // Divide um retângulo em blocos com área proporcional ao valor ("squarified": blocos o mais quadrados possível).
+  // Recebe os itens já ordenados do maior para o menor, cada um com "area".
+  function squarify(itens, x, y, w, h) {
+    // O pior rácio (lado maior / lado menor) de uma fila de blocos: quanto mais perto de 1, mais quadrados
+    const pior = (fila, lado) => {
+      const soma = fila.reduce((s, it) => s + it.area, 0);
+      const max = Math.max(...fila.map((it) => it.area));
+      const min = Math.min(...fila.map((it) => it.area));
+      return Math.max((lado * lado * max) / (soma * soma), (soma * soma) / (lado * lado * min));
+    };
+    const blocos = [];
+    let resto = [...itens];
+    while (resto.length) {
+      const lado = Math.min(w, h);
+      // Vai juntando blocos à fila enquanto isso os deixar mais quadrados
+      let n = 1;
+      while (n < resto.length && pior(resto.slice(0, n + 1), lado) <= pior(resto.slice(0, n), lado)) n++;
+      const fila = resto.slice(0, n);
+      const espessura = fila.reduce((s, it) => s + it.area, 0) / lado;
+      let pos = 0;
+      fila.forEach((it) => {
+        const comprimento = it.area / espessura;
+        blocos.push(w >= h
+          ? { ...it, x, y: y + pos, w: espessura, h: comprimento }   // fila na vertical, à esquerda
+          : { ...it, x: x + pos, y, w: comprimento, h: espessura }); // fila na horizontal, em cima
+        pos += comprimento;
+      });
+      if (w >= h) { x += espessura; w -= espessura; } else { y += espessura; h -= espessura; }
+      resto = resto.slice(n);
+    }
+    return blocos;
+  }
+
+  // Cor de um bloco: verde (ganho) ou vermelho (perda), mais forte quanto maior a %. Aos 15 % já é a cor máxima.
+  function corMapa(pct) {
+    if (pct === null) return "var(--surface-2)";
+    const forca = Math.round(30 + Math.min(Math.abs(pct) / 0.15, 1) * 70); // 30 % a 100 %
+    return `color-mix(in srgb, var(${pct >= 0 ? "--good" : "--crit"}) ${forca}%, var(--surface))`;
+  }
+
+  function desenharMapa(contentor, itens) {
+    const lista = itens.filter((it) => it.montante > 0).sort((a, b) => b.montante - a.montante);
+    if (!lista.length) { contentor.innerHTML = `<p class="empty">Ainda não tens investimentos.</p>`; return; }
+    const W = contentor.clientWidth || 1000, H = contentor.clientHeight || 380;
+    const total = lista.reduce((s, it) => s + it.montante, 0);
+    const blocos = squarify(lista.map((it) => ({ ...it, area: (it.montante / total) * W * H })), 0, 0, W, H);
+    const emPct = (v, lado) => `${(v / lado) * 100}%`; // em %, para acompanhar a largura do ecrã
+    contentor.innerHTML = blocos.map((b) => {
+      const texto = b.pct === null ? "—" : (b.pct >= 0 ? "+" : "") + pct.format(b.pct);
+      // Só escreve dentro dos blocos que têm espaço
+      const conteudo = b.w > 70 && b.h > 44
+        ? `<b>${escapar(b.nome)}</b><span class="mapa-pct num">${texto}</span>${b.h > 74 ? `<small class="num">${formatarEuro(b.montante)}</small>` : ""}`
+        : "";
+      return `<div class="mapa-bloco" style="left:${emPct(b.x, W)};top:${emPct(b.y, H)};width:${emPct(b.w, W)};height:${emPct(b.h, H)};background:${corMapa(b.pct)}"
+        title="${escapar(b.nome)} · ${formatarEuro(b.montante)} · ${b.valor === null ? "sem registo" : comSinal(b.valor) + " (" + texto + ")"}">${conteudo}</div>`;
+    }).join("");
+  }
+
+  // ---------- Separador Fundos (sobrevivência + maneio) ----------
+  // Cada fundo é um saldo numa conta: de vez em quando registas o saldo, e conta o mais recente.
+  // Mesmo formato do separador do Estado: cards em cima, duas tabelas lado a lado.
+  function renderizarFundos(el) {
+    const sobrevivencia = saldoAtual("emergencia"), maneio = saldoAtual("maneio");
+    // Tabela de um fundo: Data | Saldo | ✎ ✕ (a linha mais recente, que é a que conta, vai a negrito)
+    const tabelaSaldos = (cat) => {
+      const saldos = saldosDe(cat);
+      return `
+      <div class="panel">
+        <div class="panel-head"><h2>${CATEGORIAS[cat].nome}</h2>${botaoNovoRegisto(cat, "+ Atualizar saldo")}</div>
+        <div class="table-scroll table-alta"><table class="tabela-compacta">
+          <thead><tr><th>Data</th><th class="r">Saldo</th><th></th></tr></thead>
+          <tbody>${saldos.length ? saldos.map((r, i) => `<tr${i === 0 ? ' class="saldo-atual"' : ""}>
+            ${celula(r, "data", "date", formatarData(r.data), "num nowrap")}
+            ${celula(r, "montante", "number", formatarEuro(r.montante) + (i === 0 ? ' <span class="muted">(atual)</span>' : ""), "r num nowrap")}
+            <td class="r">${acoes(r)}</td></tr>`).join("")
+            : `<tr><td colspan="3" class="empty">Ainda sem saldos. Usa o botão <strong>+ Atualizar saldo</strong>.</td></tr>`}</tbody>
+        </table></div>
+      </div>`;
+    };
+    el.innerHTML = `
+      <div class="panel">
+        <div class="panel-head"><h2>Fundos</h2><p>O saldo mais recente de cada fundo é o que conta na Carteira</p></div>
+        <div class="years">
+          <div class="year destaque"><span>TOTAL DOS FUNDOS</span><strong class="num">${formatarEuro(sobrevivencia + maneio)}</strong></div>
+          <div class="year"><span>${CATEGORIAS.emergencia.nome.toUpperCase()}</span><strong class="num">${formatarEuro(sobrevivencia)}</strong></div>
+          <div class="year"><span>${CATEGORIAS.maneio.nome.toUpperCase()}</span><strong class="num">${formatarEuro(maneio)}</strong></div>
+        </div>
+      </div>
+      <div class="lado-a-lado">
+        ${tabelaSaldos("emergencia")}
+        ${tabelaSaldos("maneio")}
+      </div>`;
+  }
+
+  // ---------- Calendário ----------
+  // Tipos de evento: nome curto + cor (bolinha)
+  const TIPOS_EVENTO = {
+    bce: { nome: "BCE", cor: "var(--c1)" },
+    fed: { nome: "Fed", cor: "var(--c2)" },
+    eua: { nome: "EUA", cor: "var(--c4)" },
+    irs: { nome: "IRS", cor: "var(--c3)" },
+    pessoal: { nome: "Pessoal", cor: "var(--c5)" },
+  };
+  // Datas da economia. ⚠️ DATAS DE EXEMPLO: confirmar nos sites oficiais do BCE e da Fed.
+  // No projeto real vêm de um ficheiro: const eventos = await (await fetch("data/dados.json")).json();
+  const EVENTOS_ECONOMIA = [
+    ["2026-10-14", "eua", "Inflação dos EUA (CPI)"],
+    ["2026-10-28", "fed", "Fed decide as taxas de juro"],
+    ["2026-10-29", "bce", "BCE decide as taxas de juro"],
+    ["2026-11-12", "eua", "Inflação dos EUA (CPI)"],
+    ["2026-12-09", "fed", "Fed decide as taxas de juro"],
+    ["2026-12-10", "eua", "Inflação dos EUA (CPI)"],
+    ["2026-12-17", "bce", "BCE decide as taxas de juro"],
+    ["2027-01-13", "eua", "Inflação dos EUA (CPI)"],
+    ["2027-01-27", "fed", "Fed decide as taxas de juro"],
+    ["2027-02-04", "bce", "BCE decide as taxas de juro"],
+    ["2027-02-11", "eua", "Inflação dos EUA (CPI)"],
+    ["2027-03-11", "eua", "Inflação dos EUA (CPI)"],
+    ["2027-03-17", "fed", "Fed decide as taxas de juro"],
+    ["2027-03-18", "bce", "BCE decide as taxas de juro"],
+    ["2027-04-01", "irs", "Começa a entrega do IRS"],
+    ["2027-06-30", "irs", "Termina o prazo do IRS"],
+  ].map(([data, tipo, titulo]) => ({ data, tipo, titulo, exemplo: true }));
+
+  // As tuas datas, calculadas a partir do que já está na app
+  function eventosPessoais() {
+    const hoje = hojeISO();
+    const ano = Number(hoje.slice(0, 4));
+    const vencimentos = carteira.todos()
+      .filter((r) => r.categoria === "deposito" && r.vencimento >= hoje)
+      .map((r) => ({ data: r.vencimento, tipo: "pessoal", titulo: `Vence o depósito a prazo de ${formatarEuro(r.montante || 0)}` }));
+    const dezembro = `${ano}-12-01` >= hoje ? `${ano}-12-01` : `${ano + 1}-12-01`; // se já passou, é o do ano que vem
+    const ppr = { data: dezembro, tipo: "pessoal", titulo: "Reforço anual do PPR (dinheiro do Estado + salário)" };
+    // Lembrete: se a última rendibilidade registada tem mais de 30 dias
+    const hist = historicoValido();
+    const ultima = hist.length ? hist[hist.length - 1].data : null;
+    const lembrete = ultima && -diasAte(ultima) > 30
+      ? [{ data: hoje, tipo: "pessoal", titulo: `Registar rendibilidade (a última foi há ${-diasAte(ultima)} dias)` }] : [];
+    return [...vencimentos, ppr, ...lembrete];
+  }
+
+  // Todos os eventos de hoje em diante, por ordem de data
+  const eventosFuturos = () => [...EVENTOS_ECONOMIA, ...eventosPessoais()]
+    .filter((e) => e.data >= hojeISO())
+    .sort((a, b) => a.data.localeCompare(b.data));
+
+  const quandoFalta = (iso) => { const d = diasAte(iso); return d === 0 ? "Hoje" : d === 1 ? "Amanhã" : `Daqui a ${d} dias`; };
+
+  function renderizarCalendario(el) {
+    const eventos = eventosFuturos();
+    // Agrupa por mês: "outubro de 2026"
+    const porMes = eventos.reduce((acc, e) => {
+      const mes = new Date(e.data + "T00:00:00").toLocaleDateString("pt-PT", { month: "long", year: "numeric" });
+      return { ...acc, [mes]: [...(acc[mes] || []), e] };
+    }, {});
+
+    el.innerHTML = `
+      <div class="panel">
+        <div class="panel-head"><h2>Próximos eventos</h2>
+          <p>${Object.values(TIPOS_EVENTO).map((t) => `<span class="cat-cell" style="display:inline-flex;margin-left:12px"><span class="dot" style="background:${t.cor}"></span>${t.nome}</span>`).join("")}</p></div>
+        ${Object.entries(porMes).map(([mes, lista]) => `
+          <h3 class="mes-titulo">${mes}</h3>
+          <div class="table-scroll"><table class="tabela-compacta">
+            <tbody>${lista.map((e) => `<tr>
+              <td class="num nowrap" style="width:120px">${formatarData(e.data)}</td>
+              <td class="nowrap" style="width:110px"><span class="cat-cell"><span class="dot" style="background:${TIPOS_EVENTO[e.tipo].cor}"></span>${TIPOS_EVENTO[e.tipo].nome}</span></td>
+              <td>${escapar(e.titulo)}${e.exemplo ? ' <span class="muted">(exemplo)</span>' : ""}</td>
+              <td class="r muted nowrap">${quandoFalta(e.data)}</td></tr>`).join("")}</tbody>
+          </table></div>`).join("") || '<p class="empty">Sem eventos marcados.</p>'}
+      </div>`;
+  }
+
+  // ---------- Separador Mais-valias ----------
+  // Cada venda é de uma posição inteira: mais-valia = valor recebido − investido (pode ser negativa: menos-valia)
+  const vendasOrdenadas = () => carteira.todos().filter((r) => r.categoria === "venda")
+    .sort((a, b) => (b.data || "").localeCompare(a.data || ""));
+  const maisValia = (v) => v.recebido - v.investido;
+
+  function renderizarMaisValias(el) {
+    const vendas = vendasOrdenadas();
+    const soma = (f) => vendas.reduce((s, v) => s + f(v), 0);
+    const total = soma(maisValia);
+    const comCor = (v) => `<span class="${v >= 0 ? "up" : "down"}">${comSinal(v)}</span>`;
+    el.innerHTML = `
+      <div class="panel">
+        <div class="panel-head"><h2>Mais-valias</h2><p>Vende-se sempre a posição inteira</p></div>
+        <div class="years">
+          <div class="year destaque"><span>MAIS-VALIAS</span><strong class="num">${comSinal(total)}</strong></div>
+          <div class="year"><span>RECEBIDO NAS VENDAS</span><strong class="num">${formatarEuro(soma((v) => v.recebido))}</strong></div>
+          <div class="year"><span>INVESTIDO NO QUE SE VENDEU</span><strong class="num">${formatarEuro(soma((v) => v.investido))}</strong></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h2>Vendas</h2>${botaoRegistarVenda("")}</div>
+        <div class="table-scroll table-alta"><table>
+          <thead><tr><th>Data</th><th>Ativo</th><th>Categoria</th><th class="r">Investido</th><th class="r">Recebido</th><th class="r">Mais-valia</th><th></th></tr></thead>
+          <tbody>${vendas.length ? vendas.map((v) => `<tr>
+            ${celula(v, "data", "date", formatarData(v.data), "num")}
+            <td>${escapar(v.nome)}</td>
+            <td><span class="cat-cell"><span class="dot" style="background:${cor(v.categoriaAtivo)}"></span>${CATEGORIAS[v.categoriaAtivo].nome}</span></td>
+            <td class="r num">${formatarEuro(v.investido)}</td>
+            ${celula(v, "recebido", "number", formatarEuro(v.recebido), "r num")}
+            <td class="r num">${comCor(maisValia(v))}</td>
+            <td class="r">${acoes(v)}</td></tr>`).join("")
+            : `<tr><td colspan="7" class="empty">Ainda não vendeste nenhum investimento. Usa o botão <strong>+ Registar venda</strong>.</td></tr>`}</tbody>
+        </table></div>
+        <p class="muted" style="margin:10px 0 0;font-size:12px">Apagar uma venda (✕) desfaz a venda: as compras voltam para a carteira.</p>
+      </div>`;
+  }
+
+  // ---------- Separador Rendimentos ----------
+  // Dinheiro JÁ RECEBIDO (juros, Estado, vendas de investimentos).
+  // Não se mistura com a rendibilidade dos investimentos, que ainda está "no papel" e pode mudar.
+  function renderizarRendimentos(el) {
+    const todos = carteira.todos();
+    // Cada fonte de rendimento vira uma lista simples de { ano, valor }
+    // Juros: só dos depósitos já vencidos (o dinheiro já caiu na conta), no ano do vencimento
+    const juros = todos.filter((r) => r.categoria === "deposito" && r.juros && diasAte(r.vencimento) < 0)
+      .map((r) => ({ ano: r.vencimento.slice(0, 4), valor: r.juros }));
+    const estado = todos.filter((r) => r.categoria === "apoio")
+      .map((r) => ({ ano: (r.data || "").slice(0, 4), valor: r.montante }));
+    const vendas = vendasOrdenadas();
+    const realizados = vendas.map((v) => ({ ano: (v.data || "").slice(0, 4), valor: maisValia(v) }));
+
+    const somaDe = (lista, ano) => lista.filter((x) => ano === undefined || x.ano === ano).reduce((s, x) => s + x.valor, 0);
+    const totalJuros = somaDe(juros), totalEstado = somaDe(estado), totalRealizado = somaDe(realizados);
+    const anos = [...new Set([...juros, ...estado, ...realizados].map((x) => x.ano).filter(Boolean))].sort().reverse();
+    const comCor = (v) => `<span class="${v >= 0 ? "up" : "down"}">${comSinal(v)}</span>`;
+    const card = (nome, valor, sub, classe = "") => `
+      <div class="kpi ${classe}"><span class="label">${nome}</span><span class="value num">${valor}</span><span class="sub">${sub}</span></div>`;
+
+    el.innerHTML = `
+      <div class="kpis">
+        ${card("Total recebido", formatarEuro(totalJuros + totalEstado + totalRealizado), "Juros + Estado + mais-valias", "hero")}
+        ${card("Juros bancários", formatarEuro(totalJuros), "Depósitos já vencidos")}
+        ${card("Dinheiro do Estado", formatarEuro(totalEstado), "Total recebido")}
+        ${card("Mais-valias", comCor(totalRealizado), `${vendas.length} ${vendas.length === 1 ? "venda" : "vendas"}`)}
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h2>Por ano</h2></div>
+        <div class="table-scroll table-alta"><table>
+          <thead><tr><th>Ano</th><th class="r">Juros bancários</th><th class="r">Dinheiro do Estado</th><th class="r">Mais-valias</th><th class="r">Total</th></tr></thead>
+          <tbody>${anos.map((a) => `<tr><td class="num">${a}</td>
+            <td class="r num">${formatarEuro(somaDe(juros, a))}</td>
+            <td class="r num">${formatarEuro(somaDe(estado, a))}</td>
+            <td class="r num">${somaDe(realizados, a) ? comCor(somaDe(realizados, a)) : '<span class="muted">—</span>'}</td>
+            <td class="r num"><strong>${formatarEuro(somaDe(juros, a) + somaDe(estado, a) + somaDe(realizados, a))}</strong></td></tr>`).join("")}</tbody>
+        </table></div>
+      </div>`;
+  }
+
+  // 4 cards de um conjunto de posições: Valor atual (= Investido + Rendibilidade), Investido, Rendibilidade,
+  // e a data da última consulta. Usado na página Investimentos e nas páginas ETF's, Criptomoedas e REIT's.
+  function cardsInvestimento(posicoesLista, historico) {
+    const ids = new Set(posicoesLista.map((p) => p.id));
+    const hist = historico.filter((h) => ids.has(h.ativoId)); // só os registos destas posições
+    const ultimos = ultimoPorAtivo(hist);
+    const investido = posicoesLista.reduce((s, p) => s + p.montante, 0);
+    const rendTotal = posicoesLista.reduce((s, p) => s + (ultimos[p.id]?.valor ?? 0), 0);
+    const ultimaData = hist.length ? hist[hist.length - 1].data : null;
+    const dias = ultimaData ? -diasAte(ultimaData) : null;
+    const haDias = dias === null ? "Ainda sem registos" : dias === 0 ? "Hoje" : dias === 1 ? "Há 1 dia" : `Há ${dias} dias`;
+    const card = (nome, valor, sub, classe = "") => `
+      <div class="kpi ${classe}"><span class="label">${nome}</span>
+        <span class="value num">${valor}</span><span class="sub">${sub}</span></div>`;
+    return card("Valor atual", formatarEuro(investido + rendTotal), "Investido + rendibilidade", "hero") +
+      card("Investido", formatarEuro(investido), "O que puseste") +
+      card("Rendibilidade", `<span class="${rendTotal >= 0 ? "up" : "down"}">${comSinal(rendTotal)}</span>`,
+        investido ? (rendTotal >= 0 ? "+" : "") + pct.format(rendTotal / investido) : "—") +
+      card("Última atualização", ultimaData ? formatarData(ultimaData) : "—", haDias);
+  }
+
+  let agrupComparar = "categoria"; // barras da Rendibilidade: "categoria" ou "tipo"
+  try { agrupComparar = localStorage.getItem("carteira-agrup-comparar") || "categoria"; } catch (e) {}
+
+  function renderizarRendibilidade() {
+    const ativos = ativosRendibilidade();
+    const hist = historicoValido();
+
+    document.getElementById("rend-aviso").hidden = !hist.some((h) => h.exemplo);
+
+    // Filtro do gráfico: total, por categoria ou por ativo
+    const guardado = (() => { try { return localStorage.getItem("carteira-rend-filtro"); } catch (e) { return null; } })();
+    const catsComAtivos = CATS_RENDIBILIDADE.filter((c) => ativos.some((a) => a.categoria === c));
+    selFiltro.innerHTML = `
+      <option value="total">Rendibilidade total</option>
+      <optgroup label="Por categoria">${catsComAtivos.map((c) => `<option value="cat:${c}">${CATEGORIAS[c].nome}</option>`).join("")}</optgroup>
+      <optgroup label="Por ativo">${ativos.map((a) => `<option value="ativo:${escapar(a.id)}">${escapar(a.nome)}</option>`).join("")}</optgroup>`;
+    selFiltro.value = [...selFiltro.options].some((o) => o.value === guardado) ? guardado : "total";
+    desenharLinhas(document.getElementById("rend-grafico"), seriesDoFiltro(selFiltro.value, hist));
+
+    // Comparar categorias e tipos: barras com o último valor (reutilizam as barras dos ETF's)
+    const ultimaRend = ultimoPorAtivo(hist);
+    const rendDe = (p) => (ultimaRend[p.id] ? ultimaRend[p.id].valor : null);
+
+    document.getElementById("rend-kpis").innerHTML = cardsInvestimento(ativos, hist);
+
+    // Mapa de calor: um bloco por ativo
+    desenharMapa(document.getElementById("rend-mapa"), ativos.map((p) => {
+      const valor = rendDe(p);
+      return { nome: p.nome, montante: p.montante, valor, pct: valor !== null && p.montante ? valor / p.montante : null };
+    }));
+
+    const botoesModo = `<div class="alternar" role="group" aria-label="Mostrar em">
+        <button type="button" data-modo-barras="pct" aria-pressed="${modoBarras === "pct"}">%</button>
+        <button type="button" data-modo-barras="eur" aria-pressed="${modoBarras === "eur"}">€</button></div>`;
+    // Um só gráfico de barras, com o botão Categoria / Tipo (e o % / €)
+    const porTipo = agrupComparar === "tipo";
+    const comparar = document.getElementById("rend-comparar");
+    comparar.innerHTML = `
+      <div class="panel-head"><h2>Comparar ${porTipo ? "tipos" : "categorias"}</h2>
+        <div class="botoes-grafico">
+          <div class="alternar" role="group" aria-label="Agrupar por">
+            <button type="button" data-agrup-comparar="categoria" aria-pressed="${!porTipo}">Categoria</button>
+            <button type="button" data-agrup-comparar="tipo" aria-pressed="${porTipo}">Tipo</button>
+          </div>
+          ${botoesModo}
+        </div>
+      </div>
+      <div class="barras" id="rend-barras"></div>`;
+    const itensBarras = porTipo
+      ? rendPorGrupo(ativos.filter((p) => p.subtipo), (p) => p.subtipo, rendDe)
+      // Cada categoria leva a sua bolinha de cor (a mesma dos gráficos circulares)
+      : rendPorGrupo(ativos, (p) => p.categoria, rendDe).map((g) => ({ ...g, nome: CATEGORIAS[g.nome].nome, cor: cor(g.nome) }));
+    desenharBarrasRend(comparar.querySelector("#rend-barras"), itensBarras, modoBarras);
+  }
+
+  // ---------- Separador "Histórico de rendibilidade" ----------
+  // Todas as rendibilidades registadas, editáveis. O id leva o prefixo "rend-" para o guardarLinha e o apagar
+  // saberem que é uma rendibilidade (e não uma compra).
+  function renderizarHistoricoRend(el) {
+    const porId = Object.fromEntries(ativosRendibilidade().map((a) => [a.id, a]));
+    const hist = historicoValido();
+    const linhas = [...hist].reverse().map((h) => {
+      const r = { ...h, id: `rend-${h.id}` };
+      const a = porId[h.ativoId];
+      return `<tr>
+        ${celula(r, "data", "date", formatarData(h.data), "num")}
+        <td>${escapar(a.nome)}${h.exemplo ? ' <span class="muted">(exemplo)</span>' : ""}</td>
+        <td><span class="cat-cell"><span class="dot" style="background:${cor(a.categoria)}"></span>${CATEGORIAS[a.categoria].nome}</span></td>
+        ${celula(r, "valor", "number", comSinal(h.valor), `r num ${h.valor >= 0 ? "up" : "down"}`)}
+        <td class="r">${h.automatico ? '<span class="muted" title="Vem do plano anual (PPR ou Ouro digital): muda-se lá">do plano</span>' : acoes(r)}</td></tr>`;
+    }).join("");
+    el.innerHTML = `
+      <div class="panel">
+        <div class="panel-head"><h2>Histórico de rendibilidade <span class="muted">(${hist.length})</span></h2>${botaoRegistarRend("")}</div>
+        <div class="table-scroll table-alta"><table>${hist.length ? `
+          <thead><tr><th>Data</th><th>Ativo</th><th>Categoria</th><th class="r">Rendibilidade</th><th></th></tr></thead>
+          <tbody>${linhas}</tbody>`
+          : `<tbody><tr><td class="empty">Ainda não registaste rendibilidade.</td></tr></tbody>`}</table></div>
+      </div>`;
+  }
+
+  // ---------- Página "+ Registar rendibilidade" ----------
+  // Formulário: um campo por ativo, agrupados por categoria.
+  // Aberto a partir de uma página de investimento (ex.: ETF's), mostra só os ativos dessa categoria.
+  let categoriaFormRend = null; // null = todas as categorias (botão do menu)
+
+  // Botão "+ Registar rendibilidade" de uma página de investimento (reutilizável, como o "+ Novo registo")
+  function botaoRegistarRend(categoria) {
+    return `<button class="tab primary" type="button" data-registar-rend="${categoria}">+ Registar rendibilidade</button>`;
+  }
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-registar-rend]");
+    if (!btn) return;
+    categoriaFormRend = btn.dataset.registarRend;
+    mostrarTab("registar-rend");
+  });
+
+  function renderizarFormRend() {
+    const ativos = ativosRendibilidade();
+    const ultimosPorId = ultimoPorAtivo(historicoValido());
+    const cats = CATS_RENDIBILIDADE.filter((c) => !["ppr", "ouro"].includes(c)) // estes registam-se no plano anual
+      .filter((c) => ativos.some((a) => a.categoria === c))
+      .filter((c) => !categoriaFormRend || c === categoriaFormRend);
+    document.getElementById("rend-form-titulo").textContent =
+      categoriaFormRend ? `Registar rendibilidade · ${CATEGORIAS[categoriaFormRend].nome}` : "Registar rendibilidade";
+    document.getElementById("rend-data").value = document.getElementById("rend-data").value || hojeISO();
+    document.getElementById("rend-campos").innerHTML = cats.map((c) => `
+      <div class="rend-grupo"><h3>${CATEGORIAS[c].nome}</h3><div class="rend-campos">
+        ${ativos.filter((a) => a.categoria === c).map((a) => `
+          <div class="field">
+            <label for="rv-${idCampo(a.id)}">${escapar(a.nome)}</label>
+            <input id="rv-${idCampo(a.id)}" type="number" step="0.01" inputmode="decimal" data-ativo="${escapar(a.id)}"
+              placeholder="${ultimosPorId[a.id] ? "Último: " + comSinal(ultimosPorId[a.id].valor) : "€"}">
+          </div>`).join("")}
+      </div></div>`).join("");
+  }
+
+  // Sair do formulário (guardar ou cancelar): limpa-o e volta à página onde estavas
+  function sairFormRend() {
+    document.getElementById("rend-form").reset();
+    document.getElementById("rend-data").value = hojeISO();
+    document.getElementById("rend-erro").textContent = "";
+    mostrarTab(paginaAntesDoFormulario || "rendibilidade");
+  }
+  document.getElementById("btn-cancelar-rend").addEventListener("click", sairFormRend);
+
+  // ---------- Página "+ Registar venda" ----------
+  // Igual à da rendibilidade: aberta a partir de uma página (ex.: ETF's), só mostra as posições dessa categoria.
+  const CATS_VENDA = ["etf", "cripto", "reit"]; // o PPR e o Ouro são casos à parte
+  let categoriaFormVenda = null;                // null = todas (botão do menu)
+
+  function botaoRegistarVenda(categoria) {
+    return `<button class="tab primary" type="button" data-registar-venda="${categoria}">+ Registar venda</button>`;
+  }
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-registar-venda]");
+    if (!btn) return;
+    categoriaFormVenda = btn.dataset.registarVenda;
+    mostrarTab("registar-venda");
+  });
+
+  function renderizarFormVenda() {
+    const lista = posicoes(carteira.todos().filter((r) => CATS_VENDA.includes(r.categoria)))
+      .filter((p) => !categoriaFormVenda || p.categoria === categoriaFormVenda);
+    document.getElementById("venda-form-titulo").textContent =
+      categoriaFormVenda ? `Registar venda · ${CATEGORIAS[categoriaFormVenda].nome}` : "Registar venda";
+    document.getElementById("venda-data").value = document.getElementById("venda-data").value || hojeISO();
+    document.getElementById("venda-ativo").innerHTML = lista.length
+      ? lista.map((p) => `<option value="${escapar(p.id)}">${escapar(p.nome)} (${CATEGORIAS[p.categoria].nome}) · ${formatarEuro(p.montante)} investidos</option>`).join("")
+      : `<option value="">Não tens posições para vender</option>`;
+  }
+
+  // Sair (guardar ou cancelar): limpa o formulário e volta à página onde estavas
+  function sairFormVenda() {
+    document.getElementById("venda-form").reset();
+    document.getElementById("venda-data").value = hojeISO();
+    document.getElementById("venda-erro").textContent = "";
+    mostrarTab(paginaAntesDoFormulario || "maisvalias");
+  }
+  document.getElementById("btn-cancelar-venda").addEventListener("click", sairFormVenda);
+
+  document.getElementById("venda-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const chave = document.getElementById("venda-ativo").value;
+    const recebido = parseFloat(document.getElementById("venda-recebido").value);
+    const erroVenda = document.getElementById("venda-erro");
+    if (!chave) { erroVenda.textContent = "Não tens nenhuma posição para vender."; return; }
+    if (!(recebido >= 0)) { erroVenda.textContent = "Escreve o valor que recebeste pela venda."; return; }
+    carteira.vender(chave, document.getElementById("venda-data").value || hojeISO(), recebido);
+    mostrarToast("Venda registada");
+    sairFormVenda();
+  });
+
+  document.getElementById("rend-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const data = document.getElementById("rend-data").value || hojeISO();
+    const novos = [...document.querySelectorAll("#rend-campos input[data-ativo]")]
+      .filter((i) => i.value.trim() !== "")
+      .map((i) => ({ ativoId: i.dataset.ativo, data, valor: parseFloat(i.value) }));
+    const erroRend = document.getElementById("rend-erro");
+    if (!novos.length) { erroRend.textContent = "Preenche pelo menos um ativo."; return; }
+    if (novos.some((n) => Number.isNaN(n.valor))) { erroRend.textContent = "Há um valor que não é um número."; return; }
+    erroRend.textContent = "";
+    carteira.adicionarRendibilidades(novos);
+    mostrarToast(`${novos.length} ${novos.length === 1 ? "valor guardado" : "valores guardados"} a ${formatarData(data)}`);
+    sairFormRend(); // volta à Rendibilidade (que se desenha já com os valores novos)
+  });
+
+  document.getElementById("btn-apagar-rend-exemplo").addEventListener("click", () => {
+    carteira.removerRendibilidadesExemplo();
+    mostrarToast("Valores de exemplo apagados");
+    renderizar();
+  });
+
+  // Botões dos gráficos da página Investimentos
+  views.rendibilidade.addEventListener("click", (e) => {
+    // Botão Categoria / Tipo do gráfico de barras (fica lembrado)
+    const btnAgrup = e.target.closest("[data-agrup-comparar]");
+    if (btnAgrup) {
+      agrupComparar = btnAgrup.dataset.agrupComparar;
+      try { localStorage.setItem("carteira-agrup-comparar", agrupComparar); } catch (err) {}
+      renderizar();
+      return;
+    }
+    // Botão % / € das barras (o mesmo dos ETF's, fica lembrado)
+    const btnModo = e.target.closest("[data-modo-barras]");
+    if (btnModo) {
+      modoBarras = btnModo.dataset.modoBarras;
+      try { localStorage.setItem("carteira-modo-barras", modoBarras); } catch (err) {}
+      renderizar();
+    }
+  });
+
+  // ---------- Formulário ----------
+  const form = document.getElementById("form");
+  const selCategoria = document.getElementById("f-categoria");
+  const erro = document.getElementById("form-erro");
+  // O PPR não entra aqui: gere-se no plano anual da própria página (só se lhe regista a rendibilidade)
+  const OPCOES = ["deposito", "etf", "cripto", "reit", "ouro", "emergencia", "maneio", "apoio", "apoioUso"];
+  selCategoria.innerHTML = OPCOES.map((c) => `<option value="${c}">${CATEGORIAS[c].nome}</option>`).join("");
+  document.getElementById("f-data").value = hojeISO();
+
+  function atualizarCampos() {
+    const cat = selCategoria.value;
+    document.querySelectorAll("#form [data-cats]").forEach((fs) => {
+      fs.hidden = !fs.dataset.cats.split(" ").includes(cat);
+    });
+    // Os nomes dos campos mudam conforme o tipo; a origem não se aplica ao dinheiro do Estado
+    const rotulos = { apoio: ["Descrição", "Valor recebido (€)"], apoioUso: ["Destino", "Valor utilizado (€)"] };
+    const eSaldo = CATEGORIAS[cat].saldo; // fundos: só data + saldo
+    const [rotuloNome, rotuloMontante] = eSaldo ? ["Nome", "Saldo (€)"] : rotulos[cat] || ["Nome", "Montante (€)"];
+    document.querySelector('label[for="f-nome"]').textContent = rotuloNome;
+    document.querySelector('label[for="f-montante"]').textContent = rotuloMontante;
+    document.getElementById("campo-nome").hidden = eSaldo; // o nome é sempre o do fundo
+    document.getElementById("campo-origem").hidden = eSaldo || ["apoio", "apoioUso"].includes(cat);
+  }
+  selCategoria.addEventListener("change", () => {
+    atualizarCampos();
+    atualizarSugestoes(selCategoria.value);
+  });
+  form.addEventListener("reset", () => setTimeout(() => {
+    document.getElementById("f-data").value = hojeISO();
+    erro.textContent = "";
+    atualizarCampos();
+  }));
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const val = (id) => document.getElementById(id).value.trim();
+    const cat = selCategoria.value;
+    const eSaldo = CATEGORIAS[cat].saldo;
+    const nome = eSaldo ? CATEGORIAS[cat].nome : val("f-nome"); // num fundo, o nome é o do fundo
+    const montante = parseFloat(val("f-montante"));
+
+    if (!nome) { erro.textContent = "Escreve um nome para o registo."; return; }
+    if (eSaldo && (Number.isNaN(montante) || montante < 0)) { erro.textContent = "O saldo tem de ser um número igual ou maior que zero."; return; }
+    if (!eSaldo && !(montante > 0)) { erro.textContent = "O montante tem de ser um número maior que zero."; return; }
+    if (cat === "deposito" && !val("f-vencimento")) { erro.textContent = "Indica a data de vencimento do depósito."; return; }
+
+    const registo = { categoria: cat, nome, montante, data: val("f-data") || hojeISO(), origem: val("f-origem") };
+    if (cat === "deposito") {
+      registo.prazo = Number(val("f-prazo"));
+      registo.vencimento = val("f-vencimento");
+      const juros = parseFloat(val("f-juros"));
+      if (juros > 0) registo.juros = juros;
+    }
+    if (["etf", "reit", "cripto", "ppr", "ouro"].includes(cat)) {
+      registo.subtipo = val("f-subtipo");
+    }
+
+    carteira.adicionar(registo);
+    form.reset();
+    mostrarToast(`Guardado em ${CATEGORIAS[cat].nome}`);
+    mostrarTab(paginaAntesDoFormulario || "dashboard"); // volta à página onde estavas
+  });
+
+  // ---------- Repor exemplo (dois cliques) ----------
+  const btnRepor = document.getElementById("btn-repor");
+  btnRepor.addEventListener("click", () => {
+    if (!btnRepor.classList.contains("armed")) {
+      btnRepor.classList.add("armed");
+      btnRepor.textContent = "Apagar os meus registos?";
+      setTimeout(() => { btnRepor.classList.remove("armed"); btnRepor.textContent = "Repor dados da folha"; }, 3500);
+      return;
+    }
+    carteira.repor();
+    btnRepor.classList.remove("armed");
+    btnRepor.textContent = "Repor dados da folha";
+    mostrarToast("Dados da folha repostos");
+    renderizar();
+  });
+
+  // ---------- Toast ----------
+  const toast = document.getElementById("toast");
+  let toastTimer;
+  function mostrarToast(msg) {
+    toast.textContent = msg;
+    toast.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => (toast.hidden = true), 2400);
+  }
+
+  // ---------- Render geral ----------
+  // ---------- Sugestões (datalist) ----------
+  // Junta todos os valores diferentes que já existem num campo, para aparecerem como sugestão.
+  // Os nomes são filtrados pela categoria (nos ETF's só aparecem nomes de ETF's).
+  const CAMPOS_SUGESTAO = ["nome", "origem", "subtipo"];
+  function atualizarSugestoes(categoria) {
+    const registos = carteira.todos();
+    CAMPOS_SUGESTAO.forEach((campo) => {
+      const fonte = campo === "nome" && categoria ? registos.filter((r) => r.categoria === categoria) : registos;
+      const valores = [...new Set(fonte.map((r) => (r[campo] || "").trim()).filter(Boolean))]
+        .sort((a, b) => a.localeCompare(b, "pt"));
+      document.getElementById(`lista-${campo}`).innerHTML = valores.map((v) => `<option value="${escapar(v)}"></option>`).join("");
+    });
+  }
+
+  function renderizar() {
+    document.getElementById("chip-exemplo").hidden = !carteira.eExemplo();
+    atualizarSugestoes(tabAtual === "novo" ? selCategoria.value : CATEGORIAS[tabAtual] ? tabAtual : null);
+    if (tabAtual === "dashboard") renderizarDashboard();
+    else if (tabAtual === "rendibilidade") renderizarRendibilidade();
+    else if (tabAtual === "registar-rend") renderizarFormRend();
+    else if (tabAtual === "registar-venda") renderizarFormVenda();
+    else if (tabAtual !== "novo") renderizarCategoria(tabAtual);
+    desenharTicker(); // a barra de baixo acompanha as mudanças nos ativos
+  }
+
+  atualizarCampos();
+  // ---------- Barra de indicadores gerais ----------
+  // Fontes grátis, sem chave: alternative.me (Fear & Greed cripto), CoinGecko (preços), Frankfurter (câmbio).
+  // Valores de exemplo, usados enquanto não chegam os verdadeiros (ou se a internet falhar).
+  const INDICADORES_EXEMPLO = {
+    medo: { valor: 52, texto: "Neutral" },
+    bitcoin: { eur: 98450, var24h: 1.8 },
+    ethereum: { eur: 3420, var24h: -0.6 },
+    ouro: { eur: 3150, var24h: 0.3 },   // 1 onça de ouro (através do PAX Gold)
+    eurusd: 1.17,
+  };
+  const TRADUCAO_MEDO = { "Extreme Fear": "Medo extremo", Fear: "Medo", Neutral: "Neutro", Greed: "Ganância", "Extreme Greed": "Ganância extrema" };
+
+  // Estado da barra: os últimos indicadores recebidos (começa com o exemplo)
+  let indicadores = INDICADORES_EXEMPLO;
+  let indicadoresAoVivo = null; // hora da última atualização ao vivo, ou null
+
+  // Rodapé de notícias: indicadores gerais + a rendibilidade de cada ativo que tens (desde a compra).
+  // Chamado quando chegam indicadores novos e sempre que a app se redesenha (os ativos podem mudar).
+  function desenharTicker() {
+    const d = indicadores;
+    const comSinalPct = (v) => `${v >= 0 ? "+" : ""}${v.toFixed(1).replace(".", ",")}%`;
+    const variacao = (v) => `<em class="${v >= 0 ? "up" : "down"} num">${comSinalPct(v)}</em>`;
+    // Cor do Fear & Greed: vermelho no medo, verde na ganância
+    const corMedo = d.medo.valor < 45 ? "var(--crit)" : d.medo.valor > 55 ? "var(--good)" : "var(--warn)";
+    const item = (rotulo, valor, extra = "") => `<div class="indicador"><span>${rotulo}</span><strong class="num">${valor}</strong>${extra}</div>`;
+
+    const gerais =
+      `<div class="ticker-titulo">MERCADOS</div>` +
+      item("Fear & Greed cripto", `${d.medo.valor}`, `<i class="dot" style="background:${corMedo}"></i> ${TRADUCAO_MEDO[d.medo.texto] || d.medo.texto}`) +
+      item("Bitcoin", formatarEuro(d.bitcoin.eur), variacao(d.bitcoin.var24h)) +
+      item("Ethereum", formatarEuro(d.ethereum.eur), variacao(d.ethereum.var24h)) +
+      item("Ouro (onça)", formatarEuro(d.ouro.eur), variacao(d.ouro.var24h)) +
+      item("EUR/USD", d.eurusd.toFixed(4).replace(".", ","));
+
+    // Os meus ativos: última rendibilidade registada, em % do que investi (do maior investimento para o menor)
+    const ultimos = ultimoPorAtivo(historicoValido());
+    const meus = ativosRendibilidade().filter((p) => p.montante > 0).sort((a, b) => b.montante - a.montante)
+      .map((p) => {
+        const valor = ultimos[p.id]?.valor;
+        return item(escapar(p.nome), valor === undefined ? "—" : "", valor === undefined ? "" : variacao((valor / p.montante) * 100));
+      }).join("");
+
+    // Os próximos 3 eventos do calendário
+    const proximos = eventosFuturos().slice(0, 3)
+      .map((e) => item(`${TIPOS_EVENTO[e.tipo].nome} · ${formatarData(e.data)}`, "", `<em>${escapar(e.titulo)}</em>`)).join("");
+
+    const conteudo = gerais + `<div class="ticker-titulo">PRÓXIMOS EVENTOS</div>` + proximos +
+      `<div class="ticker-titulo">OS MEUS ATIVOS</div>` + meus;
+    const faixa = document.getElementById("ticker-faixa");
+    // Só redesenha se mudou alguma coisa (senão a animação recomeçava do início a cada clique)
+    if (faixa.dataset.conteudo !== conteudo) {
+      faixa.dataset.conteudo = conteudo;
+      faixa.innerHTML = conteudo + conteudo; // 2 vezes seguidas, para dar a volta sem se notar
+      const itens = faixa.querySelectorAll(".indicador").length / 2;
+      faixa.style.animationDuration = `${Math.max(30, itens * 3.5)}s`; // mais itens = mais tempo, mesma velocidade
+    }
+    document.getElementById("ticker-estado").textContent = indicadoresAoVivo ? `Ao vivo · ${indicadoresAoVivo}` : "Exemplo";
+  }
+
+  // Vai buscar os 3 pedidos ao mesmo tempo (Promise.all) e espera por todos (await).
+  // Se algum falhar, o catch mantém os valores de exemplo.
+  async function carregarIndicadores() {
+    try {
+      const pedir = async (url) => {
+        const resposta = await fetch(url);
+        if (!resposta.ok) throw new Error(`Erro ${resposta.status} em ${url}`);
+        return resposta.json();
+      };
+      const [medo, precos, cambio] = await Promise.all([
+        pedir("https://api.alternative.me/fng/"),
+        pedir("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,pax-gold&vs_currencies=eur&include_24hr_change=true"),
+        pedir("https://api.frankfurter.app/latest?from=EUR&to=USD"),
+      ]);
+      indicadores = {
+        medo: { valor: Number(medo.data[0].value), texto: medo.data[0].value_classification },
+        bitcoin: { eur: precos.bitcoin.eur, var24h: precos.bitcoin.eur_24h_change },
+        ethereum: { eur: precos.ethereum.eur, var24h: precos.ethereum.eur_24h_change },
+        ouro: { eur: precos["pax-gold"].eur, var24h: precos["pax-gold"].eur_24h_change },
+        eurusd: cambio.rates.USD,
+      };
+      indicadoresAoVivo = new Date().toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" });
+      desenharTicker();
+    } catch (erro) {
+      console.warn("Indicadores: a usar valores de exemplo.", erro.message);
+    }
+  }
+
+  carregarIndicadores();
+  mostrarTab(tabAtual);
+</script>

@@ -1,0 +1,16 @@
+{
+  "saldos_fundos": [
+    {
+      "id": "sal-001",
+      "fundo": "sobrevivencia",
+      "data": "2026-09-30",
+      "saldo": 16700
+    },
+    {
+      "id": "sal-002",
+      "fundo": "maneio",
+      "data": "2026-09-30",
+      "saldo": 2500
+    }
+  ]
+}
