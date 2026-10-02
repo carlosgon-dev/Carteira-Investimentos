@@ -21,19 +21,11 @@ export function calcular_total_investido(gaveta_posicoes, gaveta_compras, gaveta
   return somar_lista_chave(compras_abertas, "montante");
 }
 
-// Saldo mais recente de um fundo ("sobrevivencia" ou "maneio"). No mesmo dia, conta o último inserido.
-export function calcular_saldo_atual_fundo(gaveta_saldos_fundos, nome_fundo) {
-  const lista_saldos_fundo_escolhido = gaveta_saldos_fundos.filter((objeto_saldo) => objeto_saldo.fundo === nome_fundo);
-  if (lista_saldos_fundo_escolhido.length === 0) return 0; // fundo ainda sem registos
+// Saldo mais recente de um fundo (a gaveta de um dos fundos). No mesmo dia, conta o último inserido.
+export function encontrar_saldo_atual_fundo(gaveta_fundo) {
+  if (gaveta_fundo.length === 0) return 0; // fundo ainda sem registos
 
-  const saldos_por_data = lista_saldos_fundo_escolhido.sort((saldo_a, saldo_b) => saldo_a.data.localeCompare(saldo_b.data));
+  const saldos_por_data = [...gaveta_fundo].sort((saldo_a, saldo_b) => saldo_a.data.localeCompare(saldo_b.data));
   const saldo_mais_recente = saldos_por_data.at(-1);
   return saldo_mais_recente.saldo;
-}
-
-// Total dos fundos: sobrevivência + maneio
-export function calcular_total_fundos(gaveta_saldos_fundos) {
-  const saldo_sobrevivencia = calcular_saldo_atual_fundo(gaveta_saldos_fundos, "sobrevivencia");
-  const saldo_maneio = calcular_saldo_atual_fundo(gaveta_saldos_fundos, "maneio");
-  return saldo_sobrevivencia + saldo_maneio;
 }
