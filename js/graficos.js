@@ -34,6 +34,7 @@ export function desenhar_painel({ titulo, info = "", nota = "", acoes = "", cont
 //                        campo_editavel = a chave do objeto que a coluna mostra ("saldo")
 //                        tipo_campo = o tipo de campo para a escrever ("number", "date", "text")
 //                        minimo (opcional) = o valor mais baixo aceite, ex.: 0
+//                        maximo (opcional) = o valor mais alto aceite; nas datas, "hoje" = o dia de hoje
 //   linhas_conteudo:   o que vai em cada linha, as células pela ordem das colunas
 //                      [["30/09/2026", "10 000,00 €"], …]
 export function desenhar_tabela({ colunas_cabecalho, linhas_conteudo }) {
@@ -68,7 +69,8 @@ function obter_classe_coluna(coluna) {
 function obter_atributos_edicao(coluna) {
   if (!coluna.campo_editavel) return "";
   const atributo_minimo = coluna.minimo !== undefined ? `data-minimo="${coluna.minimo}"` : "";
-  return `data-campo_editavel="${coluna.campo_editavel}" data-tipo_campo="${coluna.tipo_campo}" ${atributo_minimo}`;
+  const atributo_maximo = coluna.maximo !== undefined ? `data-maximo="${coluna.maximo}"` : "";
+  return `data-campo_editavel="${coluna.campo_editavel}" data-tipo_campo="${coluna.tipo_campo}" ${atributo_minimo} ${atributo_maximo}`;
 }
 
 // O botão "+ …" que acrescenta um objeto novo a uma gaveta (vai no cabeçalho do painel, em "acoes")

@@ -132,7 +132,7 @@ function tratar_clique_adicionar(botao) {
 
 // Uma célula da linha nova: um campo vazio (data de hoje nas datas) ou, na coluna dos botões, o ✓
 function desenhar_celula_nova(titulo_coluna, nome_gaveta) {
-  const { campo_editavel, tipo_campo, minimo } = titulo_coluna.dataset;
+  const { campo_editavel, tipo_campo } = titulo_coluna.dataset;
   if (!campo_editavel) {
     return `
       <td>
@@ -144,18 +144,24 @@ function desenhar_celula_nova(titulo_coluna, nome_gaveta) {
     `;
   }
   const valor_inicial = tipo_campo === "date" ? obter_data_hoje() : "";
-  const atributo_minimo = minimo !== undefined ? `data-minimo="${minimo}"` : "";
   return `
-    <td class="${titulo_coluna.className}" data-campo_editavel="${campo_editavel}" data-tipo_campo="${tipo_campo}" ${atributo_minimo}>
-      ${desenhar_campo_edicao(tipo_campo, minimo, valor_inicial)}
+    <td class="${titulo_coluna.className}" data-campo_editavel="${campo_editavel}" data-tipo_campo="${tipo_campo}">
+      ${desenhar_campo_edicao(titulo_coluna.dataset, valor_inicial)}
     </td>
   `;
 }
 
-// O campo de escrever de uma célula em edição (usado pelo ✎ e pelo "+ …")
-function desenhar_campo_edicao(tipo_campo, minimo, valor) {
-  const atributo_min = minimo !== undefined ? `min="${minimo}"` : "";
-  return `<input class="campo_tabela" type="${tipo_campo}" step="any" ${atributo_min} required value="${valor}">`;
+// O campo de escrever de uma célula em edição (usado pelo ✎ e pelo "+ …").
+//   pistas: o dataset da célula ou do título da coluna (tipo_campo e, se houver, minimo e maximo)
+function desenhar_campo_edicao(pistas, valor) {
+  const atributo_min = pistas.minimo !== undefined ? `min="${obter_limite(pistas.minimo)}"` : "";
+  const atributo_max = pistas.maximo !== undefined ? `max="${obter_limite(pistas.maximo)}"` : "";
+  return `<input class="campo_tabela" type="${pistas.tipo_campo}" step="any" ${atributo_min} ${atributo_max} required value="${valor}">`;
+}
+
+// Um limite de um campo: "hoje" passa à data de hoje ("2026-10-02"); os outros ficam como estão
+function obter_limite(limite) {
+  return limite === "hoje" ? obter_data_hoje() : limite;
 }
 
 // O ✎ põe a linha a editar: cada célula editável passa a um campo com o valor original, e o ✎ passa a ✓
@@ -167,7 +173,7 @@ function tratar_clique_editar(botao) {
 
   linha.querySelectorAll("[data-campo_editavel]").forEach((celula) => {
     const valor_original = objeto[celula.dataset.campo_editavel];
-    celula.innerHTML = desenhar_campo_edicao(celula.dataset.tipo_campo, celula.dataset.minimo, valor_original);
+    celula.innerHTML = desenhar_campo_edicao(celula.dataset, valor_original);
   });
 
   botao.dataset.acao = "guardar"; // o próximo clique neste botão guarda

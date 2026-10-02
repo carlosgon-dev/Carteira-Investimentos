@@ -6,8 +6,9 @@ import { formatar_euro, formatar_data, ordenar_mais_recente_primeiro } from "../
 // As colunas das duas tabelas dos fundos (a última, sem título, é a dos botões ✎ ✕).
 // campo_editavel + tipo_campo: estas colunas podem ser editadas com o ✎
 // minimo: o valor mais baixo aceite (um saldo nunca é negativo)
+// maximo: o valor mais alto aceite ("hoje": um saldo não pode ter data no futuro)
 const COLUNAS_FUNDO = [
-  { titulo: "Data", campo_editavel: "data", tipo_campo: "date" },
+  { titulo: "Data", campo_editavel: "data", tipo_campo: "date", maximo: "hoje" },
   { titulo: "Saldo", campo_editavel: "saldo", tipo_campo: "number", minimo: 0, numero: true },
   { titulo: "" },
 ];
