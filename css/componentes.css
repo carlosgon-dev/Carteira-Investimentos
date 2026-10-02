@@ -2,13 +2,63 @@
    COMPONENTES: as peças que se repetem em várias páginas
    ========================================================== */
 
+/* ---------- Painel ---------- */
+/* Caixa com linha à volta, que agrupa uma parte da página (cartões, tabela, gráfico) */
+.painel {
+  padding: 1.4rem;
+  border: 1px solid var(--cor_linha);
+  border-radius: 0.85rem;
+  background: var(--cor_cartao);
+  margin-bottom: 1.5rem;
+}
+
+/* Linha de cima do painel: título (+ "i") à esquerda; nota e botões à direita */
+.painel_cabecalho {
+  display: flex;
+  flex-wrap: wrap;                  /* em ecrãs estreitos, o lado direito passa para baixo */
+  justify-content: space-between;   /* empurra um para cada ponta */
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.painel_titulo,
+.painel_lado_direito {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  & h2 { margin: 0; }
+}
+
+.painel_nota {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--cor_suave);
+}
+
+/* ---------- Info ("i" com ajuda ao passar o rato) ---------- */
+.info {
+  display: inline-grid;
+  place-items: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 1px solid var(--cor_suave);
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--cor_suave);
+  cursor: help;
+  &:hover,
+  &:focus-visible { color: var(--cor_texto); border-color: var(--cor_texto); }
+}
+
 /* ---------- Cartões ---------- */
 /* Fila de cartões lado a lado; em ecrãs estreitos passam para a linha de baixo */
 .fila_cartoes {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
   gap: 0.85rem;
-  margin-bottom: 1.5rem;
 }
 
 .cartao {
@@ -39,13 +89,25 @@
   font-variant-numeric: tabular-nums;   /* algarismos todos da mesma largura */
 }
 
+/* "Investido + rendibilidade": texto pequeno por baixo do valor */
+.cartao_legenda {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--cor_texto_secundario);
+}
+
 /* O cartão principal da página: escuro e sempre o primeiro (à esquerda) */
 .cartao_destaque {
   background: var(--cor_texto);
   border-color: var(--cor_texto);
   color: var(--cor_fundo);
-  & .cartao_titulo { color: inherit; opacity: 0.72; }
+  & .cartao_titulo,
+  & .cartao_legenda { color: inherit; opacity: 0.72; }
 }
+
+/* ---------- Cores dos valores (ver obter_cor_valor) ---------- */
+.positivo { color: var(--cor_positivo_texto); }
+.negativo { color: var(--cor_negativo_texto); }
 
 /* ---------- Mensagens ---------- */
 .erro {color: var(--cor_negativo_texto);}

@@ -11,6 +11,6 @@ export function desenhar_carteira(dados) {
 
   return `
     <h2>Carteira</h2>
-    ${desenhar_cartao("Investido", formatar_euro(total_investido))}
+    ${desenhar_cartao({ titulo: "Investido", valor: formatar_euro(total_investido) })}
   `;
 }
