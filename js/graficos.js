@@ -27,12 +27,18 @@ export function desenhar_painel({ titulo, info = "", nota = "", acoes = "", cont
 }
 
 // Uma tabela. Não sabe nada dos dados: recebe os textos já formatados.
-//   colunas_cabecalho: o que vai lá em cima, uma entrada por coluna (numero: alinha à direita)
+//   colunas_cabecalho: o que vai lá em cima, uma entrada por coluna
 //                      [{ titulo: "Data" }, { titulo: "Saldo", numero: true }]
+//                      numero: alinha à direita
+//                      campo_editavel + tipo_campo (opcionais): a coluna pode ser editada com o ✎;
+//                        campo_editavel = a chave do objeto que a coluna mostra ("saldo")
+//                        tipo_campo = o tipo de campo para a escrever ("number", "date", "text")
+//                        minimo (opcional) = o valor mais baixo aceite, ex.: 0
 //   linhas_conteudo:   o que vai em cada linha, as células pela ordem das colunas
 //                      [["30/09/2026", "10 000,00 €"], …]
 export function desenhar_tabela({ colunas_cabecalho, linhas_conteudo }) {
-  const html_cabecalho = colunas_cabecalho.map((coluna) => `<th class="${obter_classe_coluna(coluna)}">${coluna.titulo}</th>`).join("");
+  // Os títulos levam as mesmas pistas de edição que as células (o "+ …" usa-as para criar uma linha nova)
+  const html_cabecalho = colunas_cabecalho.map((coluna) => `<th class="${obter_classe_coluna(coluna)}" ${obter_atributos_edicao(coluna)}>${coluna.titulo}</th>`).join("");
   const html_linhas = linhas_conteudo.map((linha) => desenhar_linha_tabela(linha, colunas_cabecalho)).join("");
   return `
     <div class="tabela_caixa">
@@ -44,15 +50,35 @@ export function desenhar_tabela({ colunas_cabecalho, linhas_conteudo }) {
   `;
 }
 
-// Uma linha da tabela: cada célula recebe o alinhamento da sua coluna
+// Uma linha da tabela: cada célula recebe o alinhamento da sua coluna e, se for editável, o campo_editavel e o tipo_campo
 function desenhar_linha_tabela(linha, colunas_cabecalho) {
-  const html_celulas = linha.map((celula, posicao) => `<td class="${obter_classe_coluna(colunas_cabecalho[posicao])}">${celula}</td>`).join("");
+  const html_celulas = linha.map((celula, posicao) => {
+    const coluna = colunas_cabecalho[posicao];
+    return `<td class="${obter_classe_coluna(coluna)}" ${obter_atributos_edicao(coluna)}>${celula}</td>`;
+  }).join("");
   return `<tr>${html_celulas}</tr>`;
 }
 
 // Colunas de números alinham à direita
 function obter_classe_coluna(coluna) {
   return coluna.numero ? "numero" : "";
+}
+
+// Colunas editáveis: a célula leva escrito o campo_editavel, o tipo_campo e, se houver, o minimo (o ✎ do main.js lê-os)
+function obter_atributos_edicao(coluna) {
+  if (!coluna.campo_editavel) return "";
+  const atributo_minimo = coluna.minimo !== undefined ? `data-minimo="${coluna.minimo}"` : "";
+  return `data-campo_editavel="${coluna.campo_editavel}" data-tipo_campo="${coluna.tipo_campo}" ${atributo_minimo}`;
+}
+
+// O botão "+ …" que acrescenta um objeto novo a uma gaveta (vai no cabeçalho do painel, em "acoes")
+export function desenhar_botao_adicionar(nome_gaveta, texto) {
+  return `<button type="button" class="botao_secundario" data-acao="adicionar" data-gaveta="${nome_gaveta}">${texto}</button>`;
+}
+
+// O botão ↩ (cancelar) de uma linha à espera: aparece no lugar de outro botão, depois do 1.º clique
+export function desenhar_botao_cancelar() {
+  return `<button type="button" class="botao_icone" data-acao="cancelar" title="Cancelar" aria-label="Cancelar">↩</button>`;
 }
 
 // Os botões ✎ (editar) e ✕ (apagar) de uma linha de tabela. Servem para qualquer gaveta.

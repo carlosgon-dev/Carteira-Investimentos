@@ -11,6 +11,22 @@ export function formatar_data(data) {
   return `${dia}/${mes}/${ano}`;
 }
 
+// A data de hoje, no formato dos dados: "2026-10-02"
+export function obter_data_hoje() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+// Quantos algarismos tem o número de um id ("sal-003" → 3)
+const ALGARISMOS_ID = 3;
+
+// O próximo id livre de uma gaveta: se lá estão "sal-001" e "sal-002" → "sal-003"
+export function gerar_id(gaveta, prefixo) {
+  const numeros_usados = gaveta.map((objeto) => Number(objeto.id.split("-")[1]));
+  const maior_numero = Math.max(0, ...numeros_usados);
+  const numero_novo = String(maior_numero + 1).padStart(ALGARISMOS_ID, "0");
+  return `${prefixo}-${numero_novo}`;
+}
+
 // Cópia da lista ordenada pela chave "data", do mais recente para o mais antigo (a original não muda)
 export function ordenar_mais_recente_primeiro(lista) {
   return [...lista].sort((objeto_a, objeto_b) => objeto_b.data.localeCompare(objeto_a.data));

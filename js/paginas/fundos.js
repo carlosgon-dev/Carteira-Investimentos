@@ -1,10 +1,16 @@
 // Página "Fundos": fundo de sobrevivência e fundo de maneio.
-import { desenhar_cartao, desenhar_painel, desenhar_tabela, desenhar_botoes_linha } from "../graficos.js";
+import { desenhar_cartao, desenhar_painel, desenhar_tabela, desenhar_botoes_linha, desenhar_botao_adicionar } from "../graficos.js";
 import { encontrar_saldo_atual_fundo } from "../calculadores.js";
 import { formatar_euro, formatar_data, ordenar_mais_recente_primeiro } from "../ferramentas.js";
 
-// As colunas das duas tabelas dos fundos (a última, sem título, é a dos botões ✎ ✕)
-const COLUNAS_FUNDO = [{ titulo: "Data" }, { titulo: "Saldo", numero: true }, { titulo: "" }];
+// As colunas das duas tabelas dos fundos (a última, sem título, é a dos botões ✎ ✕).
+// campo_editavel + tipo_campo: estas colunas podem ser editadas com o ✎
+// minimo: o valor mais baixo aceite (um saldo nunca é negativo)
+const COLUNAS_FUNDO = [
+  { titulo: "Data", campo_editavel: "data", tipo_campo: "date" },
+  { titulo: "Saldo", campo_editavel: "saldo", tipo_campo: "number", minimo: 0, numero: true },
+  { titulo: "" },
+];
 
 export function desenhar_fundos(dados) {
   const gaveta_fundo_sobrevivencia = dados.ler("fundo_sobrevivencia");
@@ -47,5 +53,6 @@ function desenhar_painel_fundo(titulo, nome_gaveta, gaveta_fundo) {
     desenhar_botoes_linha(nome_gaveta, objeto_saldo.id),
   ]);
   const html_tabela = desenhar_tabela({ colunas_cabecalho: COLUNAS_FUNDO, linhas_conteudo: linhas_saldos });
-  return desenhar_painel({ titulo, conteudo: html_tabela });
+  const html_botao_adicionar = desenhar_botao_adicionar(nome_gaveta, "+ Atualizar saldo");
+  return desenhar_painel({ titulo, acoes: html_botao_adicionar, conteudo: html_tabela });
 }
