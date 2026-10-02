@@ -146,6 +146,35 @@
   }
 }
 
+/* Campo de escrever dentro de uma célula, quando a linha está a ser editada (✎) */
+.campo_tabela {
+  width: 100%;
+  min-width: 8rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--cor_linha);
+  border-radius: 0.4rem;
+  background: var(--cor_fundo);
+  font: inherit;
+  color: var(--cor_texto);
+  text-align: inherit;   /* os números continuam à direita */
+  &:focus-visible { outline: 2px solid var(--cor_destaque); outline-offset: 1px; }
+}
+
+/* ---------- Botão secundário ("+ Atualizar saldo", nos cabeçalhos dos painéis) ---------- */
+.botao_secundario {
+  padding: 0.45rem 0.85rem;
+  border: 1px solid var(--cor_linha);
+  border-radius: 0.55rem;
+  background: transparent;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--cor_texto_secundario);
+  cursor: pointer;
+  &:hover { background: var(--cor_cartao_suave); color: var(--cor_texto); }
+  &:focus-visible { outline: 2px solid var(--cor_destaque); outline-offset: 2px; }
+}
+
 /* ---------- Botões ✎ ✕ das linhas das tabelas ---------- */
 .botoes_linha {
   display: flex;

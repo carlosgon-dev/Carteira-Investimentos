@@ -41,6 +41,15 @@ export async function carregar_dados() {
       guardar();
     },
 
+    // Cria uma gaveta nova em que o objeto com este id leva os valores novos (o original não é alterado)
+    //   valores_novos: só as chaves que mudam, ex.: { saldo: 3000 }
+    editar: (nome_gaveta, id, valores_novos) => {
+      const gaveta_antiga = arquivo[nome_gaveta];
+      const gaveta_nova = gaveta_antiga.map((objeto) => (objeto.id === id ? { ...objeto, ...valores_novos } : objeto));
+      arquivo = { ...arquivo, [nome_gaveta]: gaveta_nova };
+      guardar();
+    },
+
     // Esquece as mudanças feitas na app e volta aos dados do ficheiro data/dados.json
     repor: async () => {
       arquivo = await ler_ficheiro();
