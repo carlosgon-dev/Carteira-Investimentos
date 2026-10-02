@@ -55,6 +55,17 @@ function obter_classe_coluna(coluna) {
   return coluna.numero ? "numero" : "";
 }
 
+// Os botões ✎ (editar) e ✕ (apagar) de uma linha de tabela. Servem para qualquer gaveta.
+// Cada botão leva escrito o que faz, em que gaveta e em que objeto (para o main.js saber o que fazer ao clique).
+export function desenhar_botoes_linha(nome_gaveta, id) {
+  return `
+    <div class="botoes_linha">
+      <button type="button" class="botao_icone" data-acao="editar" data-gaveta="${nome_gaveta}" data-id="${id}" title="Editar" aria-label="Editar">✎</button>
+      <button type="button" class="botao_icone botao_perigo" data-acao="apagar" data-gaveta="${nome_gaveta}" data-id="${id}" title="Apagar" aria-label="Apagar">✕</button>
+    </div>
+  `;
+}
+
 // Um cartão: título, valor grande e, se houver, uma legenda por baixo.
 // Opções (todas opcionais):
 //   legenda:   texto pequeno por baixo do valor, ex.: "+7,0%"
