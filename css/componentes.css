@@ -2,12 +2,49 @@
    COMPONENTES: as peças que se repetem em várias páginas
    ========================================================== */
 
-/* ---------- Cartão ---------- */
+/* ---------- Cartões ---------- */
+/* Fila de cartões lado a lado; em ecrãs estreitos passam para a linha de baixo */
+.fila_cartoes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
 .cartao {
-  padding: var(--espaco);
-  border-radius: 0.5rem;
-  background: var(--cor_cartao);
+  display: grid;
+  gap: 0.3rem;
+  padding: 1rem 1.15rem;
   border: 1px solid var(--cor_linha);
+  border-radius: 0.85rem;
+  background: var(--cor_cartao);
+}
+
+/* "TOTAL DOS FUNDOS": pequeno, em maiúsculas e cinzento */
+.cartao_titulo {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cor_suave);
+}
+
+/* "19 200,00 €": grande */
+.cartao_valor {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;   /* algarismos todos da mesma largura */
+}
+
+/* O cartão principal da página: escuro e sempre o primeiro (à esquerda) */
+.cartao_destaque {
+  background: var(--cor_texto);
+  border-color: var(--cor_texto);
+  color: var(--cor_fundo);
+  & .cartao_titulo { color: inherit; opacity: 0.72; }
 }
 
 /* ---------- Mensagens ---------- */

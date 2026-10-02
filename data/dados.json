@@ -1,0 +1,1840 @@
+{
+  "posicoes": [
+    {
+      "id": "pos-001",
+      "tipo": "etf",
+      "nome": "S&P 500",
+      "tema": "Mercado - USA"
+    },
+    {
+      "id": "pos-002",
+      "tipo": "etf",
+      "nome": "EUR STOXX Banks 30-15 DE",
+      "tema": "Bancos"
+    },
+    {
+      "id": "pos-003",
+      "tipo": "etf",
+      "nome": "iShares Core MSCI World UCITS ETF USD (Acc)",
+      "tema": "Mercado - Global"
+    },
+    {
+      "id": "pos-004",
+      "tipo": "etf",
+      "nome": "FTSE All-World",
+      "tema": "Mercado - Global"
+    },
+    {
+      "id": "pos-005",
+      "tipo": "etf",
+      "nome": "VanEck Quantum Computing UCITS ETF A",
+      "tema": "Tecnologia quântica"
+    },
+    {
+      "id": "pos-006",
+      "tipo": "cripto",
+      "nome": "Bitcoin",
+      "tema": "Blockchain"
+    },
+    {
+      "id": "pos-007",
+      "tipo": "cripto",
+      "nome": "Ethereum",
+      "tema": "Contratos inteligentes"
+    },
+    {
+      "id": "pos-008",
+      "tipo": "cripto",
+      "nome": "Solana",
+      "tema": "Blockchain"
+    },
+    {
+      "id": "pos-009",
+      "tipo": "cripto",
+      "nome": "Bittensor",
+      "tema": "Inteligência artificial"
+    },
+    {
+      "id": "pos-010",
+      "tipo": "cripto",
+      "nome": "Chainlink",
+      "tema": "Oráculos"
+    },
+    {
+      "id": "pos-011",
+      "tipo": "cripto",
+      "nome": "Render",
+      "tema": "Inteligência artificial"
+    },
+    {
+      "id": "pos-012",
+      "tipo": "cripto",
+      "nome": "Ondo",
+      "tema": "Ativos reais (RWA)"
+    },
+    {
+      "id": "pos-013",
+      "tipo": "reit",
+      "nome": "Realty Income",
+      "tema": "Retalho"
+    },
+    {
+      "id": "pos-014",
+      "tipo": "reit",
+      "nome": "Invesco Real Estate S&P US Select Sector UCITS ETF",
+      "tema": "Mercado - USA"
+    },
+    {
+      "id": "pos-015",
+      "tipo": "reit",
+      "nome": "iShares US Property Yield UCITS ETF",
+      "tema": "Mercado - USA"
+    },
+    {
+      "id": "pos-016",
+      "tipo": "reit",
+      "nome": "iShares Developed Markets Property Yield UCITS ETF",
+      "tema": "Mercado - Global"
+    },
+    {
+      "id": "pos-017",
+      "tipo": "reit",
+      "nome": "iShares European Property Yield UCITS ETF",
+      "tema": "Mercado - Europa"
+    },
+    {
+      "id": "pos-018",
+      "tipo": "ouro",
+      "nome": "Bitcoin",
+      "tema": "Reserva de ouro digital"
+    }
+  ],
+  "compras": [
+    {
+      "id": "com-001",
+      "id_posicao": "pos-001",
+      "data": "2024-03-15",
+      "montante": 150,
+      "origem": "Explicações"
+    },
+    {
+      "id": "com-002",
+      "id_posicao": "pos-001",
+      "data": "2024-09-10",
+      "montante": 192.3,
+      "origem": "Explicações"
+    },
+    {
+      "id": "com-003",
+      "id_posicao": "pos-001",
+      "data": "2025-02-12",
+      "montante": 400,
+      "origem": "Explicações"
+    },
+    {
+      "id": "com-004",
+      "id_posicao": "pos-001",
+      "data": "2025-06-18",
+      "montante": 437.95,
+      "origem": "Explicações"
+    },
+    {
+      "id": "com-005",
+      "id_posicao": "pos-001",
+      "data": "2025-11-05",
+      "montante": 400,
+      "origem": "Explicações"
+    },
+    {
+      "id": "com-006",
+      "id_posicao": "pos-002",
+      "data": "2025-01-20",
+      "montante": 300,
+      "origem": "Juros bancários"
+    },
+    {
+      "id": "com-007",
+      "id_posicao": "pos-002",
+      "data": "2025-05-14",
+      "montante": 286.85,
+      "origem": "Juros bancários"
+    },
+    {
+      "id": "com-008",
+      "id_posicao": "pos-002",
+      "data": "2025-07-02",
+      "montante": 14.53,
+      "origem": "Dividendos"
+    },
+    {
+      "id": "com-009",
+      "id_posicao": "pos-002",
+      "data": "2025-09-15",
+      "montante": 8.85,
+      "origem": "Lucro ETF"
+    },
+    {
+      "id": "com-010",
+      "id_posicao": "pos-002",
+      "data": "2026-01-10",
+      "montante": 34.54,
+      "origem": "Lucro ETF"
+    },
+    {
+      "id": "com-011",
+      "id_posicao": "pos-003",
+      "data": "2022-04-08",
+      "montante": 200,
+      "origem": "Explicações"
+    },
+    {
+      "id": "com-012",
+      "id_posicao": "pos-003",
+      "data": "2022-10-21",
+      "montante": 240,
+      "origem": "Explicações"
+    },
+    {
+      "id": "com-013",
+      "id_posicao": "pos-004",
+      "data": "2023-02-01",
+      "montante": 100,
+      "origem": "Trocos de universidade"
+    },
+    {
+      "id": "com-014",
+      "id_posicao": "pos-004",
+      "data": "2023-06-15",
+      "montante": 80,
+      "origem": "Trocos de universidade"
+    },
+    {
+      "id": "com-015",
+      "id_posicao": "pos-004",
+      "data": "2023-11-30",
+      "montante": 100,
+      "origem": "Trocos de universidade"
+    },
+    {
+      "id": "com-016",
+      "id_posicao": "pos-005",
+      "data": "2026-03-31",
+      "montante": 32.4,
+      "origem": "Arredondamentos (roundup)"
+    },
+    {
+      "id": "com-017",
+      "id_posicao": "pos-005",
+      "data": "2026-05-31",
+      "montante": 35.1,
+      "origem": "Arredondamentos (roundup)"
+    },
+    {
+      "id": "com-018",
+      "id_posicao": "pos-005",
+      "data": "2026-07-31",
+      "montante": 33,
+      "origem": "Arredondamentos (roundup)"
+    },
+    {
+      "id": "com-019",
+      "id_posicao": "pos-006",
+      "data": "2024-11-15",
+      "montante": 600,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-020",
+      "id_posicao": "pos-006",
+      "data": "2025-04-22",
+      "montante": 700,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-021",
+      "id_posicao": "pos-006",
+      "data": "2026-01-10",
+      "montante": 500,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-022",
+      "id_posicao": "pos-007",
+      "data": "2025-01-10",
+      "montante": 400,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-023",
+      "id_posicao": "pos-007",
+      "data": "2025-10-03",
+      "montante": 600,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-024",
+      "id_posicao": "pos-008",
+      "data": "2025-03-10",
+      "montante": 300,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-025",
+      "id_posicao": "pos-008",
+      "data": "2026-06-17",
+      "montante": 300,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-026",
+      "id_posicao": "pos-009",
+      "data": "2025-08-12",
+      "montante": 250,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-027",
+      "id_posicao": "pos-009",
+      "data": "2026-02-05",
+      "montante": 200,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-028",
+      "id_posicao": "pos-010",
+      "data": "2025-05-20",
+      "montante": 200,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-029",
+      "id_posicao": "pos-010",
+      "data": "2026-03-12",
+      "montante": 200,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-030",
+      "id_posicao": "pos-011",
+      "data": "2025-03-10",
+      "montante": 60,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-031",
+      "id_posicao": "pos-011",
+      "data": "2025-09-01",
+      "montante": 60,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-032",
+      "id_posicao": "pos-012",
+      "data": "2025-06-15",
+      "montante": 40,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-033",
+      "id_posicao": "pos-012",
+      "data": "2026-04-02",
+      "montante": 40,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-034",
+      "id_posicao": "pos-013",
+      "data": "2026-01-15",
+      "montante": 5,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-035",
+      "id_posicao": "pos-013",
+      "data": "2026-04-15",
+      "montante": 5,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-036",
+      "id_posicao": "pos-014",
+      "data": "2026-01-15",
+      "montante": 5,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-037",
+      "id_posicao": "pos-014",
+      "data": "2026-04-15",
+      "montante": 5,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-038",
+      "id_posicao": "pos-015",
+      "data": "2026-02-15",
+      "montante": 4,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-039",
+      "id_posicao": "pos-015",
+      "data": "2026-05-15",
+      "montante": 3,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-040",
+      "id_posicao": "pos-015",
+      "data": "2026-08-15",
+      "montante": 3,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-041",
+      "id_posicao": "pos-016",
+      "data": "2026-02-15",
+      "montante": 5,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-042",
+      "id_posicao": "pos-016",
+      "data": "2026-06-15",
+      "montante": 5,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-043",
+      "id_posicao": "pos-017",
+      "data": "2026-03-15",
+      "montante": 4,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-044",
+      "id_posicao": "pos-017",
+      "data": "2026-06-15",
+      "montante": 3,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-045",
+      "id_posicao": "pos-017",
+      "data": "2026-09-15",
+      "montante": 3,
+      "origem": "Salário"
+    },
+    {
+      "id": "com-046",
+      "id_posicao": "pos-018",
+      "data": "2025-12-31",
+      "montante": 49.37,
+      "origem": "Cashback Trade Republic"
+    }
+  ],
+  "rendibilidades": [
+    {
+      "id": "ren-001",
+      "id_posicao": "pos-001",
+      "data": "2026-06-30",
+      "valor": 96.4
+    },
+    {
+      "id": "ren-002",
+      "id_posicao": "pos-001",
+      "data": "2026-07-31",
+      "valor": 131.2
+    },
+    {
+      "id": "ren-003",
+      "id_posicao": "pos-001",
+      "data": "2026-08-31",
+      "valor": 118.7
+    },
+    {
+      "id": "ren-004",
+      "id_posicao": "pos-001",
+      "data": "2026-09-28",
+      "valor": 162.9
+    },
+    {
+      "id": "ren-005",
+      "id_posicao": "pos-002",
+      "data": "2026-06-30",
+      "valor": 58.1
+    },
+    {
+      "id": "ren-006",
+      "id_posicao": "pos-002",
+      "data": "2026-07-31",
+      "valor": 71.6
+    },
+    {
+      "id": "ren-007",
+      "id_posicao": "pos-002",
+      "data": "2026-08-31",
+      "valor": 66
+    },
+    {
+      "id": "ren-008",
+      "id_posicao": "pos-002",
+      "data": "2026-09-28",
+      "valor": 84.3
+    },
+    {
+      "id": "ren-009",
+      "id_posicao": "pos-003",
+      "data": "2026-06-30",
+      "valor": 52.7
+    },
+    {
+      "id": "ren-010",
+      "id_posicao": "pos-003",
+      "data": "2026-07-31",
+      "valor": 61.9
+    },
+    {
+      "id": "ren-011",
+      "id_posicao": "pos-003",
+      "data": "2026-08-31",
+      "valor": 58.3
+    },
+    {
+      "id": "ren-012",
+      "id_posicao": "pos-003",
+      "data": "2026-09-28",
+      "valor": 70.4
+    },
+    {
+      "id": "ren-013",
+      "id_posicao": "pos-004",
+      "data": "2026-06-30",
+      "valor": 18.2
+    },
+    {
+      "id": "ren-014",
+      "id_posicao": "pos-004",
+      "data": "2026-07-31",
+      "valor": 22.5
+    },
+    {
+      "id": "ren-015",
+      "id_posicao": "pos-004",
+      "data": "2026-08-31",
+      "valor": 20.9
+    },
+    {
+      "id": "ren-016",
+      "id_posicao": "pos-004",
+      "data": "2026-09-28",
+      "valor": 26.1
+    },
+    {
+      "id": "ren-017",
+      "id_posicao": "pos-005",
+      "data": "2026-06-30",
+      "valor": -8.4
+    },
+    {
+      "id": "ren-018",
+      "id_posicao": "pos-005",
+      "data": "2026-07-31",
+      "valor": 4.1
+    },
+    {
+      "id": "ren-019",
+      "id_posicao": "pos-005",
+      "data": "2026-08-31",
+      "valor": 12.7
+    },
+    {
+      "id": "ren-020",
+      "id_posicao": "pos-005",
+      "data": "2026-09-28",
+      "valor": 19.8
+    },
+    {
+      "id": "ren-021",
+      "id_posicao": "pos-006",
+      "data": "2026-06-30",
+      "valor": 120.5
+    },
+    {
+      "id": "ren-022",
+      "id_posicao": "pos-006",
+      "data": "2026-07-31",
+      "valor": 188.3
+    },
+    {
+      "id": "ren-023",
+      "id_posicao": "pos-006",
+      "data": "2026-08-31",
+      "valor": 142.7
+    },
+    {
+      "id": "ren-024",
+      "id_posicao": "pos-006",
+      "data": "2026-09-28",
+      "valor": 215.4
+    },
+    {
+      "id": "ren-025",
+      "id_posicao": "pos-007",
+      "data": "2026-06-30",
+      "valor": -35.2
+    },
+    {
+      "id": "ren-026",
+      "id_posicao": "pos-007",
+      "data": "2026-07-31",
+      "valor": 22.8
+    },
+    {
+      "id": "ren-027",
+      "id_posicao": "pos-007",
+      "data": "2026-08-31",
+      "valor": -12.4
+    },
+    {
+      "id": "ren-028",
+      "id_posicao": "pos-007",
+      "data": "2026-09-28",
+      "valor": 48.9
+    },
+    {
+      "id": "ren-029",
+      "id_posicao": "pos-008",
+      "data": "2026-06-30",
+      "valor": 44.1
+    },
+    {
+      "id": "ren-030",
+      "id_posicao": "pos-008",
+      "data": "2026-07-31",
+      "valor": 71.5
+    },
+    {
+      "id": "ren-031",
+      "id_posicao": "pos-008",
+      "data": "2026-08-31",
+      "valor": 38.2
+    },
+    {
+      "id": "ren-032",
+      "id_posicao": "pos-008",
+      "data": "2026-09-28",
+      "valor": 62
+    },
+    {
+      "id": "ren-033",
+      "id_posicao": "pos-009",
+      "data": "2026-06-30",
+      "valor": -60.3
+    },
+    {
+      "id": "ren-034",
+      "id_posicao": "pos-009",
+      "data": "2026-07-31",
+      "valor": -22.7
+    },
+    {
+      "id": "ren-035",
+      "id_posicao": "pos-009",
+      "data": "2026-08-31",
+      "valor": 15.4
+    },
+    {
+      "id": "ren-036",
+      "id_posicao": "pos-009",
+      "data": "2026-09-28",
+      "valor": 58.6
+    },
+    {
+      "id": "ren-037",
+      "id_posicao": "pos-010",
+      "data": "2026-06-30",
+      "valor": 12.2
+    },
+    {
+      "id": "ren-038",
+      "id_posicao": "pos-010",
+      "data": "2026-07-31",
+      "valor": -8.5
+    },
+    {
+      "id": "ren-039",
+      "id_posicao": "pos-010",
+      "data": "2026-08-31",
+      "valor": 20.1
+    },
+    {
+      "id": "ren-040",
+      "id_posicao": "pos-010",
+      "data": "2026-09-28",
+      "valor": 31.7
+    },
+    {
+      "id": "ren-041",
+      "id_posicao": "pos-011",
+      "data": "2026-06-30",
+      "valor": -18.4
+    },
+    {
+      "id": "ren-042",
+      "id_posicao": "pos-011",
+      "data": "2026-07-31",
+      "valor": -9.1
+    },
+    {
+      "id": "ren-043",
+      "id_posicao": "pos-011",
+      "data": "2026-08-31",
+      "valor": -14.6
+    },
+    {
+      "id": "ren-044",
+      "id_posicao": "pos-011",
+      "data": "2026-09-28",
+      "valor": -6.2
+    },
+    {
+      "id": "ren-045",
+      "id_posicao": "pos-012",
+      "data": "2026-06-30",
+      "valor": 5.3
+    },
+    {
+      "id": "ren-046",
+      "id_posicao": "pos-012",
+      "data": "2026-07-31",
+      "valor": 9.8
+    },
+    {
+      "id": "ren-047",
+      "id_posicao": "pos-012",
+      "data": "2026-08-31",
+      "valor": 2.1
+    },
+    {
+      "id": "ren-048",
+      "id_posicao": "pos-012",
+      "data": "2026-09-28",
+      "valor": -3.4
+    },
+    {
+      "id": "ren-049",
+      "id_posicao": "pos-013",
+      "data": "2026-06-30",
+      "valor": 0.4
+    },
+    {
+      "id": "ren-050",
+      "id_posicao": "pos-013",
+      "data": "2026-07-31",
+      "valor": -0.3
+    },
+    {
+      "id": "ren-051",
+      "id_posicao": "pos-013",
+      "data": "2026-08-31",
+      "valor": 0.6
+    },
+    {
+      "id": "ren-052",
+      "id_posicao": "pos-013",
+      "data": "2026-09-28",
+      "valor": 0.9
+    },
+    {
+      "id": "ren-053",
+      "id_posicao": "pos-014",
+      "data": "2026-06-30",
+      "valor": 0.2
+    },
+    {
+      "id": "ren-054",
+      "id_posicao": "pos-014",
+      "data": "2026-07-31",
+      "valor": 0.5
+    },
+    {
+      "id": "ren-055",
+      "id_posicao": "pos-014",
+      "data": "2026-08-31",
+      "valor": -0.1
+    },
+    {
+      "id": "ren-056",
+      "id_posicao": "pos-014",
+      "data": "2026-09-28",
+      "valor": 0.7
+    },
+    {
+      "id": "ren-057",
+      "id_posicao": "pos-015",
+      "data": "2026-06-30",
+      "valor": -0.4
+    },
+    {
+      "id": "ren-058",
+      "id_posicao": "pos-015",
+      "data": "2026-07-31",
+      "valor": 0.1
+    },
+    {
+      "id": "ren-059",
+      "id_posicao": "pos-015",
+      "data": "2026-08-31",
+      "valor": 0.3
+    },
+    {
+      "id": "ren-060",
+      "id_posicao": "pos-015",
+      "data": "2026-09-28",
+      "valor": 0.6
+    },
+    {
+      "id": "ren-061",
+      "id_posicao": "pos-016",
+      "data": "2026-06-30",
+      "valor": 0.3
+    },
+    {
+      "id": "ren-062",
+      "id_posicao": "pos-016",
+      "data": "2026-07-31",
+      "valor": 0.4
+    },
+    {
+      "id": "ren-063",
+      "id_posicao": "pos-016",
+      "data": "2026-08-31",
+      "valor": 0.2
+    },
+    {
+      "id": "ren-064",
+      "id_posicao": "pos-016",
+      "data": "2026-09-28",
+      "valor": 0.5
+    },
+    {
+      "id": "ren-065",
+      "id_posicao": "pos-017",
+      "data": "2026-06-30",
+      "valor": -0.6
+    },
+    {
+      "id": "ren-066",
+      "id_posicao": "pos-017",
+      "data": "2026-07-31",
+      "valor": -0.2
+    },
+    {
+      "id": "ren-067",
+      "id_posicao": "pos-017",
+      "data": "2026-08-31",
+      "valor": -0.5
+    },
+    {
+      "id": "ren-068",
+      "id_posicao": "pos-017",
+      "data": "2026-09-28",
+      "valor": -0.3
+    }
+  ],
+  "vendas": [],
+  "saldos_fundos": [
+    {
+      "id": "sal-001",
+      "fundo": "sobrevivencia",
+      "data": "2026-09-30",
+      "saldo": 16700
+    },
+    {
+      "id": "sal-002",
+      "fundo": "maneio",
+      "data": "2026-09-30",
+      "saldo": 2500
+    }
+  ],
+  "depositos": [
+    {
+      "id": "dep-001",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 0,
+      "data": "2023-12-13",
+      "origem": "Fundo emergência",
+      "prazo_meses": 6,
+      "vencimento": "2024-06-13",
+      "juros": 53.22
+    },
+    {
+      "id": "dep-002",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 10242.75,
+      "data": "2024-05-30",
+      "origem": "Fundo emergência",
+      "prazo_meses": 3,
+      "vencimento": "2024-08-30",
+      "juros": 53.22
+    },
+    {
+      "id": "dep-003",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 1000,
+      "data": "2024-04-12",
+      "origem": "Fundo emergência",
+      "prazo_meses": 6,
+      "vencimento": "2024-10-12",
+      "juros": 10.98
+    },
+    {
+      "id": "dep-004",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 5000,
+      "data": "2024-08-18",
+      "origem": "Fundo emergência",
+      "prazo_meses": 3,
+      "vencimento": "2024-11-18",
+      "juros": 27.14
+    },
+    {
+      "id": "dep-005",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 3000,
+      "data": "2024-08-25",
+      "origem": "Fundo emergência",
+      "prazo_meses": 3,
+      "vencimento": "2024-11-25",
+      "juros": 16.29
+    },
+    {
+      "id": "dep-006",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 0,
+      "data": "2024-06-11",
+      "origem": "Fundo emergência",
+      "prazo_meses": 6,
+      "vencimento": "2024-12-11",
+      "juros": 4.18
+    },
+    {
+      "id": "dep-007",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 5068.12,
+      "data": "2024-11-18",
+      "origem": "Fundo emergência",
+      "prazo_meses": 3,
+      "vencimento": "2025-02-18",
+      "juros": 25.65
+    },
+    {
+      "id": "dep-008",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 3000,
+      "data": "2024-11-25",
+      "origem": "Fundo emergência",
+      "prazo_meses": 3,
+      "vencimento": "2025-02-25",
+      "juros": 15.18
+    },
+    {
+      "id": "dep-009",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 10354.4,
+      "data": "2024-09-01",
+      "origem": "Fundo emergência",
+      "prazo_meses": 6,
+      "vencimento": "2025-03-01",
+      "juros": 113.69
+    },
+    {
+      "id": "dep-010",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 4000,
+      "data": "2025-02-18",
+      "origem": "Fundo emergência",
+      "prazo_meses": 3,
+      "vencimento": "2025-05-18",
+      "juros": 11.75
+    },
+    {
+      "id": "dep-011",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 2000,
+      "data": "2025-02-18",
+      "origem": "Fundo emergência",
+      "prazo_meses": 3,
+      "vencimento": "2025-05-18",
+      "juros": 5.88
+    },
+    {
+      "id": "dep-012",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 10000,
+      "data": "2025-03-01",
+      "origem": "Fundo emergência",
+      "prazo_meses": 3,
+      "vencimento": "2025-05-29",
+      "juros": 29.73
+    },
+    {
+      "id": "dep-013",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 0,
+      "data": "2024-12-10",
+      "origem": "Fundo emergência",
+      "prazo_meses": 6,
+      "vencimento": "2025-06-10",
+      "juros": 4.72
+    },
+    {
+      "id": "dep-014",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 4000,
+      "data": "2025-05-23",
+      "origem": "Fundo emergência",
+      "prazo_meses": 3,
+      "vencimento": "2025-08-23",
+      "juros": 9.94
+    },
+    {
+      "id": "dep-015",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 2000,
+      "data": "2025-05-23",
+      "origem": "Fundo emergência",
+      "prazo_meses": 3,
+      "vencimento": "2025-08-23",
+      "juros": 4.97
+    },
+    {
+      "id": "dep-016",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 10000,
+      "data": "2025-05-29",
+      "origem": "Fundo emergência",
+      "prazo_meses": 6,
+      "vencimento": "2025-11-29",
+      "juros": 47.84
+    },
+    {
+      "id": "dep-017",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 0,
+      "data": "2025-06-08",
+      "origem": "Fundo emergência",
+      "prazo_meses": 6,
+      "vencimento": "2025-12-08",
+      "juros": 1.09
+    },
+    {
+      "id": "dep-018",
+      "nome": "Juros Trade Republic",
+      "montante": 0,
+      "data": "2024-12-31",
+      "origem": "Fundo emergência",
+      "prazo_meses": 12,
+      "vencimento": "2025-12-31",
+      "juros": 3.41
+    },
+    {
+      "id": "dep-019",
+      "nome": "Juros Trading 212",
+      "montante": 0,
+      "data": "2024-12-31",
+      "origem": "Fundo emergência",
+      "prazo_meses": 12,
+      "vencimento": "2025-12-31",
+      "juros": 4.74
+    },
+    {
+      "id": "dep-020",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 6000,
+      "data": "2025-08-23",
+      "origem": "Fundo emergência",
+      "prazo_meses": 6,
+      "vencimento": "2026-02-23",
+      "juros": 29.81
+    },
+    {
+      "id": "dep-021",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 700,
+      "data": "2026-01-23",
+      "origem": "Fundo emergência",
+      "prazo_meses": 3,
+      "vencimento": "2026-04-23",
+      "juros": 2.02
+    },
+    {
+      "id": "dep-022",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 6000,
+      "data": "2026-02-23",
+      "origem": "Fundo emergência",
+      "prazo_meses": 3,
+      "vencimento": "2026-05-23",
+      "juros": 16.02
+    },
+    {
+      "id": "dep-023",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 3000,
+      "data": "2025-11-29",
+      "origem": "Fundo emergência",
+      "prazo_meses": 6,
+      "vencimento": "2026-05-29",
+      "juros": 17.37
+    },
+    {
+      "id": "dep-024",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 7000,
+      "data": "2025-11-29",
+      "origem": "Fundo emergência",
+      "prazo_meses": 6,
+      "vencimento": "2026-05-29",
+      "juros": 34.21
+    },
+    {
+      "id": "dep-025",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 0,
+      "data": "2025-12-08",
+      "origem": "Fundo emergência",
+      "prazo_meses": 6,
+      "vencimento": "2026-06-08",
+      "juros": 5.16
+    },
+    {
+      "id": "dep-026",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 6000,
+      "data": "2026-05-31",
+      "origem": "Fundo emergência",
+      "prazo_meses": 3,
+      "vencimento": "2026-08-31",
+      "juros": 16.56
+    },
+    {
+      "id": "dep-027",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 6000,
+      "data": "2026-09-05",
+      "origem": "Fundo emergência",
+      "prazo_meses": 4,
+      "vencimento": "2027-01-05",
+      "juros": null
+    },
+    {
+      "id": "dep-028",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 6700,
+      "data": "2026-05-25",
+      "origem": "Fundo emergência",
+      "prazo_meses": 9,
+      "vencimento": "2027-02-25",
+      "juros": null
+    },
+    {
+      "id": "dep-029",
+      "nome": "Juros Caixa Geral de Depósitos",
+      "montante": 4000,
+      "data": "2026-06-01",
+      "origem": "Fundo emergência",
+      "prazo_meses": 9,
+      "vencimento": "2027-03-01",
+      "juros": null
+    }
+  ],
+  "governo_recebido": [
+    {
+      "id": "rec-001",
+      "data": "2020-12-01",
+      "descricao": "Outro apoio",
+      "valor": 275
+    },
+    {
+      "id": "rec-002",
+      "data": "2021-05-01",
+      "descricao": "IRS 2020",
+      "valor": 392.06
+    },
+    {
+      "id": "rec-003",
+      "data": "2022-05-01",
+      "descricao": "IRS 2021",
+      "valor": 200.24
+    },
+    {
+      "id": "rec-004",
+      "data": "2023-05-01",
+      "descricao": "IRS 2022",
+      "valor": 954.57
+    },
+    {
+      "id": "rec-005",
+      "data": "2024-05-01",
+      "descricao": "IRS 2023",
+      "valor": 341.34
+    },
+    {
+      "id": "rec-006",
+      "data": "2024-09-01",
+      "descricao": "Prémio qualificações",
+      "valor": 1500
+    },
+    {
+      "id": "rec-007",
+      "data": "2024-10-01",
+      "descricao": "Não cobrança do IRS",
+      "valor": 185
+    },
+    {
+      "id": "rec-008",
+      "data": "2024-11-01",
+      "descricao": "Não cobrança do IRS",
+      "valor": 185
+    },
+    {
+      "id": "rec-009",
+      "data": "2025-05-01",
+      "descricao": "IRS 2024",
+      "valor": 520.35
+    },
+    {
+      "id": "rec-010",
+      "data": "2025-08-01",
+      "descricao": "Não cobrança do IRS",
+      "valor": 124
+    },
+    {
+      "id": "rec-011",
+      "data": "2025-09-01",
+      "descricao": "Não cobrança do IRS",
+      "valor": 165
+    },
+    {
+      "id": "rec-012",
+      "data": "2026-01-01",
+      "descricao": "Retroativos IRS 2023",
+      "valor": 706.26
+    },
+    {
+      "id": "rec-013",
+      "data": "2026-01-01",
+      "descricao": "Retroativos IRS 2024",
+      "valor": 892.03
+    },
+    {
+      "id": "rec-014",
+      "data": "2026-05-01",
+      "descricao": "IRS 2025",
+      "valor": 1343.12
+    }
+  ],
+  "governo_utilizado": [
+    {
+      "id": "uti-001",
+      "data": "2024-09-01",
+      "destino": "Abate do crédito do carro",
+      "valor": 1500
+    }
+  ],
+  "plano_ppr": {
+    "taxa": 0.04,
+    "idade_inicial": 28,
+    "estrategia": "Dinheiro recebido de IRS será reinvestido no PPR do próprio ano + ajudas \"pequenas\" do Estado. Depois, completar com dinheiro do salário.",
+    "anos": [
+      {
+        "ano": 2024,
+        "governo": 2000,
+        "pessoal": 0,
+        "real": 2031.23,
+        "real_data": "2024-12-31"
+      },
+      {
+        "ano": 2025,
+        "governo": 2000,
+        "pessoal": 0,
+        "real": 4315.58,
+        "real_data": "2025-12-31"
+      },
+      {
+        "ano": 2026,
+        "governo": 1500,
+        "pessoal": 500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2027,
+        "governo": 0,
+        "pessoal": 2000,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2028,
+        "governo": 0,
+        "pessoal": 2000,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2029,
+        "governo": 0,
+        "pessoal": 2000,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2030,
+        "governo": 0,
+        "pessoal": 2000,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2031,
+        "governo": 0,
+        "pessoal": 2000,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2032,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2033,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2034,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2035,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2036,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2037,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2038,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2039,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2040,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2041,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2042,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2043,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2044,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2045,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2046,
+        "governo": 0,
+        "pessoal": 1750,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2047,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2048,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2049,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2050,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2051,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2052,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2053,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2054,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2055,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2056,
+        "governo": 0,
+        "pessoal": 1500,
+        "real": null,
+        "real_data": null
+      }
+    ]
+  },
+  "plano_ouro": {
+    "taxa": 0.2,
+    "anos": [
+      {
+        "ano": 2025,
+        "previsto": 59.35,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2026,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2027,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2028,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2029,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2030,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2031,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2032,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2033,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2034,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2035,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2036,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2037,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2038,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2039,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2040,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2041,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2042,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2043,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2044,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2045,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2046,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2047,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2048,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2049,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2050,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2051,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2052,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2053,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2054,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2055,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2056,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2057,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2058,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2059,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      },
+      {
+        "ano": 2060,
+        "previsto": 36,
+        "cashback": null,
+        "real": null,
+        "real_data": null
+      }
+    ]
+  },
+  "eventos_economia": [
+    {
+      "id": "eve-001",
+      "data": "2026-10-14",
+      "tipo": "eua",
+      "titulo": "Inflação dos EUA (CPI)"
+    },
+    {
+      "id": "eve-002",
+      "data": "2026-10-28",
+      "tipo": "fed",
+      "titulo": "Fed decide as taxas de juro"
+    },
+    {
+      "id": "eve-003",
+      "data": "2026-10-29",
+      "tipo": "bce",
+      "titulo": "BCE decide as taxas de juro"
+    },
+    {
+      "id": "eve-004",
+      "data": "2026-11-12",
+      "tipo": "eua",
+      "titulo": "Inflação dos EUA (CPI)"
+    },
+    {
+      "id": "eve-005",
+      "data": "2026-12-09",
+      "tipo": "fed",
+      "titulo": "Fed decide as taxas de juro"
+    },
+    {
+      "id": "eve-006",
+      "data": "2026-12-10",
+      "tipo": "eua",
+      "titulo": "Inflação dos EUA (CPI)"
+    },
+    {
+      "id": "eve-007",
+      "data": "2026-12-17",
+      "tipo": "bce",
+      "titulo": "BCE decide as taxas de juro"
+    },
+    {
+      "id": "eve-008",
+      "data": "2027-01-13",
+      "tipo": "eua",
+      "titulo": "Inflação dos EUA (CPI)"
+    },
+    {
+      "id": "eve-009",
+      "data": "2027-01-27",
+      "tipo": "fed",
+      "titulo": "Fed decide as taxas de juro"
+    },
+    {
+      "id": "eve-010",
+      "data": "2027-02-04",
+      "tipo": "bce",
+      "titulo": "BCE decide as taxas de juro"
+    },
+    {
+      "id": "eve-011",
+      "data": "2027-02-11",
+      "tipo": "eua",
+      "titulo": "Inflação dos EUA (CPI)"
+    },
+    {
+      "id": "eve-012",
+      "data": "2027-03-11",
+      "tipo": "eua",
+      "titulo": "Inflação dos EUA (CPI)"
+    },
+    {
+      "id": "eve-013",
+      "data": "2027-03-17",
+      "tipo": "fed",
+      "titulo": "Fed decide as taxas de juro"
+    },
+    {
+      "id": "eve-014",
+      "data": "2027-03-18",
+      "tipo": "bce",
+      "titulo": "BCE decide as taxas de juro"
+    },
+    {
+      "id": "eve-015",
+      "data": "2027-04-01",
+      "tipo": "irs",
+      "titulo": "Começa a entrega do IRS"
+    },
+    {
+      "id": "eve-016",
+      "data": "2027-06-30",
+      "tipo": "irs",
+      "titulo": "Termina o prazo do IRS"
+    }
+  ]
+}

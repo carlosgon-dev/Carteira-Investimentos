@@ -24,6 +24,26 @@ O enunciado permite simular a base de dados com ficheiros JSON locais. Por isso:
 
 Prefixos: `pos-` posições · `com-` compras · `ren-` rendibilidades · `ven-` vendas · `sal-` saldos dos fundos · `dep-` depósitos · `rec-` dinheiro do governo recebido · `uti-` utilizado · `eve-` eventos.
 
+## Nomenclatura no código: arquivo → gavetas → objetos
+
+Os mesmos três nomes em todo o código JavaScript:
+
+```
+arquivo                         ← o dados.json inteiro (o conjunto de todas as gavetas)
+ ├── gaveta_compras             ← uma lista
+ │    ├── objeto_compra         ← um registo: { id: "com-001", montante: 400, … }
+ │    └── objeto_compra
+ ├── gaveta_vendas
+ │    └── objeto_venda
+ └── …
+```
+
+| Nível              | Nome no código                    | Exemplo                                   |
+| ------------------ | --------------------------------- | ----------------------------------------- |
+| O conjunto de tudo | `arquivo`                       | `let arquivo = …` (no `gestor_dados.js`) |
+| Uma lista          | `gaveta_…` (o texto: `nome_gaveta`) | `gaveta_compras`, `dados.ler("compras")` |
+| Um registo         | `objeto_…`                      | `objeto_compra`, `objeto_posicao`       |
+
 ## As gavetas
 
 ### 1. Investimentos (ETF's, Criptomoedas, REIT's, Ações, Fundos de investimento, Ouro digital)
