@@ -12,6 +12,15 @@
   margin-bottom: 1.5rem;
 }
 
+/* Painéis lado a lado (ex.: as 2 tabelas dos fundos); em ecrãs estreitos, um por baixo do outro */
+.lado_a_lado {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  & .painel { margin-bottom: 0; }   /* o espaço entre eles já vem do gap */
+}
+
 /* Linha de cima do painel: título (+ "i") à esquerda; nota e botões à direita */
 .painel_cabecalho {
   display: flex;
@@ -103,6 +112,38 @@
   color: var(--cor_fundo);
   & .cartao_titulo,
   & .cartao_legenda { color: inherit; opacity: 0.72; }
+}
+
+/* ---------- Tabelas ---------- */
+/* A caixa deixa a tabela fazer scroll para o lado em ecrãs estreitos, sem alargar a página */
+.tabela_caixa { overflow-x: auto; }
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;   /* as linhas das células juntam-se numa só */
+  font-size: 0.93rem;
+  & th,
+  & td {
+    padding: 0.7rem 0.75rem;
+    border-bottom: 1px solid var(--cor_linha);
+    text-align: left;
+  }
+  /* Títulos das colunas: pequenos, em maiúsculas e cinzentos */
+  & th {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--cor_suave);
+    white-space: nowrap;
+  }
+  & tbody tr:hover td { background: var(--cor_cartao_suave); }
+  /* Colunas de números: à direita e com algarismos da mesma largura */
+  & .numero {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
 }
 
 /* ---------- Cores dos valores (ver obter_cor_valor) ---------- */

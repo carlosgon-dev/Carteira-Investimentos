@@ -26,6 +26,35 @@ export function desenhar_painel({ titulo, info = "", nota = "", acoes = "", cont
   `;
 }
 
+// Uma tabela. Não sabe nada dos dados: recebe os textos já formatados.
+//   colunas_cabecalho: o que vai lá em cima, uma entrada por coluna (numero: alinha à direita)
+//                      [{ titulo: "Data" }, { titulo: "Saldo", numero: true }]
+//   linhas_conteudo:   o que vai em cada linha, as células pela ordem das colunas
+//                      [["30/09/2026", "10 000,00 €"], …]
+export function desenhar_tabela({ colunas_cabecalho, linhas_conteudo }) {
+  const html_cabecalho = colunas_cabecalho.map((coluna) => `<th class="${obter_classe_coluna(coluna)}">${coluna.titulo}</th>`).join("");
+  const html_linhas = linhas_conteudo.map((linha) => desenhar_linha_tabela(linha, colunas_cabecalho)).join("");
+  return `
+    <div class="tabela_caixa">
+      <table class="tabela">
+        <thead><tr>${html_cabecalho}</tr></thead>
+        <tbody>${html_linhas}</tbody>
+      </table>
+    </div>
+  `;
+}
+
+// Uma linha da tabela: cada célula recebe o alinhamento da sua coluna
+function desenhar_linha_tabela(linha, colunas_cabecalho) {
+  const html_celulas = linha.map((celula, posicao) => `<td class="${obter_classe_coluna(colunas_cabecalho[posicao])}">${celula}</td>`).join("");
+  return `<tr>${html_celulas}</tr>`;
+}
+
+// Colunas de números alinham à direita
+function obter_classe_coluna(coluna) {
+  return coluna.numero ? "numero" : "";
+}
+
 // Um cartão: título, valor grande e, se houver, uma legenda por baixo.
 // Opções (todas opcionais):
 //   legenda:   texto pequeno por baixo do valor, ex.: "+7,0%"

@@ -11,6 +11,11 @@ export function formatar_data(data) {
   return `${dia}/${mes}/${ano}`;
 }
 
+// Cópia da lista ordenada pela chave "data", do mais recente para o mais antigo (a original não muda)
+export function ordenar_mais_recente_primeiro(lista) {
+  return [...lista].sort((objeto_a, objeto_b) => objeto_b.data.localeCompare(objeto_a.data));
+}
+
 // A classe de cor de um número: 318 → "positivo" | -12 → "negativo" | 0 → "" (sem cor)
 export function obter_cor_valor(numero) {
   if (numero > 0) return "positivo";
