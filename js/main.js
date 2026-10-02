@@ -42,9 +42,11 @@ const PAGINAS = {
 
 const zona_pagina = document.querySelector("#pagina");
 let dados; // o cofre dos dados: fica preenchido no arranque
+let pagina_atual; // a página que está aberta (para a redesenhar depois de apagar)
 
 // ---------- Navegação ----------
 function mostrar_pagina(nome_pagina) {
+  pagina_atual = nome_pagina;
   const desenhar_pagina = PAGINAS[nome_pagina];
   zona_pagina.innerHTML = desenhar_pagina ? desenhar_pagina(dados) : `<h2>EM CONSTRUÇÃO</h2>`;
   marcar_botao_ativo(nome_pagina);
@@ -63,6 +65,38 @@ document.querySelector(".menu_lateral").addEventListener("click", (evento) => {
   if (!botao) return; // clicou fora de um botão
   mostrar_pagina(botao.dataset.pagina);
 });
+
+// Botões ✎ ✕ das tabelas, em qualquer página (cada botão diz a ação, a gaveta e o id)
+zona_pagina.addEventListener("click", (evento) => {
+  const botao = evento.target.closest("[data-acao]");
+  if (!botao) return; // clicou fora de um botão de ação
+
+  const { acao } = botao.dataset; //este dataset tem 3 propriedades: acao, gaveta e id
+  if (acao === "editar") tratar_clique_editar(botao);
+  else (acao === "apagar") tratar_clique_apagar(botao);
+);
+
+
+function tratar_clique_editar(botao) {
+  const { gaveta, id } = botao.dataset;
+  if (gaveta === "fundo_sobrevivencia" || gaveta === "fundo_maneio") {
+    mostrar_pagina("registar_rendibilidade");
+    return;
+  }
+
+
+// O ✕ apaga em 2 cliques: o 1.º só pede confirmação (✕ passa a ✓), o 2.º apaga mesmo.
+// O próprio botão diz a gaveta e o id do objeto a apagar.
+function tratar_clique_apagar(botao) {
+  const esta_a_confirmar = botao.classList.contains("a_confirmar");
+  if (!esta_a_confirmar) {
+    botao.classList.add("a_confirmar");
+    botao.textContent = "✓";
+    return;
+  }
+  dados.apagar(botao.dataset.gaveta, botao.dataset.id);
+  mostrar_pagina(pagina_atual);
+}
 
 // ---------- Arranque ----------
 async function arrancar() {

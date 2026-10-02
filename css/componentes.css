@@ -146,6 +146,40 @@
   }
 }
 
+/* ---------- Botões ✎ ✕ das linhas das tabelas ---------- */
+.botoes_linha {
+  display: flex;
+  justify-content: flex-end;   /* encostados à direita da célula */
+  gap: 0.35rem;
+}
+
+.botao_icone {
+  display: inline-grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--cor_linha);
+  border-radius: 0.5rem;
+  background: transparent;
+  font: inherit;
+  color: var(--cor_texto_secundario);
+  cursor: pointer;
+  &:hover { background: var(--cor_cartao_suave); color: var(--cor_texto); }
+  &:focus-visible { outline: 2px solid var(--cor_destaque); outline-offset: 2px; }
+}
+
+/* O ✕: vermelho, porque apaga */
+.botao_perigo { color: var(--cor_negativo_texto); }
+
+/* Depois do 1.º clique no ✕: fica um ✓ vermelho cheio, à espera do 2.º clique para apagar */
+.botao_perigo.a_confirmar,
+.botao_perigo.a_confirmar:hover {
+  background: var(--cor_negativo);
+  border-color: var(--cor_negativo);
+  color: var(--cor_cartao);
+}
+
 /* ---------- Cores dos valores (ver obter_cor_valor) ---------- */
 .positivo { color: var(--cor_positivo_texto); }
 .negativo { color: var(--cor_negativo_texto); }

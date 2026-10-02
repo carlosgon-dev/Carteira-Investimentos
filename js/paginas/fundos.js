@@ -1,10 +1,10 @@
 // Página "Fundos": fundo de sobrevivência e fundo de maneio.
-import { desenhar_cartao, desenhar_painel, desenhar_tabela } from "../graficos.js";
+import { desenhar_cartao, desenhar_painel, desenhar_tabela, desenhar_botoes_linha } from "../graficos.js";
 import { encontrar_saldo_atual_fundo } from "../calculadores.js";
 import { formatar_euro, formatar_data, ordenar_mais_recente_primeiro } from "../ferramentas.js";
 
-// As colunas das duas tabelas dos fundos
-const COLUNAS_FUNDO = [{ titulo: "Data" }, { titulo: "Saldo", numero: true }];
+// As colunas das duas tabelas dos fundos (a última, sem título, é a dos botões ✎ ✕)
+const COLUNAS_FUNDO = [{ titulo: "Data" }, { titulo: "Saldo", numero: true }, { titulo: "" }];
 
 export function desenhar_fundos(dados) {
   const gaveta_fundo_sobrevivencia = dados.ler("fundo_sobrevivencia");
@@ -31,16 +31,21 @@ export function desenhar_fundos(dados) {
   return `
     ${painel_cartoes}
     <div class="lado_a_lado">
-      ${desenhar_painel_fundo("Fundo de sobrevivência", gaveta_fundo_sobrevivencia)}
-      ${desenhar_painel_fundo("Fundo de maneio", gaveta_fundo_maneio)}
+      ${desenhar_painel_fundo("Fundo de sobrevivência", "fundo_sobrevivencia", gaveta_fundo_sobrevivencia)}
+      ${desenhar_painel_fundo("Fundo de maneio", "fundo_maneio", gaveta_fundo_maneio)}
     </div>
   `;
 }
 
 // Um painel com a tabela dos saldos de um fundo, do mais recente para o mais antigo
-function desenhar_painel_fundo(titulo, gaveta_fundo) {
+//   nome_gaveta: para os botões ✎ ✕ saberem de que gaveta é cada linha
+function desenhar_painel_fundo(titulo, nome_gaveta, gaveta_fundo) {
   const saldos_ordenados = ordenar_mais_recente_primeiro(gaveta_fundo);
-  const linhas_saldos = saldos_ordenados.map((objeto_saldo) => [formatar_data(objeto_saldo.data), formatar_euro(objeto_saldo.saldo)]);
+  const linhas_saldos = saldos_ordenados.map((objeto_saldo) => [
+    formatar_data(objeto_saldo.data),
+    formatar_euro(objeto_saldo.saldo),
+    desenhar_botoes_linha(nome_gaveta, objeto_saldo.id),
+  ]);
   const html_tabela = desenhar_tabela({ colunas_cabecalho: COLUNAS_FUNDO, linhas_conteudo: linhas_saldos });
   return desenhar_painel({ titulo, conteudo: html_tabela });
 }
