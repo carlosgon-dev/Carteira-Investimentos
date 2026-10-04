@@ -1,5 +1,6 @@
 // Ferramentas genéricas, que serviriam para qualquer app.
 
+// #region ==================== FORMATAR (EUROS E DATAS) ====================
 // 1234.5 → "1234,50 €"
 export function formatar_euro(valor) {
   return valor.toLocaleString("pt-PT", { style: "currency", currency: "EUR", useGrouping: "always" });
@@ -10,7 +11,9 @@ export function formatar_data(data) {
   const [ano, mes, dia] = data.split("-");
   return `${dia}/${mes}/${ano}`;
 }
+// #endregion
 
+// #region ==================== DATAS E IDS ====================
 // A data de hoje, no formato dos dados: "2026-10-02"
 export function obter_data_hoje() {
   return new Date().toISOString().slice(0, 10);
@@ -26,14 +29,16 @@ export function gerar_id(gaveta, prefixo) {
   const numero_novo = String(maior_numero + 1).padStart(ALGARISMOS_ID, "0");
   return `${prefixo}-${numero_novo}`;
 }
+// #endregion
 
+// #region ==================== LISTAS E NÚMEROS ====================
 // Cópia da lista ordenada pela chave "data", do mais recente para o mais antigo (a original não muda)
 export function ordenar_mais_recente_primeiro(lista) {
   return [...lista].sort((objeto_a, objeto_b) => objeto_b.data.localeCompare(objeto_a.data));
 }
 
 // A classe de cor de um número: 318 → "positivo" | -12 → "negativo" | 0 → "" (sem cor)
-export function obter_cor_valor(numero) {
+export function obter_classe_positivo_negativo(numero) {
   if (numero > 0) return "positivo";
   if (numero < 0) return "negativo";
   return "";
@@ -43,3 +48,4 @@ export function obter_cor_valor(numero) {
 export function somar_lista_chave(lista, chave) {
   return lista.reduce((total, objeto) => total + objeto[chave], 0);
 }
+// #endregion

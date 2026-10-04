@@ -2,7 +2,7 @@
    BASE: variáveis, reset e o aspeto geral da página
    ========================================================== */
 
-/* ---------- Cores e medidas (mudam-se só aqui) ---------- */
+/* #region ==================== CORES E MEDIDAS ==================== */
 :root {
   font-size: 14px; /* tamanho base: todos os rem dependem daqui */
 
@@ -47,8 +47,9 @@
   /* Medidas */
   --espaco: 0.5rem;
 }
+/* #endregion */
 
-/* ---------- Modo escuro: segue o tema do computador ---------- */
+/* #region ==================== MODO ESCURO ==================== */
 /* Só mudam as cores; os nomes das variáveis são os mesmos */
 @media (prefers-color-scheme: dark) {
   :root {
@@ -83,8 +84,9 @@
     --sombra: 0 1px 2px rgba(0, 0, 0, 0.4);
   }
 }
+/* #endregion */
 
-/* ---------- Reset ---------- */
+/* #region ==================== RESET, PÁGINA E TÍTULOS ==================== */
 * {box-sizing: border-box;}
 
 /* ---------- Página ---------- */
@@ -101,3 +103,4 @@ h1, h2, h3 {margin: 0 0 var(--espaco);}
 h1 { font-size: 1.25rem; }   /* marca */
 h2 { font-size: 1.5rem; }    /* título da página */
 h3 { font-size: 1.1rem; }    /* título de cartão ou secção */
+/* #endregion */

@@ -1,6 +1,6 @@
 // Página "PPR": o plano do PPR, ano a ano.
 
-export function desenhar_ppr(dados) {
+export function desenhar_pagina_ppr(dados) {
   return `
     <h2>PPR</h2>
   `;

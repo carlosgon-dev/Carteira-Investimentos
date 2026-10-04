@@ -1,5 +1,6 @@
 // Valores fixos da app, partilhados por vários ficheiros. Nunca mudam enquanto a app corre.
 
+// #region ==================== PREFIXOS DOS IDS ====================
 // O prefixo dos ids de cada gaveta (ver gerar_id): um objeto novo em "compras" recebe "com-047"
 export const PREFIXOS_ID = {
   posicoes: "pos",
@@ -13,7 +14,9 @@ export const PREFIXOS_ID = {
   governo_utilizado: "uti",
   eventos_economia: "eve",
 };
+// #endregion
 
+// #region ==================== NOMES DOS TIPOS ====================
 // Os tipos de investimento (o campo "tipo" das posições) → o nome que aparece na app
 export const NOMES_TIPOS = {
   etf: "ETF's",
@@ -23,3 +26,4 @@ export const NOMES_TIPOS = {
   fundos: "Fundos de investimento",
   ouro: "Ouro digital",
 };
+// #endregion

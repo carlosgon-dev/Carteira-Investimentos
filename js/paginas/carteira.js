@@ -3,7 +3,7 @@ import { calcular_total_investido } from "../calculadores.js";
 import { desenhar_cartao } from "../graficos.js";
 import { formatar_euro } from "../ferramentas.js";
 
-export function desenhar_carteira(dados) {
+export function desenhar_pagina_carteira(dados) {
   const gaveta_posicoes = dados.ler("posicoes");
   const gaveta_compras = dados.ler("compras");
   const gaveta_vendas = dados.ler("vendas");
