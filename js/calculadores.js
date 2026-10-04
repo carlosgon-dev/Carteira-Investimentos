@@ -1,6 +1,7 @@
 // Contas feitas a partir dos dados. Não tocam no HTML.
 import { somar_lista_chave } from "./ferramentas.js";
 
+// #region ==================== POSIÇÕES ====================
 // Tudo o que pertence a uma posição (ex.: "pos-003")
 export function filtrar_por_posicao(gaveta, id_posicao) {
   return gaveta.filter((objeto) => objeto.id_posicao === id_posicao);
@@ -20,7 +21,9 @@ export function calcular_total_investido(gaveta_posicoes, gaveta_compras, gaveta
   const compras_abertas = gaveta_compras.filter((objeto_compra) => ids_abertas.includes(objeto_compra.id_posicao));
   return somar_lista_chave(compras_abertas, "montante");
 }
+// #endregion
 
+// #region ==================== FUNDOS ====================
 // Saldo mais recente de um fundo (a gaveta de um dos fundos). No mesmo dia, conta o último inserido.
 export function encontrar_saldo_atual_fundo(gaveta_fundo) {
   if (gaveta_fundo.length === 0) return 0; // fundo ainda sem registos
@@ -29,3 +32,4 @@ export function encontrar_saldo_atual_fundo(gaveta_fundo) {
   const saldo_mais_recente = saldos_por_data.at(-1);
   return saldo_mais_recente.saldo;
 }
+// #endregion

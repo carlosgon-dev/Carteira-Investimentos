@@ -1,5 +1,7 @@
 // Peças visuais reutilizáveis. Cada função devolve HTML em texto (template string).
 
+// #region ==================== PAINEL ====================
+
 // Um painel: caixa com linha à volta, com um cabeçalho e o conteúdo por baixo.
 //   conteudo: o HTML que vai dentro (cartões, tabela, gráfico…)
 // Opções do cabeçalho (todas opcionais):
@@ -7,7 +9,7 @@
 //   nota:  texto pequeno à direita
 //   acoes: HTML dos botões, à direita
 export function desenhar_painel({ titulo, info = "", nota = "", acoes = "", conteudo }) {
-  const html_info = info ? `<span class="info" title="${info}" tabindex="0" aria-label="${info}">i</span>` : "";
+  const html_info = info ? `<span class="info" title="${info}" tabindex="0">i</span>` : "";
   const html_nota = nota ? `<p class="painel_nota">${nota}</p>` : "";
   return `
     <section class="painel">
@@ -25,6 +27,9 @@ export function desenhar_painel({ titulo, info = "", nota = "", acoes = "", cont
     </section>
   `;
 }
+// #endregion
+
+// #region ==================== TABELA ====================
 
 // Uma tabela. Não sabe nada dos dados: recebe os textos já formatados.
 //   colunas_cabecalho: o que vai lá em cima, uma entrada por coluna
@@ -51,7 +56,24 @@ export function desenhar_tabela({ colunas_cabecalho, linhas_conteudo }) {
   `;
 }
 
-// Uma linha da tabela: cada célula recebe o alinhamento da sua coluna e, se for editável, o campo_editavel e o tipo_campo
+/* ---------- Ajudantes da tabela (só usados aqui) ---------- */
+// Dão a cada célula as características da sua coluna:
+// o alinhamento, para o CSS, e as pistas de edição, para o ✎ do main.js
+
+// Colunas de números alinham à direita
+function obter_classe_coluna(coluna) {
+  return coluna.numero ? "numero" : "";
+}
+
+// Colunas editáveis: a célula leva escrito o campo_editavel, o tipo_campo e, se houver, o minimo e o maximo
+function obter_atributos_edicao(coluna) {
+  if (!coluna.campo_editavel) return "";
+  const atributo_minimo = coluna.minimo !== undefined ? `data-minimo="${coluna.minimo}"` : "";
+  const atributo_maximo = coluna.maximo !== undefined ? `data-maximo="${coluna.maximo}"` : "";
+  return `data-campo_editavel="${coluna.campo_editavel}" data-tipo_campo="${coluna.tipo_campo}" ${atributo_minimo} ${atributo_maximo}`;
+}
+
+// Uma linha da tabela: cada célula recebe o alinhamento e as pistas de edição da sua coluna
 function desenhar_linha_tabela(linha, colunas_cabecalho) {
   const html_celulas = linha.map((celula, posicao) => {
     const coluna = colunas_cabecalho[posicao];
@@ -59,19 +81,9 @@ function desenhar_linha_tabela(linha, colunas_cabecalho) {
   }).join("");
   return `<tr>${html_celulas}</tr>`;
 }
+// #endregion
 
-// Colunas de números alinham à direita
-function obter_classe_coluna(coluna) {
-  return coluna.numero ? "numero" : "";
-}
-
-// Colunas editáveis: a célula leva escrito o campo_editavel, o tipo_campo e, se houver, o minimo (o ✎ do main.js lê-os)
-function obter_atributos_edicao(coluna) {
-  if (!coluna.campo_editavel) return "";
-  const atributo_minimo = coluna.minimo !== undefined ? `data-minimo="${coluna.minimo}"` : "";
-  const atributo_maximo = coluna.maximo !== undefined ? `data-maximo="${coluna.maximo}"` : "";
-  return `data-campo_editavel="${coluna.campo_editavel}" data-tipo_campo="${coluna.tipo_campo}" ${atributo_minimo} ${atributo_maximo}`;
-}
+// #region ==================== BOTÕES ====================
 
 // O botão "+ …" que acrescenta um objeto novo a uma gaveta (vai no cabeçalho do painel, em "acoes")
 export function desenhar_botao_adicionar(nome_gaveta, texto) {
@@ -80,7 +92,7 @@ export function desenhar_botao_adicionar(nome_gaveta, texto) {
 
 // O botão ↩ (cancelar) de uma linha à espera: aparece no lugar de outro botão, depois do 1.º clique
 export function desenhar_botao_cancelar() {
-  return `<button type="button" class="botao_icone" data-acao="cancelar" title="Cancelar" aria-label="Cancelar">↩</button>`;
+  return `<button type="button" class="botao_icone" data-acao="cancelar" title="Cancelar">↩</button>`;
 }
 
 // Os botões ✎ (editar) e ✕ (apagar) de uma linha de tabela. Servem para qualquer gaveta.
@@ -88,17 +100,20 @@ export function desenhar_botao_cancelar() {
 export function desenhar_botoes_linha(nome_gaveta, id) {
   return `
     <div class="botoes_linha">
-      <button type="button" class="botao_icone" data-acao="editar" data-gaveta="${nome_gaveta}" data-id="${id}" title="Editar" aria-label="Editar">✎</button>
-      <button type="button" class="botao_icone botao_perigo" data-acao="apagar" data-gaveta="${nome_gaveta}" data-id="${id}" title="Apagar" aria-label="Apagar">✕</button>
+      <button type="button" class="botao_icone" data-acao="editar" data-gaveta="${nome_gaveta}" data-id="${id}" title="Editar">✎</button>
+      <button type="button" class="botao_icone botao_perigo" data-acao="apagar" data-gaveta="${nome_gaveta}" data-id="${id}" title="Apagar">✕</button>
     </div>
   `;
 }
+// #endregion
+
+// #region ==================== CARTÃO ====================
 
 // Um cartão: título, valor grande e, se houver, uma legenda por baixo.
 // Opções (todas opcionais):
 //   legenda:   texto pequeno por baixo do valor, ex.: "+7,0%"
 //   estilo:    uma classe extra, ex.: "cartao_destaque"
-//   cor_valor: "positivo" (verde) ou "negativo" (vermelho), ver obter_cor_valor()
+//   cor_valor: "positivo" (verde) ou "negativo" (vermelho), ver obter_classe_positivo_negativo()
 export function desenhar_cartao({ titulo, valor, legenda = "", estilo = "", cor_valor = "" }) {
   const html_legenda = legenda ? `<p class="cartao_legenda">${legenda}</p>` : "";
   return `
@@ -109,3 +124,4 @@ export function desenhar_cartao({ titulo, valor, legenda = "", estilo = "", cor_
     </article>
   `;
 }
+// #endregion

@@ -2,6 +2,7 @@
    LAYOUT: a "moldura" da app (menu lateral + zona da página)
    ========================================================== */
 
+/* #region ==================== GRELHA DA APP ==================== */
 /* Menu à esquerda, página à direita, rodapé a toda a largura */
 body {
   display: grid;
@@ -12,8 +13,9 @@ body {
     "rodape rodape";
   min-height: 100vh;
 }
+/* #endregion */
 
-/* ---------- Menu lateral ---------- */
+/* #region ==================== MENU LATERAL ==================== */
 .menu_lateral {
   grid-area: menu;              /* ← onde fica */
   display: flex;                /* ← como é (daqui para baixo) */
@@ -112,11 +114,13 @@ details[open]::details-content {animation: abrir_submenu 0.25s ease-out;}
   font-weight: 500;
   border-color: var(--cor_linha);
 }
+/* #endregion */
 
 
 
 
 
+/* #region ==================== ZONA DA PÁGINA ==================== */
 /* ==========================================================
                               ZONA DA PÁGINA
    ========================================================== */
@@ -124,7 +128,9 @@ details[open]::details-content {animation: abrir_submenu 0.25s ease-out;}
   grid-area: pagina;
   padding: calc(var(--espaco) * 2);
 }
+/* #endregion */
 
+/* #region ==================== ZONA DO RODAPÉ ==================== */
 /* ==========================================================
                               ZONA DO RODAPÉ
    ========================================================== */
@@ -135,3 +141,4 @@ details[open]::details-content {animation: abrir_submenu 0.25s ease-out;}
   color: var(--cor_suave);
   border-top: 1px solid var(--cor_linha);
 }
+/* #endregion */

@@ -2,7 +2,7 @@
    COMPONENTES: as peças que se repetem em várias páginas
    ========================================================== */
 
-/* ---------- Painel ---------- */
+/* #region ==================== PAINEL ==================== */
 /* Caixa com linha à volta, que agrupa uma parte da página (cartões, tabela, gráfico) */
 .painel {
   padding: 1.4rem;
@@ -44,8 +44,9 @@
   font-size: 0.85rem;
   color: var(--cor_suave);
 }
+/* #endregion */
 
-/* ---------- Info ("i" com ajuda ao passar o rato) ---------- */
+/* #region ==================== INFO ==================== */
 .info {
   display: inline-grid;
   place-items: center;
@@ -61,8 +62,9 @@
   &:hover,
   &:focus-visible { color: var(--cor_texto); border-color: var(--cor_texto); }
 }
+/* #endregion */
 
-/* ---------- Cartões ---------- */
+/* #region ==================== CARTÕES ==================== */
 /* Fila de cartões lado a lado; em ecrãs estreitos passam para a linha de baixo */
 .fila_cartoes {
   display: grid;
@@ -113,8 +115,9 @@
   & .cartao_titulo,
   & .cartao_legenda { color: inherit; opacity: 0.72; }
 }
+/* #endregion */
 
-/* ---------- Tabelas ---------- */
+/* #region ==================== TABELAS ==================== */
 /* A caixa deixa a tabela fazer scroll para o lado em ecrãs estreitos, sem alargar a página */
 .tabela_caixa { overflow-x: auto; }
 
@@ -159,8 +162,9 @@
   text-align: inherit;   /* os números continuam à direita */
   &:focus-visible { outline: 2px solid var(--cor_destaque); outline-offset: 1px; }
 }
+/* #endregion */
 
-/* ---------- Botão secundário ("+ Atualizar saldo", nos cabeçalhos dos painéis) ---------- */
+/* #region ==================== BOTÕES ==================== */
 .botao_secundario {
   padding: 0.45rem 0.85rem;
   border: 1px solid var(--cor_linha);
@@ -208,10 +212,12 @@
   border-color: var(--cor_negativo);
   color: var(--cor_cartao);
 }
+/* #endregion */
 
-/* ---------- Cores dos valores (ver obter_cor_valor) ---------- */
+/* #region ==================== CORES E MENSAGENS ==================== */
 .positivo { color: var(--cor_positivo_texto); }
 .negativo { color: var(--cor_negativo_texto); }
 
 /* ---------- Mensagens ---------- */
 .erro {color: var(--cor_negativo_texto);}
+/* #endregion */

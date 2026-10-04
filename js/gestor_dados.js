@@ -1,18 +1,23 @@
 // Gestor dos dados da app: carrega, protege (closure, requisito 6) e guarda no localStorage.
 
+// #region ==================== CONSTANTES ====================
 // O ficheiro da base de dados: o arquivo com todas as gavetas
 const FICHEIRO_DADOS = "data/dados.json";
 
 // Onde os dados ficam guardados no localStorage
 const CHAVE_GUARDADA = "carteira_investimentos";
+// #endregion
 
+// #region ==================== LER O FICHEIRO ====================
 // Lê a base de dados do ficheiro JSON (requisito 7)
 async function ler_ficheiro() {
   const resposta = await fetch(FICHEIRO_DADOS);
   if (!resposta.ok) throw new Error(`Não consegui ler ${FICHEIRO_DADOS}`);
   return resposta.json();
 }
+// #endregion
 
+// #region ==================== O COFRE DOS DADOS (CLOSURE) ====================
 export async function carregar_dados() {
   // 🔒 Privado: só os "botões" devolvidos em baixo lhe chegam
   const dados_no_browser = localStorage.getItem(CHAVE_GUARDADA);
@@ -57,3 +62,4 @@ export async function carregar_dados() {
     },
   };
 }
+// #endregion
