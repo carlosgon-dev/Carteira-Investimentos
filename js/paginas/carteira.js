@@ -3,7 +3,7 @@
 import {
   calcular_total_investido,
   encontrar_saldo_atual_fundo,
-  agrupar_investido_por_tipo,
+  agrupar_investido_por_posicao,
   agrupar_investido_por_origem,
 } from "../calculadores.js";
 import { desenhar_cartao, desenhar_painel, desenhar_grafico_circular } from "../graficos.js";
@@ -56,7 +56,7 @@ function desenhar_painel_cartoes(dados, gaveta_posicoes, gaveta_compras, gaveta_
 
 // Gráfico: os investimentos por tipo (ETF's, Criptomoedas…), com o nome que aparece na app
 function desenhar_painel_por_tipo(gaveta_posicoes, gaveta_compras, gaveta_vendas) {
-  const fatias = agrupar_investido_por_tipo(gaveta_posicoes, gaveta_compras, gaveta_vendas);
+  const fatias = agrupar_investido_por_posicao(gaveta_posicoes, gaveta_compras, gaveta_vendas, "tipo");
   const fatias_com_nome = fatias.map((fatia) => ({ ...fatia, nome: NOMES_TIPOS[fatia.nome] ?? fatia.nome }));
   return desenhar_painel({ titulo: "Investimentos por tipo", conteudo: desenhar_grafico_circular(fatias_com_nome) });
 }

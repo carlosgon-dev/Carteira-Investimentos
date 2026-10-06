@@ -17,6 +17,11 @@ export function formatar_percentagem(percentagem) {
   return `${percentagem.toLocaleString("pt-PT", { maximumFractionDigits: 1 })} %`;
 }
 
+// Põe um "+" à frente dos números positivos: ("48,90 €", 48.9) → "+48,90 €" (os negativos já trazem o "-")
+export function acrescentar_sinal(texto, numero) {
+  return numero > 0 ? `+${texto}` : texto;
+}
+
 // "2026-09-30" → "30/09/2026"
 export function formatar_data(data) {
   const [ano, mes, dia] = data.split("-");
@@ -28,6 +33,17 @@ export function formatar_data(data) {
 // A data de hoje, no formato dos dados: "2026-10-02"
 export function obter_data_hoje() {
   return new Date().toISOString().slice(0, 10);
+}
+
+// Quantos milissegundos tem um dia (as datas do JavaScript contam o tempo em milissegundos)
+const MILISSEGUNDOS_POR_DIA = 24 * 60 * 60 * 1000;
+
+// Há quantos dias foi esta data: "2026-09-30" (vista a 2026-10-06) → "há 6 dias"
+export function descrever_dias_desde(data) {
+  const dias = Math.floor((new Date(obter_data_hoje()) - new Date(data)) / MILISSEGUNDOS_POR_DIA);
+  if (dias === 0) return "hoje";
+  if (dias === 1) return "ontem";
+  return `há ${dias} dias`;
 }
 
 // Quantos algarismos tem o número de um id ("sal-003" → 3)
@@ -46,6 +62,11 @@ export function gerar_id(gaveta, prefixo) {
 // Cópia da lista ordenada pela chave "data", do mais recente para o mais antigo (a original não muda)
 export function ordenar_mais_recente_primeiro(lista) {
   return [...lista].sort((objeto_a, objeto_b) => objeto_b.data.localeCompare(objeto_a.data));
+}
+
+// O objeto com a data mais recente de uma lista (ou undefined, se a lista estiver vazia)
+export function obter_mais_recente(lista) {
+  return ordenar_mais_recente_primeiro(lista)[0];
 }
 
 // A classe de cor de um número: 318 → "positivo" | -12 → "negativo" | 0 → "" (sem cor)
