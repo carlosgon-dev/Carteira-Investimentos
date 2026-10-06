@@ -74,7 +74,7 @@ async function arrancar() {
     ativar_eventos({
       dados,
       mostrar_pagina,
-      redesenhar: () => mostrar_pagina(pagina_atual),
+      redesenhar_pagina_atual: () => mostrar_pagina(pagina_atual),
     });
     mostrar_pagina("carteira");
   } catch (erro) {

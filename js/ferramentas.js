@@ -6,6 +6,17 @@ export function formatar_euro(valor) {
   return valor.toLocaleString("pt-PT", { style: "currency", currency: "EUR", useGrouping: "always" });
 }
 
+// Que parte do total é este valor, em %: (25, 200) → 12.5. Se o total for 0, dá 0 (não se divide por zero)
+export function calcular_percentagem(valor, total) {
+  if (total === 0) return 0;
+  return (valor / total) * 100;
+}
+
+// 62.345 → "62,3 %"
+export function formatar_percentagem(percentagem) {
+  return `${percentagem.toLocaleString("pt-PT", { maximumFractionDigits: 1 })} %`;
+}
+
 // "2026-09-30" → "30/09/2026"
 export function formatar_data(data) {
   const [ano, mes, dia] = data.split("-");
