@@ -7,7 +7,7 @@ import { desenhar_botao_cancelar } from "./graficos.js";
 // O que o main.js entrega no arranque (injeção de dependências), em ativar_eventos()
 let dados;            // o gestor dos dados (ler, adicionar, editar, apagar)
 let mostrar_pagina;   // a função do main.js que desenha uma página
-let redesenhar;       // a função do main.js que volta a desenhar a página aberta
+let redesenhar_pagina_atual; // a função do main.js que volta a desenhar a página aberta
 
 let linha_em_espera = null; // a linha com um ✎ ou um ✕ à espera do 2.º clique
 let linha_em_espera_original = ""; // como essa linha era antes do 1.º clique (para a poder repor)
@@ -18,7 +18,7 @@ let linha_em_espera_original = ""; // como essa linha era antes do 1.º clique (
 export function ativar_eventos(dependencias) {
   dados = dependencias.dados;
   mostrar_pagina = dependencias.mostrar_pagina;
-  redesenhar = dependencias.redesenhar;
+  redesenhar_pagina_atual = dependencias.redesenhar_pagina_atual;
 
   document.querySelector(".menu_lateral").addEventListener("click", tratar_clique_menu);             // evento 1
   document.addEventListener("click", tratar_clique_fora, true);                                       // evento 2
@@ -93,9 +93,9 @@ function tratar_clique_botao_tabela(evento) {
 }
 
 // Volta a desenhar a página aberta (depois de guardar ou apagar); nenhuma linha fica à espera
-function redesenhar_pagina() {
+function atualizar_pagina_apos_alteracao() {
   linha_em_espera = null;
-  redesenhar();
+  redesenhar_pagina_atual();
 }
 
 /* ---------- Auxiliares do "+ …" (adicionar) ---------- */
@@ -178,7 +178,7 @@ function tratar_clique_guardar(botao) {
   if (!validar_campos_linha(linha)) return;
 
   dados.editar(botao.dataset.gaveta, botao.dataset.id, ler_valores_linha(linha));
-  redesenhar_pagina();
+  atualizar_pagina_apos_alteracao();
 }
 
 // O ✓ da linha nova (do "+ …"): cria o objeto com um id novo e acrescenta-o à gaveta
@@ -190,7 +190,7 @@ function tratar_clique_guardar_novo(botao) {
   const id_novo = gerar_id(dados.ler(nome_gaveta), PREFIXOS_ID[nome_gaveta]);
   const novo_objeto = { id: id_novo, ...ler_valores_linha(linha) };
   dados.adicionar(nome_gaveta, novo_objeto);
-  redesenhar_pagina();
+  atualizar_pagina_apos_alteracao();
 }
 
 // Os campos da linha estão bem preenchidos? Se algum não estiver (vazio, ou fora dos limites),
@@ -233,6 +233,6 @@ function tratar_clique_apagar(botao) {
     return;
   }
   dados.apagar(botao.dataset.gaveta, botao.dataset.id);
-  redesenhar_pagina();
+  atualizar_pagina_apos_alteracao();
 }
 // #endregion

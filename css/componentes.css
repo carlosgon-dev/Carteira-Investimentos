@@ -117,6 +117,67 @@
 }
 /* #endregion */
 
+/* #region ==================== GRÁFICO CIRCULAR ==================== */
+/* O gráfico em cima, ao centro, e a legenda por baixo, a toda a largura */
+.grafico_circular_caixa {
+  display: flex;
+  flex-direction: column;   /* um por baixo do outro */
+  align-items: center;      /* o círculo fica ao centro */
+  gap: 1.5rem;
+}
+
+/* O círculo (SVG): rodado -90° para a 1.ª fatia começar em cima, como os ponteiros de um relógio */
+.grafico_circular {
+  flex-shrink: 0;
+  width: 14rem;   /* o tamanho no ecrã: muda-se só aqui (o desenho estica sozinho) */
+  aspect-ratio: 1;
+  transform: rotate(-90deg);
+}
+
+/* Cada fatia é só um contorno grosso, sem enchimento: é isso que deixa o buraco do meio ("donut") */
+.fatia {
+  fill: none;
+  stroke-width: 18;
+  cursor: pointer;
+  transition: stroke-width 0.15s;
+  &:hover { stroke-width: 22; }   /* ao passar o rato, a fatia engorda um pouco */
+}
+
+/* A legenda: uma linha por fatia → bolinha · nome · valor · % */
+.legenda_grafico {
+  align-self: stretch;      /* a legenda ocupa a largura toda do painel */
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.93rem;
+  & li {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: 0.6rem;
+  }
+}
+
+.bolinha {
+  width: 0.75rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.legenda_valor,
+.legenda_percentagem {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.legenda_percentagem {
+  min-width: 3.5rem;
+  color: var(--cor_suave);
+}
+/* #endregion */
+
 /* #region ==================== TABELAS ==================== */
 /* A caixa deixa a tabela fazer scroll para o lado em ecrãs estreitos, sem alargar a página */
 .tabela_caixa { overflow-x: auto; }

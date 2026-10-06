@@ -1,4 +1,5 @@
 // Peças visuais reutilizáveis. Cada função devolve HTML em texto (template string).
+import { formatar_euro, calcular_percentagem, formatar_percentagem } from "./ferramentas.js";
 
 // #region ==================== PAINEL ====================
 
@@ -103,6 +104,71 @@ export function desenhar_botoes_linha(nome_gaveta, id) {
       <button type="button" class="botao_icone" data-acao="editar" data-gaveta="${nome_gaveta}" data-id="${id}" title="Editar">✎</button>
       <button type="button" class="botao_icone botao_perigo" data-acao="apagar" data-gaveta="${nome_gaveta}" data-id="${id}" title="Apagar">✕</button>
     </div>
+  `;
+}
+// #endregion
+
+// #region ==================== GRÁFICO CIRCULAR ====================
+// Quantas cores há para as fatias (--cor_grafico_1 a 15, no base.css); a partir da 16.ª fatia, as cores repetem-se
+const NUMERO_CORES = 15;
+const CORTE_ENTRE_FATIAS = 0.4;
+
+// Um gráfico circular (donut) com a legenda por baixo. Ao passar o rato numa fatia, aparece o nome, o valor e a %.
+//   fatias: [{ nome: "ETF's", valor: 3200 }, …], já do maior para o menor
+// Cada fatia tem a sua cor, sempre pela mesma ordem; a legenda mostra o nome, o valor e a %.
+export function desenhar_grafico_circular(fatias) {
+  const fatias_com_cor = dar_cor_as_fatias(fatias);
+  const total = fatias_com_cor.reduce((soma, fatia) => soma + fatia.valor, 0);
+  if (total === 0) return `<p class="painel_nota">Ainda sem dados.</p>`;
+
+  return `
+    <div class="grafico_circular_caixa">
+      ${desenhar_circulo_fatias(fatias_com_cor, total)}
+      <ul class="legenda_grafico">${fatias_com_cor.map((fatia) => desenhar_linha_legenda(fatia, total)).join("")}</ul>
+    </div>
+  `;
+}
+
+/* ---------- Ajudantes do gráfico circular (só usados aqui) ---------- */
+
+// Dá a cada fatia a sua cor, pela ordem (1.ª fatia → cor 1, 2.ª → cor 2…). Todas as fatias aparecem.
+// O % (resto da divisão) faz a 9.ª voltar à cor 1, a 10.ª à cor 2, e assim por diante.
+function dar_cor_as_fatias(fatias) {
+  return fatias.map((fatia, posicao) => ({ ...fatia, cor: `var(--cor_grafico_${(posicao % NUMERO_CORES) + 1})` }));
+}
+
+// O círculo em SVG: cada fatia é um anel (<circle>) com a sua cor, a começar onde a anterior acabou.
+//   pathLength="100": a volta inteira passa a valer 100, por isso cada fatia ocupa exatamente a sua %
+//   stroke-dasharray:  o tamanho do traço pintado (a fatia) e o espaço vazio a seguir
+//   stroke-dashoffset: onde a fatia começa (logo a seguir à anterior)
+//   <title>:           o balão que aparece ao passar o rato (é do próprio browser, sem JavaScript)
+function desenhar_circulo_fatias(fatias_com_cor, total) {
+  const html_fatias = [];
+  let inicio = 0;
+  for (const fatia of fatias_com_cor) {
+    const percentagem = calcular_percentagem(fatia.valor, total);
+    const tamanho_pintado = Math.max(percentagem - CORTE_ENTRE_FATIAS, 0);
+    html_fatias.push(`
+      <circle class="fatia" cx="50" cy="50" r="38" pathLength="100" style="stroke: ${fatia.cor}"
+              stroke-dasharray="${tamanho_pintado} 100" stroke-dashoffset="${-inicio}">
+        <title>${fatia.nome}: ${formatar_euro(fatia.valor)} (${formatar_percentagem(percentagem)})</title>
+      </circle>
+    `);
+    inicio += percentagem;
+  }
+  return `<svg class="grafico_circular" viewBox="0 0 100 100">${html_fatias.join("")}</svg>`;
+}
+
+// Uma linha da legenda: bolinha da cor · nome · valor · %
+function desenhar_linha_legenda(fatia, total) {
+  const percentagem = formatar_percentagem(calcular_percentagem(fatia.valor, total));
+  return `
+    <li>
+      <span class="bolinha" style="background: ${fatia.cor}"></span>
+      <span class="legenda_nome">${fatia.nome}</span>
+      <span class="legenda_valor">${formatar_euro(fatia.valor)}</span>
+      <span class="legenda_percentagem">${percentagem}</span>
+    </li>
   `;
 }
 // #endregion
