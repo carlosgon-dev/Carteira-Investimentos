@@ -2,6 +2,7 @@
 // #region ==================== IMPORTS ====================
 import { carregar_dados } from "./gestor_dados.js";
 import { ativar_eventos } from "./eventos.js";
+import { mostrar_surpresa_depois_de_esperar } from "./surpresa.js";
 import { desenhar_pagina_carteira } from "./paginas/carteira.js";
 import { desenhar_pagina_fundos } from "./paginas/fundos.js";
 import { desenhar_pagina_depositos } from "./paginas/depositos.js";
@@ -77,6 +78,7 @@ async function arrancar() {
       redesenhar_pagina_atual: () => mostrar_pagina(pagina_atual),
     });
     mostrar_pagina("carteira");
+    mostrar_surpresa_depois_de_esperar(); // sem await: a app continua a funcionar enquanto espera
   } catch (erro) {
     console.error(erro);
     zona_pagina.innerHTML = `<p class="erro">Não consegui carregar os dados. ${erro.message}</p>`;

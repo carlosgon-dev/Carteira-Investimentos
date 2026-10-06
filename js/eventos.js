@@ -3,6 +3,7 @@
 import { obter_data_hoje, gerar_id } from "./ferramentas.js";
 import { PREFIXOS_ID } from "./constantes.js";
 import { desenhar_botao_cancelar } from "./graficos.js";
+import { guardar_escolha_grafico_barras } from "./paginas/investimentos.js";
 
 // O que o main.js entrega no arranque (injeção de dependências), em ativar_eventos()
 let dados;            // o gestor dos dados (ler, adicionar, editar, apagar)
@@ -89,6 +90,8 @@ function tratar_clique_botao_tabela(evento) {
     case "adicionar": tratar_clique_adicionar(botao); break;
     case "guardar_novo": tratar_clique_guardar_novo(botao); break;
     case "cancelar": repor_linha_em_espera(); break;
+    case "mudar_escolha": tratar_clique_mudar_escolha(botao); break;
+    case "abrir_pagina": mostrar_pagina(botao.dataset.pagina_destino); break;
   }
 }
 
@@ -96,6 +99,14 @@ function tratar_clique_botao_tabela(evento) {
 function atualizar_pagina_apos_alteracao() {
   linha_em_espera = null;
   redesenhar_pagina_atual();
+}
+
+/* ---------- Auxiliares do alternador (ex.: [Ativo | Tema], [€ | %]) ---------- */
+
+// Guarda a escolha do botão e volta a desenhar a página com ela
+function tratar_clique_mudar_escolha(botao) {
+  guardar_escolha_grafico_barras(botao.dataset.escolha, botao.dataset.valor);
+  atualizar_pagina_apos_alteracao();
 }
 
 /* ---------- Auxiliares do "+ …" (adicionar) ---------- */

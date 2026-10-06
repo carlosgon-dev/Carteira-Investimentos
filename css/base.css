@@ -4,7 +4,7 @@
 
 /* #region ==================== CORES E MEDIDAS ==================== */
 :root {
-  font-size: 50px; /* tamanho base: todos os rem dependem daqui */
+  font-size: 14px; /* tamanho base: todos os rem dependem daqui */
 
   /* Fundos e linhas */
   --cor_fundo: #f2f4f1;          /* fundo da página */
@@ -50,6 +50,10 @@
 
   /* Sombra dos cartões */
   --sombra: 0 1px 2px rgba(20, 32, 27, 0.06), 0 8px 24px rgba(20, 32, 27, 0.06);
+
+  /* O ecrã escuro da surpresa (por cima de tudo) */
+  --cor_ecra_surpresa: rgba(0, 0, 0, 0.88);
+  --cor_texto_surpresa: #ffffff;   /* o texto por cima do ecrã escuro (igual nos 2 modos) */
 
   /* Medidas */
   --espaco: 0.5rem;
