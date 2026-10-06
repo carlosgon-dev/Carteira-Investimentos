@@ -1,5 +1,5 @@
 // Peças visuais reutilizáveis. Cada função devolve HTML em texto (template string).
-import { formatar_euro, calcular_percentagem, formatar_percentagem } from "./ferramentas.js";
+import { formatar_euro, calcular_percentagem, formatar_percentagem, obter_classe_positivo_negativo } from "./ferramentas.js";
 
 // #region ==================== PAINEL ====================
 
@@ -57,6 +57,34 @@ export function desenhar_tabela({ colunas_cabecalho, linhas_conteudo }) {
   `;
 }
 
+// Uma tabela em que cada linha abre (acordeão) e mostra mais coisas por baixo.
+// Como o HTML não deixa pôr <details> dentro de <table>, é feita com <div>s + CSS grid; cada linha é um <details>.
+//   colunas_cabecalho: igual à desenhar_tabela ([{ titulo: "Nome" }, { titulo: "Investido", numero: true }, …])
+//   linhas_conteudo:   [{ celulas: ["Bitcoin", "1 800,00 €", …], conteudo_aberto: "<HTML que aparece ao abrir>" }, …]
+// A largura das colunas: as de texto ocupam 2 partes, as de números 1 parte.
+export function desenhar_tabela_acordeao({ colunas_cabecalho, linhas_conteudo }) {
+  const grelha_colunas = colunas_cabecalho.map((coluna) => (coluna.numero ? "1fr" : "2fr")).join(" ");
+  const html_cabecalho = colunas_cabecalho.map((coluna) => `<span class="${obter_classe_coluna(coluna)}">${coluna.titulo}</span>`).join("");
+  const html_linhas = linhas_conteudo.map((linha) => desenhar_linha_acordeao(linha, colunas_cabecalho)).join("");
+  return `
+    <div class="tabela_acordeao" style="--grelha_colunas: ${grelha_colunas}">
+      <div class="acordeao_cabecalho">${html_cabecalho}</div>
+      ${html_linhas}
+    </div>
+  `;
+}
+
+// Uma linha do acordeão: o <summary> (sempre visível) com as células, e o conteúdo que aparece ao abrir
+function desenhar_linha_acordeao(linha, colunas_cabecalho) {
+  const html_celulas = linha.celulas.map((celula, posicao) => `<span class="${obter_classe_coluna(colunas_cabecalho[posicao])}">${celula}</span>`).join("");
+  return `
+    <details class="acordeao_linha">
+      <summary>${html_celulas}</summary>
+      <div class="acordeao_conteudo">${linha.conteudo_aberto}</div>
+    </details>
+  `;
+}
+
 /* ---------- Ajudantes da tabela (só usados aqui) ---------- */
 // Dão a cada célula as características da sua coluna:
 // o alinhamento, para o CSS, e as pistas de edição, para o ✎ do main.js
@@ -89,6 +117,12 @@ function desenhar_linha_tabela(linha, colunas_cabecalho) {
 // O botão "+ …" que acrescenta um objeto novo a uma gaveta (vai no cabeçalho do painel, em "acoes")
 export function desenhar_botao_adicionar(nome_gaveta, texto) {
   return `<button type="button" class="botao_secundario" data-acao="adicionar" data-gaveta="${nome_gaveta}">${texto}</button>`;
+}
+
+// Um botão que abre outra página da app (ex.: "+ Registar venda" → página registar_venda).
+// Leva data-acao="abrir_pagina" e o nome da página: o eventos.js trata do clique.
+export function desenhar_botao_abrir_pagina(nome_pagina, texto) {
+  return `<button type="button" class="botao_secundario" data-acao="abrir_pagina" data-pagina_destino="${nome_pagina}">${texto}</button>`;
 }
 
 // O botão ↩ (cancelar) de uma linha à espera: aparece no lugar de outro botão, depois do 1.º clique
@@ -170,6 +204,67 @@ function desenhar_linha_legenda(fatia, total) {
       <span class="legenda_percentagem">${percentagem}</span>
     </li>
   `;
+}
+// #endregion
+
+// #region ==================== GRÁFICO DE BARRAS ====================
+
+// Um gráfico de barras horizontais: positivos para a direita (verde), negativos para a esquerda (vermelho).
+// A pista vai do valor mais baixo (à esquerda) ao mais alto (à direita); o zero fica onde calhar entre os dois.
+//   barras: [{ nome: "S&P 500", valor: 61.8, texto: "+61,80 €" }, …]
+//   valor null = sem registo: mostra o texto ("—") e não desenha barra
+export function desenhar_grafico_barras(barras) {
+  const valores = barras.map((barra) => barra.valor ?? 0);
+  const minimo = Math.min(0, ...valores); // o mais negativo (ou 0, se não houver negativos)
+  const maximo = Math.max(0, ...valores); // o mais positivo (ou 0, se não houver positivos)
+  const escala = { minimo, amplitude: maximo - minimo };
+  return `<ul class="grafico_barras">${barras.map((barra) => desenhar_linha_barra(barra, escala)).join("")}</ul>`;
+}
+
+/* ---------- Ajudantes do gráfico de barras (só usados aqui) ---------- */
+
+// Uma linha: nome · pista com a barra · valor (com a cor do sinal)
+// A pista leva a posição do zero numa variável CSS (--posicao_zero), para desenhar lá a linha do zero
+function desenhar_linha_barra(barra, escala) {
+  return `
+    <li class="barra_linha">
+      <span class="barra_nome">${barra.nome}</span>
+      <div class="barra_pista" style="--posicao_zero: ${calcular_posicao_na_pista(0, escala)}%">${desenhar_barra(barra.valor, escala)}</div>
+      <span class="barra_valor ${obter_classe_positivo_negativo(barra.valor ?? 0)}">${barra.texto}</span>
+    </li>
+  `;
+}
+
+// Onde fica um valor na pista, em %: o mínimo fica em 0 % (esquerda) e o máximo em 100 % (direita)
+function calcular_posicao_na_pista(valor, escala) {
+  if (escala.amplitude === 0) return 0;
+  return ((valor - escala.minimo) / escala.amplitude) * 100;
+}
+
+// A barra pintada: vai do zero até ao valor (para a direita se for positivo, para a esquerda se for negativo)
+function desenhar_barra(valor, escala) {
+  if (!valor) return ""; // sem registo ou zero: sem barra
+  const posicao_zero = calcular_posicao_na_pista(0, escala);
+  const posicao_valor = calcular_posicao_na_pista(valor, escala);
+  const inicio = Math.min(posicao_zero, posicao_valor); // a barra começa no ponto mais à esquerda dos dois
+  const largura = Math.abs(posicao_valor - posicao_zero);
+  const lado = valor > 0 ? "barra_positiva" : "barra_negativa";
+  return `<div class="barra ${lado}" style="left: ${inicio}%; width: ${largura}%"></div>`;
+}
+// #endregion
+
+// #region ==================== ALTERNADOR ====================
+
+// Um grupo de botões em que só um está escolhido (ex.: [Ativo | Tema] ou [€ | %]).
+//   nome_escolha: o que o grupo muda (ex.: "agrupar_por") · opcoes: [{ valor: "nome", texto: "Ativo" }, …]
+//   escolhido: o valor que está ativo agora
+// Cada botão leva data-acao="mudar_escolha": o eventos.js trata do clique.
+export function desenhar_alternador({ nome_escolha, opcoes, escolhido }) {
+  const html_botoes = opcoes.map((opcao) => {
+    const classe_ativo = opcao.valor === escolhido ? "ativo" : "";
+    return `<button type="button" class="${classe_ativo}" data-acao="mudar_escolha" data-escolha="${nome_escolha}" data-valor="${opcao.valor}">${opcao.texto}</button>`;
+  });
+  return `<div class="alternador">${html_botoes.join("")}</div>`;
 }
 // #endregion
 

@@ -47,6 +47,34 @@ export function obter_rendibilidades_atuais(gaveta_posicoes, gaveta_compras, gav
   const rendibilidades_mais_recentes = posicoes_abertas.map((objeto_posicao) => obter_mais_recente(filtrar_por_posicao(gaveta_rendibilidades, objeto_posicao.id)));
   return rendibilidades_mais_recentes.filter((objeto_rendibilidade) => objeto_rendibilidade !== undefined);
 }
+
+// O investido e a rendibilidade das posições abertas, agrupados por uma CHAVE DA POSIÇÃO:
+//   chave "nome" → por ativo (S&P 500…) · "tema" → por tema (Mercado - USA…)
+//   resultado: [{ nome: "S&P 500", investido: 1580.25, rendibilidade: 162.9 }, …]
+//   rendibilidade null = nenhuma posição do grupo tem registo
+export function agrupar_rendibilidade_por_posicao(gaveta_posicoes, gaveta_compras, gaveta_vendas, gaveta_rendibilidades, chave) {
+  const grupos = {};
+  for (const objeto_posicao of filtrar_posicoes_abertas(gaveta_posicoes, gaveta_compras, gaveta_vendas)) {
+    const nome_grupo = objeto_posicao[chave] || "Sem " + chave;
+    const grupo = grupos[nome_grupo] ?? { nome: nome_grupo, investido: 0, rendibilidade: null };
+    const investido_e_rendibilidade = calcular_investido_e_rendibilidade_posicao(objeto_posicao, gaveta_compras, gaveta_rendibilidades);
+
+    grupo.investido += investido_e_rendibilidade.investido;
+    if (investido_e_rendibilidade.rendibilidade !== null) grupo.rendibilidade = (grupo.rendibilidade ?? 0) + investido_e_rendibilidade.rendibilidade;
+
+    grupos[nome_grupo] = grupo;
+  }
+  return Object.values(grupos);
+}
+
+// O investido e a rendibilidade de UMA posição: { investido: 1580.25, rendibilidade: 162.9 }
+//   investido = soma das suas compras · rendibilidade = o registo mais recente (null = ainda sem registo)
+export function calcular_investido_e_rendibilidade_posicao(objeto_posicao, gaveta_compras, gaveta_rendibilidades) {
+  const investido = somar_lista_chave(filtrar_por_posicao(gaveta_compras, objeto_posicao.id), "montante");
+  const rendibilidade_mais_recente = obter_mais_recente(filtrar_por_posicao(gaveta_rendibilidades, objeto_posicao.id));
+  const rendibilidade = rendibilidade_mais_recente ? rendibilidade_mais_recente.valor : null;
+  return { investido, rendibilidade };
+}
 // #endregion
 
 // #region ==================== GRÁFICOS CIRCULARES ====================

@@ -117,6 +117,66 @@
 }
 /* #endregion */
 
+/* #region ==================== TABELA ACORDEÃO ==================== */
+/* Os títulos e cada linha usam a MESMA grelha de colunas (vinda do JS em --grelha_colunas), por isso ficam alinhados */
+.tabela_acordeao {
+  font-size: 0.93rem;
+  overflow-x: auto;
+}
+
+.acordeao_cabecalho,
+.acordeao_linha > summary {
+  display: grid;
+  grid-template-columns: var(--grelha_colunas);
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.7rem 0.75rem;
+  border-bottom: 1px solid var(--cor_linha);
+}
+
+/* Os títulos: pequenos, em maiúsculas e cinzentos (como na tabela normal) */
+.acordeao_cabecalho {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--cor_suave);
+}
+
+/* A linha que se clica para abrir: sem o triângulo do browser, com a nossa seta ▸ antes do nome */
+.acordeao_linha > summary {
+  cursor: pointer;
+  list-style: none;
+  &::-webkit-details-marker { display: none; }
+  &:hover { background: var(--cor_cartao_suave); }
+  & > span:first-child::before {
+    content: "▸";
+    display: inline-block;
+    margin-right: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--cor_suave);
+    transition: transform 0.2s;
+  }
+}
+
+/* Linha aberta: a seta roda para baixo */
+.acordeao_linha[open] > summary > span:first-child::before { transform: rotate(90deg); }
+
+/* O que aparece ao abrir: um pouco recuado e com fundo suave */
+.acordeao_conteudo {
+  padding: 0.5rem 0.75rem 1rem 2rem;
+  background: var(--cor_cartao_suave);
+  border-bottom: 1px solid var(--cor_linha);
+}
+
+/* As células de números (alinhadas à direita), como na tabela normal */
+.tabela_acordeao .numero {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+/* #endregion */
+
 /* #region ==================== GRÁFICO CIRCULAR ==================== */
 /* O gráfico em cima, ao centro, e a legenda por baixo, a toda a largura */
 .grafico_circular_caixa {
@@ -175,6 +235,91 @@
 .legenda_percentagem {
   min-width: 3.5rem;
   color: var(--cor_suave);
+}
+/* #endregion */
+
+/* #region ==================== GRÁFICO DE BARRAS ==================== */
+/* Uma linha por ativo: nome · pista com a barra · valor */
+.grafico_barras {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.93rem;
+}
+
+.barra_linha {
+  display: grid;
+  grid-template-columns: minmax(8rem, 14rem) 1fr 6rem;   /* nome | pista (o resto) | valor */
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.barra_nome {
+  overflow: hidden;
+  text-overflow: ellipsis;   /* nomes compridos acabam em "…" */
+  white-space: nowrap;
+}
+
+/* A pista: a faixa onde a barra cresce; a linha fina é o zero (a posição vem do JS, em --posicao_zero) */
+.barra_pista {
+  position: relative;
+  height: 0.9rem;
+  &::before {
+    content: "";
+    position: absolute;
+    left: var(--posicao_zero);
+    top: -0.2rem;
+    bottom: -0.2rem;
+    border-left: 1px solid var(--cor_linha);
+  }
+}
+
+/* A barra: a posição (left) e a largura vêm do JS */
+.barra {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+
+.barra_positiva {
+  border-radius: 0 0.25rem 0.25rem 0;
+  background: var(--cor_positivo);
+}
+
+.barra_negativa {
+  border-radius: 0.25rem 0 0 0.25rem;
+  background: var(--cor_negativo);
+}
+
+.barra_valor {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+/* #endregion */
+
+/* #region ==================== ALTERNADOR ==================== */
+/* Um grupo de botões colados ([Ativo | Tema]); o escolhido fica escuro */
+.alternador {
+  display: inline-flex;
+  border: 1px solid var(--cor_linha);
+  border-radius: 0.55rem;
+  overflow: hidden;   /* os cantos dos botões ficam dentro da borda redonda */
+  & button {
+    padding: 0.35rem 0.8rem;
+    border: none;
+    background: transparent;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--cor_texto_secundario);
+    cursor: pointer;
+    &:hover { background: var(--cor_cartao_suave); }
+    &:focus-visible { outline: 2px solid var(--cor_destaque); outline-offset: -2px; }
+  }
+  & button.ativo { background: var(--cor_texto); color: var(--cor_fundo); }
 }
 /* #endregion */
 
@@ -281,4 +426,38 @@
 
 /* ---------- Mensagens ---------- */
 .erro {color: var(--cor_negativo_texto);}
+/* #endregion */
+
+/* #region ==================== SURPRESA (vídeo do Éder) ==================== */
+/* O ecrã escuro, por cima de tudo. Começa invisível (opacity 0) e, com a classe "visivel", escurece em 3 segundos */
+.ecra_surpresa {
+  position: fixed;
+  inset: 0;                         /* ocupa o ecrã inteiro */
+  z-index: 100;                     /* fica por cima de tudo */
+  display: grid;
+  place-items: center;              /* o vídeo fica ao centro */
+  background: var(--cor_ecra_surpresa);
+  opacity: 0;
+  transition: opacity 3s ease-in;
+}
+
+.ecra_surpresa.visivel { opacity: 1; }
+
+/* O vídeo: também começa invisível e só aparece DEPOIS de o ecrã escurecer (espera 2,5 s e demora 2 s) */
+.video_surpresa {
+  max-width: 80vw;
+  max-height: 80vh;
+  border-radius: 0.85rem;
+  opacity: 0;
+  transition: opacity 2s ease-in 2.5s;
+}
+
+.visivel .video_surpresa { opacity: 1; }
+/* O aviso "Clica em qualquer sítio para ligar o som", por baixo do vídeo */
+.aviso_som {
+  margin: 1rem 0 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--cor_texto_surpresa);
+}
 /* #endregion */
