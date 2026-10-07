@@ -49,11 +49,18 @@ const PAGINAS = {
 const zona_pagina = document.querySelector("#pagina");
 let dados; // o cofre dos dados: fica preenchido no arranque
 let pagina_atual; // a página que está aberta (para a redesenhar depois de guardar ou apagar)
+let pagina_anterior; // a página que estava aberta antes desta (para o "Cancelar" dos formulários voltar a ela)
+
+// Onde fica guardada a página aberta no sessionStorage: ao recarregar (F5), a app volta a ela
+const CHAVE_PAGINA_ABERTA = "pagina_aberta";
+const PAGINA_INICIAL = "carteira";
 // #endregion
 
 // #region ==================== NAVEGAÇÃO ====================
 function mostrar_pagina(nome_pagina) {
+  if (nome_pagina !== pagina_atual) pagina_anterior = pagina_atual; // ao mudar de página, a de agora passa a ser a anterior
   pagina_atual = nome_pagina;
+  sessionStorage.setItem(CHAVE_PAGINA_ABERTA, nome_pagina); // lembra-a, para o caso de a página recarregar
   const funcao_desenhar_pagina = PAGINAS[nome_pagina]; // a função que desenha esta página (ou undefined)
   zona_pagina.innerHTML = funcao_desenhar_pagina ? funcao_desenhar_pagina(dados) : `<h2>EM CONSTRUÇÃO</h2>`;
   marcar_botao_ativo(nome_pagina);
@@ -76,8 +83,10 @@ async function arrancar() {
       dados,
       mostrar_pagina,
       redesenhar_pagina_atual: () => mostrar_pagina(pagina_atual),
+      voltar_pagina_anterior: () => mostrar_pagina(pagina_anterior ?? PAGINA_INICIAL),
     });
-    mostrar_pagina("carteira");
+    // Abre a página que estava aberta antes de recarregar (ou a Carteira, se for a 1.ª vez)
+    mostrar_pagina(sessionStorage.getItem(CHAVE_PAGINA_ABERTA) ?? PAGINA_INICIAL);
     mostrar_surpresa_depois_de_esperar(); // sem await: a app continua a funcionar enquanto espera
   } catch (erro) {
     console.error(erro);
