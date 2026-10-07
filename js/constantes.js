@@ -16,9 +16,9 @@ export const PREFIXOS_ID = {
 };
 // #endregion
 
-// #region ==================== NOMES DOS TIPOS ====================
-// Os tipos de investimento (o campo "tipo" das posições) → o nome que aparece na app
-export const NOMES_TIPOS = {
+// #region ==================== NOMES DAS CATEGORIAS ====================
+// As categorias de investimento (o campo "categoria" das posições) → o nome que aparece na app
+export const NOMES_CATEGORIAS = {
   etf: "ETF's",
   cripto: "Criptomoedas",
   reit: "REIT's",
@@ -27,8 +27,8 @@ export const NOMES_TIPOS = {
   ouro: "Ouro digital",
 };
 
-// A página do menu de cada tipo (o data-pagina do botão): depois de uma compra, a app abre a página desse tipo
-export const PAGINA_DO_TIPO = {
+// A página do menu de cada categoria (o data-pagina do botão): depois de uma compra, a app abre a página dessa categoria
+export const PAGINA_DA_CATEGORIA = {
   etf: "etf",
   cripto: "cripto",
   reit: "reit",

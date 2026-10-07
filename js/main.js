@@ -28,7 +28,7 @@ const PAGINAS = {
   governo: desenhar_pagina_governo,
   mais_valias: desenhar_pagina_mais_valias,
 
-  // Investimentos (os 5 primeiros usam a mesma função, só muda o tipo)
+  // Investimentos (os 5 primeiros usam a mesma função, só muda a categoria)
   etf: (dados) => desenhar_pagina_investimento(dados, "etf"),
   cripto: (dados) => desenhar_pagina_investimento(dados, "cripto"),
   reit: (dados) => desenhar_pagina_investimento(dados, "reit"),

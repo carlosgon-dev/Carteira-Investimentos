@@ -61,9 +61,10 @@ export function desenhar_tabela({ colunas_cabecalho, linhas_conteudo }) {
 // Como o HTML não deixa pôr <details> dentro de <table>, é feita com <div>s + CSS grid; cada linha é um <details>.
 //   colunas_cabecalho: igual à desenhar_tabela ([{ titulo: "Nome" }, { titulo: "Investido", numero: true }, …])
 //   linhas_conteudo:   [{ celulas: ["Bitcoin", "1 800,00 €", …], conteudo_aberto: "<HTML que aparece ao abrir>" }, …]
-// A largura das colunas: as de texto ocupam 2 partes, as de números 1 parte.
+// A largura das colunas: as de texto ocupam 1,5 partes, as de números 1 parte.
+// O minmax(0, …) obriga TODAS as linhas a ter as colunas iguais (sem ele, um texto comprido alargava a coluna só nessa linha).
 export function desenhar_tabela_acordeao({ colunas_cabecalho, linhas_conteudo }) {
-  const grelha_colunas = colunas_cabecalho.map((coluna) => (coluna.numero ? "1fr" : "2fr")).join(" ");
+  const grelha_colunas = colunas_cabecalho.map((coluna) => (coluna.numero ? "minmax(0, 1fr)" : "minmax(0, 1.5fr)")).join(" ");
   const html_cabecalho = colunas_cabecalho.map((coluna) => `<span class="${obter_classe_coluna(coluna)}">${coluna.titulo}</span>`).join("");
   const html_linhas = linhas_conteudo.map((linha) => desenhar_linha_acordeao(linha, colunas_cabecalho)).join("");
   return `
@@ -255,7 +256,7 @@ function desenhar_barra(valor, escala) {
 
 // #region ==================== ALTERNADOR ====================
 
-// Um grupo de botões em que só um está escolhido (ex.: [Ativo | Tema] ou [€ | %]).
+// Um grupo de botões em que só um está escolhido (ex.: [Ativo | Área] ou [€ | %]).
 //   nome_escolha: o que o grupo muda (ex.: "agrupar_por") · opcoes: [{ valor: "nome", texto: "Ativo" }, …]
 //   escolhido: o valor que está ativo agora
 // Cada botão leva data-acao="mudar_escolha": o eventos.js trata do clique.

@@ -2,111 +2,111 @@
   "posicoes": [
     {
       "id": "pos-001",
-      "tipo": "etf",
+      "categoria": "etf",
       "nome": "S&P 500",
-      "tema": "Mercado - USA"
+      "area_negocio": "Mercado - USA"
     },
     {
       "id": "pos-002",
-      "tipo": "etf",
+      "categoria": "etf",
       "nome": "EUR STOXX Banks 30-15 DE",
-      "tema": "Bancos"
+      "area_negocio": "Bancos"
     },
     {
       "id": "pos-003",
-      "tipo": "etf",
+      "categoria": "etf",
       "nome": "iShares Core MSCI World UCITS ETF USD (Acc)",
-      "tema": "Mercado - Global"
+      "area_negocio": "Mercado - Global"
     },
     {
       "id": "pos-004",
-      "tipo": "etf",
+      "categoria": "etf",
       "nome": "FTSE All-World",
-      "tema": "Mercado - Global"
+      "area_negocio": "Mercado - Global"
     },
     {
       "id": "pos-005",
-      "tipo": "etf",
+      "categoria": "etf",
       "nome": "VanEck Quantum Computing UCITS ETF A",
-      "tema": "Tecnologia quântica"
+      "area_negocio": "Tecnologia quântica"
     },
     {
       "id": "pos-006",
-      "tipo": "cripto",
+      "categoria": "cripto",
       "nome": "Bitcoin",
-      "tema": "Blockchain"
+      "area_negocio": "Blockchain"
     },
     {
       "id": "pos-007",
-      "tipo": "cripto",
+      "categoria": "cripto",
       "nome": "Ethereum",
-      "tema": "Contratos inteligentes"
+      "area_negocio": "Contratos inteligentes"
     },
     {
       "id": "pos-008",
-      "tipo": "cripto",
+      "categoria": "cripto",
       "nome": "Solana",
-      "tema": "Blockchain"
+      "area_negocio": "Blockchain"
     },
     {
       "id": "pos-009",
-      "tipo": "cripto",
+      "categoria": "cripto",
       "nome": "Bittensor",
-      "tema": "Inteligência artificial"
+      "area_negocio": "Inteligência artificial"
     },
     {
       "id": "pos-010",
-      "tipo": "cripto",
+      "categoria": "cripto",
       "nome": "Chainlink",
-      "tema": "Oráculos"
+      "area_negocio": "Oráculos"
     },
     {
       "id": "pos-011",
-      "tipo": "cripto",
+      "categoria": "cripto",
       "nome": "Render",
-      "tema": "Inteligência artificial"
+      "area_negocio": "Inteligência artificial"
     },
     {
       "id": "pos-012",
-      "tipo": "cripto",
+      "categoria": "cripto",
       "nome": "Ondo",
-      "tema": "Ativos reais (RWA)"
+      "area_negocio": "Ativos reais (RWA)"
     },
     {
       "id": "pos-013",
-      "tipo": "reit",
+      "categoria": "reit",
       "nome": "Realty Income",
-      "tema": "Retalho"
+      "area_negocio": "Retalho"
     },
     {
       "id": "pos-014",
-      "tipo": "reit",
+      "categoria": "reit",
       "nome": "Invesco Real Estate S&P US Select Sector UCITS ETF",
-      "tema": "Mercado - USA"
+      "area_negocio": "Mercado - USA"
     },
     {
       "id": "pos-015",
-      "tipo": "reit",
+      "categoria": "reit",
       "nome": "iShares US Property Yield UCITS ETF",
-      "tema": "Mercado - USA"
+      "area_negocio": "Mercado - USA"
     },
     {
       "id": "pos-016",
-      "tipo": "reit",
+      "categoria": "reit",
       "nome": "iShares Developed Markets Property Yield UCITS ETF",
-      "tema": "Mercado - Global"
+      "area_negocio": "Mercado - Global"
     },
     {
       "id": "pos-017",
-      "tipo": "reit",
+      "categoria": "reit",
       "nome": "iShares European Property Yield UCITS ETF",
-      "tema": "Mercado - Europa"
+      "area_negocio": "Mercado - Europa"
     },
     {
       "id": "pos-018",
-      "tipo": "ouro",
+      "categoria": "ouro",
       "nome": "Bitcoin",
-      "tema": "Reserva de ouro digital"
+      "area_negocio": "Reserva de ouro digital"
     }
   ],
   "compras": [

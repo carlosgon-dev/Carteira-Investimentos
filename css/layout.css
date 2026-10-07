@@ -171,6 +171,9 @@ details[open]::details-content {animation: abrir_submenu 0.25s ease-out;}
 /* Tudo o que está aqui dentro SÓ conta em ecrãs estreitos; no computador, é ignorado */
 @media (max-width: 600px) {
 
+  /* ---------- Tudo mais pequeno: todos os rem dependem daqui (no computador são 14px, ver base.css) ---------- */
+  :root { font-size: 12px; }   /* não descer mais: os botões ficavam pequenos demais para o dedo */
+
   /* ---------- A grelha: tudo numa coluna (menu em cima, página, rodapé) ---------- */
   body {
     grid-template-columns: minmax(0, 1fr);

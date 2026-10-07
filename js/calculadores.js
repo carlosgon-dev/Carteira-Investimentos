@@ -9,9 +9,9 @@ export function filtrar_por_posicao(gaveta, id_posicao) {
   return gaveta.filter((objeto) => objeto.id_posicao === id_posicao);
 }
 
-// Só as posições de um tipo ("etf", "cripto"…)
-export function filtrar_posicoes_por_tipo(gaveta_posicoes, tipo) {
-  return gaveta_posicoes.filter((objeto_posicao) => objeto_posicao.tipo === tipo);
+// Só as posições de uma categoria ("etf", "cripto"…)
+export function filtrar_posicoes_por_categoria(gaveta_posicoes, categoria) {
+  return gaveta_posicoes.filter((objeto_posicao) => objeto_posicao.categoria === categoria);
 }
 
 // Só as posições que ainda estão abertas (têm compras e não foram vendidas)
@@ -49,7 +49,7 @@ export function obter_rendibilidades_atuais(gaveta_posicoes, gaveta_compras, gav
 }
 
 // O investido e a rendibilidade das posições abertas, agrupados por uma CHAVE DA POSIÇÃO:
-//   chave "nome" → por ativo (S&P 500…) · "tema" → por tema (Mercado - USA…)
+//   chave "nome" → por ativo (S&P 500…) · "area_negocio" → por área de negócio (Mercado - USA…)
 //   resultado: [{ nome: "S&P 500", investido: 1580.25, rendibilidade: 162.9 }, …]
 //   rendibilidade null = nenhuma posição do grupo tem registo
 export function agrupar_rendibilidade_por_posicao(gaveta_posicoes, gaveta_compras, gaveta_vendas, gaveta_rendibilidades, chave) {
@@ -79,7 +79,7 @@ export function calcular_investido_e_rendibilidade_posicao(objeto_posicao, gavet
 
 // #region ==================== GRÁFICOS CIRCULARES ====================
 // O dinheiro investido agrupado por uma CHAVE DA POSIÇÃO, do maior para o menor:
-//   chave "tipo" → por tipo (etf, cripto…) · "nome" → por ativo (S&P 500…) · "tema" → por tema (Mercado - USA…)
+//   chave "categoria" → por categoria (etf, cripto…) · "nome" → por ativo (S&P 500…) · "area_negocio" → por área de negócio (Mercado - USA…)
 //   resultado: [{ nome: "etf", valor: 3200 }, …]
 export function agrupar_investido_por_posicao(gaveta_posicoes, gaveta_compras, gaveta_vendas, chave) {
   const totais = {};
