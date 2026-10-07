@@ -26,4 +26,14 @@ export const NOMES_TIPOS = {
   fundos: "Fundos de investimento",
   ouro: "Ouro digital",
 };
+
+// A página do menu de cada tipo (o data-pagina do botão): depois de uma compra, a app abre a página desse tipo
+export const PAGINA_DO_TIPO = {
+  etf: "etf",
+  cripto: "cripto",
+  reit: "reit",
+  acoes: "acoes",
+  fundos: "fundos_investimento",
+  ouro: "ouro",
+};
 // #endregion

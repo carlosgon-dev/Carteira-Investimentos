@@ -1,6 +1,8 @@
 // A surpresa: passado um tempo, o ecrã escurece devagar e aparece o vídeo do golo do Éder.
 // Mostra o assincronismo com uma Promise feita à mão (setTimeout + async/await) e o createElement.
 
+import { esperar } from "./ferramentas.js";
+
 // #region ==================== CONSTANTES ====================
 const SEGUNDOS_ATE_SURPRESA = 30;
 const FICHEIRO_VIDEO = "data/eder.mp4";
@@ -27,10 +29,6 @@ export async function mostrar_surpresa_depois_de_esperar() {
 // #endregion
 
 // #region ==================== AUXILIARES ====================
-// Uma pausa: devolve uma Promise que só fica resolvida passados estes milissegundos
-function esperar(milissegundos) {
-  return new Promise((resolver) => setTimeout(resolver, milissegundos));
-}
 
 // O ecrã escuro, por cima de tudo, com o vídeo ao centro (criado com createElement)
 function criar_ecra_surpresa() {

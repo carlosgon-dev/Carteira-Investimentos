@@ -1,29 +1,35 @@
-// Os eventos da app: os cliques no menu e nos botões das tabelas (✎ ✓ ✕ ↩ e "+ …").
-// Organização: o MOTOR liga 3 eventos; cada evento tem por baixo as suas funções auxiliares.
+// Os eventos da app: os cliques no menu e nos botões das tabelas (✎ ✓ ✕ ↩ e "+ …") e os formulários.
+// Organização: o MOTOR liga 5 eventos; cada evento tem por baixo as suas funções auxiliares.
 import { obter_data_hoje, gerar_id } from "./ferramentas.js";
-import { PREFIXOS_ID } from "./constantes.js";
+import { PREFIXOS_ID, PAGINA_DO_TIPO } from "./constantes.js";
 import { desenhar_botao_cancelar } from "./graficos.js";
 import { guardar_escolha_grafico_barras } from "./paginas/investimentos.js";
+import { guardar_novo_registo, guardar_rascunho, apagar_rascunho } from "./paginas/formularios.js";
+import { mostrar_aviso } from "./avisos.js";
 
 // O que o main.js entrega no arranque (injeção de dependências), em ativar_eventos()
 let dados;            // o gestor dos dados (ler, adicionar, editar, apagar)
 let mostrar_pagina;   // a função do main.js que desenha uma página
 let redesenhar_pagina_atual; // a função do main.js que volta a desenhar a página aberta
+let voltar_pagina_anterior; // a função do main.js que volta à página onde se estava antes
 
 let linha_em_espera = null; // a linha com um ✎ ou um ✕ à espera do 2.º clique
 let linha_em_espera_original = ""; // como essa linha era antes do 1.º clique (para a poder repor)
 
 // #region ==================== MOTOR ====================
 
-// Liga os 3 eventos da app. O main.js chama isto uma vez, no arranque.
+// Liga os 5 eventos da app. O main.js chama isto uma vez, no arranque.
 export function ativar_eventos(dependencias) {
   dados = dependencias.dados;
   mostrar_pagina = dependencias.mostrar_pagina;
   redesenhar_pagina_atual = dependencias.redesenhar_pagina_atual;
+  voltar_pagina_anterior = dependencias.voltar_pagina_anterior;
 
   document.querySelector(".menu_lateral").addEventListener("click", tratar_clique_menu);             // evento 1
   document.addEventListener("click", tratar_clique_fora, true);                                       // evento 2
   document.querySelector("#pagina").addEventListener("click", tratar_clique_botao_tabela);           // evento 3
+  document.querySelector("#pagina").addEventListener("submit", tratar_envio_formulario);             // evento 4
+  document.querySelector("#pagina").addEventListener("input", tratar_escrita_formulario);            // evento 5
   // O "true" do evento 2 faz esse ouvido correr ANTES dos outros (para cancelar primeiro)
 }
 
@@ -92,6 +98,7 @@ function tratar_clique_botao_tabela(evento) {
     case "cancelar": repor_linha_em_espera(); break;
     case "mudar_escolha": tratar_clique_mudar_escolha(botao); break;
     case "abrir_pagina": mostrar_pagina(botao.dataset.pagina_destino); break;
+    case "cancelar_formulario": tratar_clique_cancelar_formulario(botao); break;
   }
 }
 
@@ -99,6 +106,15 @@ function tratar_clique_botao_tabela(evento) {
 function atualizar_pagina_apos_alteracao() {
   linha_em_espera = null;
   redesenhar_pagina_atual();
+}
+
+/* ---------- Auxiliares do "Cancelar" dos formulários ---------- */
+
+// Desiste do formulário: apaga o que estava escrito, volta à página anterior e avisa
+function tratar_clique_cancelar_formulario(botao) {
+  apagar_rascunho(botao.dataset.formulario);
+  voltar_pagina_anterior();
+  mostrar_aviso("↩ Operação cancelada");
 }
 
 /* ---------- Auxiliares do alternador (ex.: [Ativo | Tema], [€ | %]) ---------- */
@@ -190,6 +206,7 @@ function tratar_clique_guardar(botao) {
 
   dados.editar(botao.dataset.gaveta, botao.dataset.id, ler_valores_linha(linha));
   atualizar_pagina_apos_alteracao();
+  mostrar_aviso("✓ Alteração guardada");
 }
 
 // O ✓ da linha nova (do "+ …"): cria o objeto com um id novo e acrescenta-o à gaveta
@@ -202,6 +219,7 @@ function tratar_clique_guardar_novo(botao) {
   const novo_objeto = { id: id_novo, ...ler_valores_linha(linha) };
   dados.adicionar(nome_gaveta, novo_objeto);
   atualizar_pagina_apos_alteracao();
+  mostrar_aviso("✓ Registo adicionado");
 }
 
 // Os campos da linha estão bem preenchidos? Se algum não estiver (vazio, ou fora dos limites),
@@ -245,5 +263,39 @@ function tratar_clique_apagar(botao) {
   }
   dados.apagar(botao.dataset.gaveta, botao.dataset.id);
   atualizar_pagina_apos_alteracao();
+  mostrar_aviso("✓ Registo apagado");
+}
+// #endregion
+
+// #region ==================== EVENTO 4: GUARDAR UM FORMULÁRIO (submit) ====================
+
+// Quando se carrega no botão "Guardar" de um formulário. O browser só deixa chegar aqui se os campos
+// estiverem bem preenchidos (required, min, max): se não estiverem, ele próprio mostra o aviso.
+function tratar_envio_formulario(evento) {
+  evento.preventDefault(); // sem isto, o browser recarregava a página (é o que um <form> faz por defeito)
+  const formulario = evento.target;
+
+  switch (formulario.dataset.formulario) {
+    case "novo_registo": tratar_envio_novo_registo(formulario); break;
+  }
+}
+
+/* ---------- Auxiliares dos formulários ---------- */
+
+// Guarda a compra e abre a página do tipo dela (ex.: ETF's), onde já aparece
+function tratar_envio_novo_registo(formulario) {
+  const { tipo, nome } = guardar_novo_registo(dados, formulario);
+  mostrar_pagina(PAGINA_DO_TIPO[tipo]);
+  mostrar_aviso(`✓ Compra de ${nome} guardada`);
+}
+// #endregion
+
+// #region ==================== EVENTO 5: ESCREVER NUM FORMULÁRIO (input) ====================
+
+// A cada letra escrita (ou opção escolhida) num formulário, guarda o rascunho no sessionStorage
+function tratar_escrita_formulario(evento) {
+  const formulario = evento.target.closest("form[data-formulario]");
+  if (!formulario) return; // escreveu noutro sítio (ex.: num campo de uma tabela a editar)
+  guardar_rascunho(formulario);
 }
 // #endregion

@@ -29,6 +29,14 @@ export function formatar_data(data) {
 }
 // #endregion
 
+// #region ==================== PAUSAS ====================
+// Uma pausa: devolve uma Promise que só fica resolvida passados estes milissegundos.
+// Usa-se com await: await esperar(3000) → espera 3 segundos antes de continuar
+export function esperar(milissegundos) {
+  return new Promise((resolver) => setTimeout(resolver, milissegundos));
+}
+// #endregion
+
 // #region ==================== DATAS E IDS ====================
 // A data de hoje, no formato dos dados: "2026-10-02"
 export function obter_data_hoje() {
