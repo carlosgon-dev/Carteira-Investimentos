@@ -8,7 +8,7 @@ import {
 } from "../calculadores.js";
 import { desenhar_cartao, desenhar_painel, desenhar_grafico_circular } from "../graficos.js";
 import { formatar_euro, calcular_percentagem, formatar_percentagem } from "../ferramentas.js";
-import { NOMES_TIPOS } from "../constantes.js";
+import { NOMES_CATEGORIAS } from "../constantes.js";
 // #endregion
 
 // #region ==================== PÁGINA ====================
@@ -20,7 +20,8 @@ export function desenhar_pagina_carteira(dados) {
   return `
     ${desenhar_painel_cartoes(dados, gaveta_posicoes, gaveta_compras, gaveta_vendas)}
     <div class="lado_a_lado">
-      ${desenhar_painel_por_tipo(gaveta_posicoes, gaveta_compras, gaveta_vendas)}
+      ${desenhar_painel_por_categoria(gaveta_posicoes, gaveta_compras, gaveta_vendas)}
+      ${desenhar_painel_por_area_negocio(gaveta_posicoes, gaveta_compras, gaveta_vendas)}
       ${desenhar_painel_por_origem(gaveta_posicoes, gaveta_compras, gaveta_vendas)}
     </div>
   `;
@@ -54,16 +55,22 @@ function desenhar_painel_cartoes(dados, gaveta_posicoes, gaveta_compras, gaveta_
   });
 }
 
-// Gráfico: os investimentos por tipo (ETF's, Criptomoedas…), com o nome que aparece na app
-function desenhar_painel_por_tipo(gaveta_posicoes, gaveta_compras, gaveta_vendas) {
-  const fatias = agrupar_investido_por_posicao(gaveta_posicoes, gaveta_compras, gaveta_vendas, "tipo");
-  const fatias_com_nome = fatias.map((fatia) => ({ ...fatia, nome: NOMES_TIPOS[fatia.nome] ?? fatia.nome }));
-  return desenhar_painel({ titulo: "Investimentos por tipo", conteudo: desenhar_grafico_circular(fatias_com_nome) });
+// Gráfico: os investimentos por categoria (ETF's, Criptomoedas…), com o nome que aparece na app
+function desenhar_painel_por_categoria(gaveta_posicoes, gaveta_compras, gaveta_vendas) {
+  const fatias = agrupar_investido_por_posicao(gaveta_posicoes, gaveta_compras, gaveta_vendas, "categoria");
+  const fatias_com_nome = fatias.map((fatia) => ({ ...fatia, nome: NOMES_CATEGORIAS[fatia.nome] ?? fatia.nome }));
+  return desenhar_painel({ titulo: "Por categoria", conteudo: desenhar_grafico_circular(fatias_com_nome) });
+}
+
+// Gráfico: os investimentos por área de negócio (Mercado - USA, Bancos…), de todas as categorias juntas
+function desenhar_painel_por_area_negocio(gaveta_posicoes, gaveta_compras, gaveta_vendas) {
+  const fatias = agrupar_investido_por_posicao(gaveta_posicoes, gaveta_compras, gaveta_vendas, "area_negocio");
+  return desenhar_painel({ titulo: "Por área de negócio", conteudo: desenhar_grafico_circular(fatias) });
 }
 
 // Gráfico: os investimentos por origem do dinheiro (Salário, Explicações…)
 function desenhar_painel_por_origem(gaveta_posicoes, gaveta_compras, gaveta_vendas) {
   const fatias = agrupar_investido_por_origem(gaveta_posicoes, gaveta_compras, gaveta_vendas);
-  return desenhar_painel({ titulo: "Investimentos por origem", conteudo: desenhar_grafico_circular(fatias) });
+  return desenhar_painel({ titulo: "Por origem", conteudo: desenhar_grafico_circular(fatias) });
 }
 // #endregion

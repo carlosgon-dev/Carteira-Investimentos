@@ -562,7 +562,6 @@
   display: inline-flex;
   white-space: nowrap;
   animation: deslizar_cotacoes 40s linear infinite;
-  &:hover { animation-play-state: paused; }   /* com o rato em cima, para (para se poder ler) */
 }
 
 @keyframes deslizar_cotacoes {
@@ -582,5 +581,29 @@
 /* Para quem pediu menos movimento nas definições do computador: a faixa fica parada */
 @media (prefers-reduced-motion: reduce) {
   .rodape_faixa_conteudo { animation: none; }
+}
+/* #endregion */
+
+/* #region ==================== TELEMÓVEL (ecrãs até 600px) ==================== */
+/* Fica no FIM do ficheiro de propósito: assim estas regras ganham às de cima */
+/* (os TAMANHOS já encolhem sozinhos: o layout.css põe o :root a 12px. Aqui fica só a ARRUMAÇÃO) */
+@media (max-width: 600px) {
+  /* Cartões: 2 por linha (4 cartões → 2 em cima, 2 em baixo) */
+  .fila_cartoes { grid-template-columns: 1fr 1fr; }
+
+  /* Painéis lado a lado → um por baixo do outro */
+  .lado_a_lado { grid-template-columns: 1fr; }
+
+  /* Barras: o nome fica com o espaço que sobra (1fr) e a pista das barras é curta (5rem) */
+  .barra_linha { grid-template-columns: minmax(0, 1fr) 5rem 5rem; }   /* nome | pista | valor (larguras fixas: as barras ficam alinhadas) */
+  /* Nomes compridos passam para a linha de baixo, em vez de acabarem em "…" */
+  .barra_nome { white-space: normal; }
+
+  /* Tabela acordeão: não espreme as colunas; em vez disso, faz scroll para o lado */
+  .acordeao_cabecalho,
+  .acordeao_linha > summary { min-width: 44rem; }
+  /* Os títulos das colunas: um pouco mais pequenos e, se precisarem, em 2 linhas ("VALOR / ATUAL") */
+  .acordeao_cabecalho { font-size: 0.7rem; letter-spacing: 0.02em; }
+  .acordeao_cabecalho .numero { white-space: normal; }
 }
 /* #endregion */

@@ -1,7 +1,7 @@
 // Os eventos da app: os cliques no menu e nos botões das tabelas (✎ ✓ ✕ ↩ e "+ …") e os formulários.
 // Organização: o MOTOR liga 5 eventos; cada evento tem por baixo as suas funções auxiliares.
 import { obter_data_hoje, gerar_id } from "./ferramentas.js";
-import { PREFIXOS_ID, PAGINA_DO_TIPO } from "./constantes.js";
+import { PREFIXOS_ID, PAGINA_DA_CATEGORIA } from "./constantes.js";
 import { desenhar_botao_cancelar } from "./graficos.js";
 import { guardar_escolha_grafico_barras } from "./paginas/investimentos.js";
 import { guardar_novo_registo, guardar_rascunho, apagar_rascunho } from "./paginas/formularios.js";
@@ -37,11 +37,28 @@ export function ativar_eventos(dependencias) {
 
 // #region ==================== EVENTO 1: CLIQUE NO MENU ====================
 
-// Abre a página do botão clicado (o botão diz qual, no data-pagina)
+// O ☰ abre/fecha o menu (telemóvel). Um botão de página abre essa página (o botão diz qual, no data-pagina)
+// e fecha o menu, para se ver logo a página escolhida.
 function tratar_clique_menu(evento) {
+  if (evento.target.closest(".menu_hamburguer")) {
+    const menu_esta_aberto = document.querySelector(".menu_lateral").classList.contains("aberto");
+    mostrar_menu_telemovel(!menu_esta_aberto);
+    return;
+  }
+
   const botao = evento.target.closest("[data-pagina]");
   if (!botao) return; // clicou fora de um botão
   mostrar_pagina(botao.dataset.pagina);
+  mostrar_menu_telemovel(false);
+}
+
+/* ---------- Auxiliares do ☰ (menu do telemóvel) ---------- */
+
+// Abre (true) ou fecha (false) o menu; o botão mostra ✕ quando está aberto e ☰ quando está fechado.
+// No computador, a classe "aberto" não muda nada (o CSS só a usa em ecrãs estreitos).
+function mostrar_menu_telemovel(abrir) {
+  document.querySelector(".menu_lateral").classList.toggle("aberto", abrir);
+  document.querySelector(".menu_hamburguer").textContent = abrir ? "✕" : "☰";
 }
 
 // #endregion
@@ -117,7 +134,7 @@ function tratar_clique_cancelar_formulario(botao) {
   mostrar_aviso("↩ Operação cancelada");
 }
 
-/* ---------- Auxiliares do alternador (ex.: [Ativo | Tema], [€ | %]) ---------- */
+/* ---------- Auxiliares do alternador (ex.: [Ativo | Área], [€ | %]) ---------- */
 
 // Guarda a escolha do botão e volta a desenhar a página com ela
 function tratar_clique_mudar_escolha(botao) {
@@ -282,10 +299,10 @@ function tratar_envio_formulario(evento) {
 
 /* ---------- Auxiliares dos formulários ---------- */
 
-// Guarda a compra e abre a página do tipo dela (ex.: ETF's), onde já aparece
+// Guarda a compra e abre a página da categoria dela (ex.: ETF's), onde já aparece
 function tratar_envio_novo_registo(formulario) {
-  const { tipo, nome } = guardar_novo_registo(dados, formulario);
-  mostrar_pagina(PAGINA_DO_TIPO[tipo]);
+  const { categoria, nome } = guardar_novo_registo(dados, formulario);
+  mostrar_pagina(PAGINA_DA_CATEGORIA[categoria]);
   mostrar_aviso(`✓ Compra de ${nome} guardada`);
 }
 // #endregion

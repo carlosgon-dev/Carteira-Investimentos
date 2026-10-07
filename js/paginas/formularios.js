@@ -1,6 +1,6 @@
 // Os 3 formulários do menu: Novo registo/compra, Registar rendibilidade, Registar venda.
 // #region ==================== IMPORTS ====================
-import { NOMES_TIPOS, PREFIXOS_ID } from "../constantes.js";
+import { NOMES_CATEGORIAS, PREFIXOS_ID } from "../constantes.js";
 import { desenhar_painel } from "../graficos.js";
 import { obter_data_hoje, gerar_id } from "../ferramentas.js";
 import { filtrar_posicoes_abertas } from "../calculadores.js";
@@ -17,7 +17,7 @@ function obter_chave_rascunho(nome_formulario) {
 
 // Guarda tudo o que está escrito no formulário (o eventos.js chama isto a cada letra escrita)
 export function guardar_rascunho(formulario) {
-  const valores_escritos = Object.fromEntries(new FormData(formulario)); // { tipo: "etf", nome: "S&P 500", … }
+  const valores_escritos = Object.fromEntries(new FormData(formulario)); // { categoria: "etf", nome: "S&P 500", … }
   sessionStorage.setItem(obter_chave_rascunho(formulario.dataset.formulario), JSON.stringify(valores_escritos));
 }
 
@@ -45,13 +45,13 @@ export function desenhar_pagina_novo_registo(dados) {
   const html_formulario = `
     <form class="formulario" data-formulario="novo_registo">
       <label>Tipo
-        <select name="tipo" required>${desenhar_opcoes_tipos(rascunho.tipo)}</select>
+        <select name="categoria" required>${desenhar_opcoes_categorias(rascunho.categoria)}</select>
       </label>
       <label>Ativo
         <input name="nome" list="sugestoes_ativos" required placeholder="ex.: S&P 500" value="${rascunho.nome ?? ""}">
       </label>
-      <label>Tema
-        <input name="tema" list="sugestoes_temas" placeholder="ex.: Mercado - USA" value="${rascunho.tema ?? ""}">
+      <label>Área de negócio
+        <input name="area_negocio" list="sugestoes_areas_negocio" placeholder="ex.: Mercado - USA" value="${rascunho.area_negocio ?? ""}">
       </label>
       <label>Data
         <input name="data" type="date" required max="${hoje}" value="${rascunho.data ?? hoje}">
@@ -64,7 +64,7 @@ export function desenhar_pagina_novo_registo(dados) {
       </label>
 
       ${desenhar_sugestoes("sugestoes_ativos", gaveta_posicoes.map((objeto_posicao) => objeto_posicao.nome))}
-      ${desenhar_sugestoes("sugestoes_temas", gaveta_posicoes.map((objeto_posicao) => objeto_posicao.tema))}
+      ${desenhar_sugestoes("sugestoes_areas_negocio", gaveta_posicoes.map((objeto_posicao) => objeto_posicao.area_negocio))}
       ${desenhar_sugestoes("sugestoes_origens", gaveta_compras.map((objeto_compra) => objeto_compra.origem))}
 
       <div class="formulario_botoes">
@@ -81,13 +81,13 @@ export function desenhar_pagina_novo_registo(dados) {
   });
 }
 
-// Guarda a compra. Se já houver uma posição ABERTA com o mesmo tipo e nome, a compra junta-se a ela;
-// se não houver, cria-se uma posição nova. Devolve o tipo e o nome (para a app abrir a página do tipo e avisar).
+// Guarda a compra. Se já houver uma posição ABERTA com a mesma categoria e nome, a compra junta-se a ela;
+// se não houver, cria-se uma posição nova. Devolve a categoria e o nome (para a app abrir a página da categoria e avisar).
 export function guardar_novo_registo(dados, formulario) {
   const valores = new FormData(formulario);
-  const tipo = valores.get("tipo");
+  const categoria = valores.get("categoria");
   const nome = valores.get("nome").trim();
-  const id_posicao = encontrar_ou_criar_posicao(dados, tipo, nome, valores.get("tema").trim());
+  const id_posicao = encontrar_ou_criar_posicao(dados, categoria, nome, valores.get("area_negocio").trim());
 
   dados.adicionar("compras", {
     id: gerar_id(dados.ler("compras"), PREFIXOS_ID.compras),
@@ -97,15 +97,15 @@ export function guardar_novo_registo(dados, formulario) {
     origem: valores.get("origem").trim(),
   });
   apagar_rascunho("novo_registo");
-  return { tipo, nome };
+  return { categoria, nome };
 }
 // #endregion
 
 // #region ==================== AUXILIARES DOS FORMULÁRIOS ====================
-// As opções da lista dos tipos (ETF's, Criptomoedas…); a do rascunho vem já escolhida
-function desenhar_opcoes_tipos(tipo_escolhido) {
-  return Object.entries(NOMES_TIPOS)
-    .map(([tipo, nome]) => `<option value="${tipo}" ${tipo === tipo_escolhido ? "selected" : ""}>${nome}</option>`)
+// As opções da lista das categorias (ETF's, Criptomoedas…); a do rascunho vem já escolhida
+function desenhar_opcoes_categorias(categoria_escolhida) {
+  return Object.entries(NOMES_CATEGORIAS)
+    .map(([categoria, nome]) => `<option value="${categoria}" ${categoria === categoria_escolhida ? "selected" : ""}>${nome}</option>`)
     .join("");
 }
 
@@ -116,16 +116,16 @@ function desenhar_sugestoes(id_lista, textos) {
   return `<datalist id="${id_lista}">${html_opcoes}</datalist>`;
 }
 
-// O id da posição ABERTA com este tipo e nome; se não houver, cria uma posição nova e devolve o id dela
-function encontrar_ou_criar_posicao(dados, tipo, nome, tema) {
+// O id da posição ABERTA com esta categoria e nome; se não houver, cria uma posição nova e devolve o id dela
+function encontrar_ou_criar_posicao(dados, categoria, nome, area_negocio) {
   const posicoes_abertas = filtrar_posicoes_abertas(dados.ler("posicoes"), dados.ler("compras"), dados.ler("vendas"));
   const posicao_existente = posicoes_abertas.find(
-    (objeto_posicao) => objeto_posicao.tipo === tipo && objeto_posicao.nome.toLowerCase() === nome.toLowerCase(),
+    (objeto_posicao) => objeto_posicao.categoria === categoria && objeto_posicao.nome.toLowerCase() === nome.toLowerCase(),
   );
   if (posicao_existente) return posicao_existente.id;
 
   const id_novo = gerar_id(dados.ler("posicoes"), PREFIXOS_ID.posicoes);
-  dados.adicionar("posicoes", { id: id_novo, tipo, nome, tema });
+  dados.adicionar("posicoes", { id: id_novo, categoria, nome, area_negocio });
   return id_novo;
 }
 // #endregion

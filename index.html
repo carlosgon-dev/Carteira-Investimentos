@@ -9,48 +9,54 @@
     <link rel="stylesheet" href="css/componentes.css" />
     <script type="module" src="js/main.js"></script>
   </head>
+  
   <body>
     <aside class="menu_lateral">
-      <h1 class="marca">Carteira de Investimentos</h1>
+      <div class="menu_topo">
+        <h1 class="marca">Carteira de Investimentos</h1>
+        <button class="menu_hamburguer" type="button" title="Abrir o menu">☰</button>
+      </div>
 
-      <nav class="menu_grupo">
-        <button class="menu_botao" type="button" data-pagina="carteira">Carteira</button>
-        <button class="menu_botao" type="button" data-pagina="fundos">Fundos</button>
+      <div class="menu_conteudo">
+        <nav class="menu_grupo">
+          <button class="menu_botao" type="button" data-pagina="carteira">Carteira</button>
+          <button class="menu_botao" type="button" data-pagina="fundos">Fundos</button>
 
-        <details class="menu_grupo" name="menu">
-          <summary class="menu_titulo">Rendimentos</summary>
-          <div class="submenu">
-            <button class="menu_botao submenu_botao" type="button" data-pagina="depositos">Depósitos a prazo</button>
-            <button class="menu_botao submenu_botao" type="button" data-pagina="governo">Dinheiro do governo</button>
-            <button class="menu_botao submenu_botao" type="button" data-pagina="mais_valias">Mais-valias</button>
-            <button class="menu_botao submenu_botao" type="button" data-pagina="questionarios">Questionários</button>
-            <button class="menu_botao submenu_botao" type="button" data-pagina="fidelidade">Programas de fidelidade</button>
-          </div>
-        </details>
+          <details class="menu_grupo" name="menu">
+            <summary class="menu_titulo">Rendimentos</summary>
+            <div class="submenu">
+              <button class="menu_botao submenu_botao" type="button" data-pagina="depositos">Depósitos a prazo</button>
+              <button class="menu_botao submenu_botao" type="button" data-pagina="governo">Dinheiro do governo</button>
+              <button class="menu_botao submenu_botao" type="button" data-pagina="mais_valias">Mais-valias</button>
+              <button class="menu_botao submenu_botao" type="button" data-pagina="questionarios">Questionários</button>
+              <button class="menu_botao submenu_botao" type="button" data-pagina="fidelidade">Programas de fidelidade</button>
+            </div>
+          </details>
 
-        <details class="menu_grupo" name="menu">
-          <summary class="menu_titulo">Investimentos</summary>
-          <div class="submenu">
-            <button class="menu_botao submenu_botao" type="button" data-pagina="etf">ETF's</button>
-            <button class="menu_botao submenu_botao" type="button" data-pagina="cripto">Criptomoedas</button>
-            <button class="menu_botao submenu_botao" type="button" data-pagina="reit">REIT's</button>
-            <button class="menu_botao submenu_botao" type="button" data-pagina="ppr">PPR</button>
-            <button class="menu_botao submenu_botao" type="button" data-pagina="ouro">Ouro digital</button>
-            <button class="menu_botao submenu_botao" type="button" data-pagina="acoes">Ações</button>
-            <button class="menu_botao submenu_botao" type="button" data-pagina="fundos_investimento">Fundos de investimento</button>
-            <button class="menu_botao submenu_botao" type="button" data-pagina="historico">Histórico de rendibilidade</button>
-          </div>
-        </details>
+          <details class="menu_grupo" name="menu">
+            <summary class="menu_titulo">Investimentos</summary>
+            <div class="submenu">
+              <button class="menu_botao submenu_botao" type="button" data-pagina="etf">ETF's</button>
+              <button class="menu_botao submenu_botao" type="button" data-pagina="cripto">Criptomoedas</button>
+              <button class="menu_botao submenu_botao" type="button" data-pagina="reit">REIT's</button>
+              <button class="menu_botao submenu_botao" type="button" data-pagina="ppr">PPR</button>
+              <button class="menu_botao submenu_botao" type="button" data-pagina="ouro">Ouro digital</button>
+              <button class="menu_botao submenu_botao" type="button" data-pagina="acoes">Ações</button>
+              <button class="menu_botao submenu_botao" type="button" data-pagina="fundos_investimento">Fundos de investimento</button>
+              <button class="menu_botao submenu_botao" type="button" data-pagina="historico">Histórico de rendibilidade</button>
+            </div>
+          </details>
 
-        <button class="menu_botao" type="button" data-pagina="calendario">Calendário</button>
-      </nav>
+          <button class="menu_botao" type="button" data-pagina="calendario">Calendário</button>
+        </nav>
 
-      <menu class="menu_grupo acoes">
-        <li><button class="menu_botao acao_botao" type="button" data-pagina="novo_registo">+ Novo registo/compra</button></li>
-        <li><button class="menu_botao acao_botao" type="button" data-pagina="registar_rendibilidade">+ Registar rendibilidade</button></li>
-        <li><button class="menu_botao acao_botao" type="button" data-pagina="registar_venda">+ Registar venda</button></li>
-        <li><button class="menu_botao acao_botao" type="button" data-pagina="repor_dados">x Repor dados iniciais</button></li>
-      </menu>
+        <menu class="menu_grupo acoes">
+          <li><button class="menu_botao acao_botao" type="button" data-pagina="novo_registo">+ Novo registo/compra</button></li>
+          <li><button class="menu_botao acao_botao" type="button" data-pagina="registar_rendibilidade">+ Registar rendibilidade</button></li>
+          <li><button class="menu_botao acao_botao" type="button" data-pagina="registar_venda">+ Registar venda</button></li>
+          <li><button class="menu_botao acao_botao" type="button" data-pagina="repor_dados">x Repor dados iniciais</button></li>
+        </menu>
+      </div>
     </aside>
 
     <main id="pagina"></main>

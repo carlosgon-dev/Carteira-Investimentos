@@ -2,39 +2,39 @@
   "posicoes": [
     {
       "id": "pos-001",
-      "tipo": "etf",
+      "categoria": "etf",
       "nome": "S&P 500",
-      "tema": "Mercado - USA"
+      "area_negocio": "Mercado - USA"
     },
     {
       "id": "pos-002",
-      "tipo": "etf",
+      "categoria": "etf",
       "nome": "MSCI World",
-      "tema": "Mercado - Global"
+      "area_negocio": "Mercado - Global"
     },
     {
       "id": "pos-003",
-      "tipo": "cripto",
+      "categoria": "cripto",
       "nome": "Bitcoin",
-      "tema": "Blockchain"
+      "area_negocio": "Blockchain"
     },
     {
       "id": "pos-004",
-      "tipo": "cripto",
+      "categoria": "cripto",
       "nome": "Solana",
-      "tema": "Blockchain"
+      "area_negocio": "Blockchain"
     },
     {
       "id": "pos-005",
-      "tipo": "reit",
+      "categoria": "reit",
       "nome": "Realty Income",
-      "tema": "Retalho"
+      "area_negocio": "Retalho"
     },
     {
       "id": "pos-006",
-      "tipo": "ouro",
+      "categoria": "ouro",
       "nome": "Bitcoin (cashback)",
-      "tema": "Reserva de ouro digital"
+      "area_negocio": "Reserva de ouro digital"
     }
   ],
   "compras": [
