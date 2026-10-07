@@ -584,3 +584,24 @@
   .rodape_faixa_conteudo { animation: none; }
 }
 /* #endregion */
+
+/* #region ==================== TELEMÓVEL (ecrãs até 600px) ==================== */
+/* Fica no FIM do ficheiro de propósito: assim estas regras ganham às de cima */
+@media (max-width: 600px) {
+  /* Painéis com menos espaço por dentro */
+  .painel { padding: 1rem; }
+
+  /* Painéis lado a lado → um por baixo do outro */
+  .lado_a_lado { grid-template-columns: 1fr; }
+
+  /* Barras: a coluna do nome fica mais estreita */
+  .barra_linha {
+    grid-template-columns: 6rem 1fr 5rem;
+    gap: 0.5rem;
+  }
+
+  /* Tabela acordeão: não espreme as colunas; em vez disso, faz scroll para o lado */
+  .acordeao_cabecalho,
+  .acordeao_linha > summary { min-width: 40rem; }
+}
+/* #endregion */

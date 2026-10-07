@@ -6,7 +6,7 @@
 /* Menu à esquerda, página à direita, rodapé a toda a largura */
 body {
   display: grid;
-  grid-template-columns: 20rem 1fr;
+  grid-template-columns: 20rem minmax(0, 1fr);   /* minmax(0, …): a faixa das cotações (muito comprida) não alarga a página */
   grid-template-rows: 1fr auto;
   grid-template-areas:
     "menu pagina"
@@ -31,7 +31,22 @@ body {
   border-bottom: 1px solid var(--cor_linha);
 }
 
+/* O botão ☰: no computador fica escondido (só aparece no telemóvel, ver a região TELEMÓVEL) */
+.menu_hamburguer {
+  display: none;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--cor_linha);
+  border-radius: 0.55rem;
+  background: none;
+  font-size: 1.3rem;
+  line-height: 1;
+  color: var(--cor_texto);
+  cursor: pointer;
+}
+
+/* Tudo o que está por baixo do título (os botões e as ações): no telemóvel, é isto que se esconde */
 /* Um grupo de botões em coluna (o nav, cada details e as ações) */
+.menu_conteudo,
 .menu_grupo { display: flex; flex-direction: column; gap: 0.3rem; }
 
 /* Botões principais: Carteira, Fundos, Calendário + "Rendimentos", "Investimentos" */
@@ -149,5 +164,60 @@ details[open]::details-content {animation: abrir_submenu 0.25s ease-out;}
   color: var(--cor_texto_secundario);
   background: var(--cor_cartao);
   border-top: 1px solid var(--cor_linha);
+}
+/* #endregion */
+
+/* #region ==================== TELEMÓVEL (ecrãs até 600px) ==================== */
+/* Tudo o que está aqui dentro SÓ conta em ecrãs estreitos; no computador, é ignorado */
+@media (max-width: 600px) {
+
+  /* ---------- A grelha: tudo numa coluna (menu em cima, página, rodapé) ---------- */
+  body {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "menu"
+      "pagina"
+      "rodape";
+  }
+
+  /* ---------- O menu: uma barra colada ao topo, com o título e o ☰ ---------- */
+  .menu_lateral {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    padding: 0.75rem 1rem;
+    background: var(--cor_fundo);
+    border-bottom: 1px solid var(--cor_linha);
+  }
+
+  .menu_topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .marca {
+    margin: 0;
+    padding: 0;
+    border-bottom: none;
+  }
+
+  .menu_hamburguer { display: block; }
+
+  /* Os botões do menu: escondidos… */
+  .menu_conteudo { display: none; }
+
+  /* …até se carregar no ☰ (o JS põe a classe "aberto" no menu) */
+  .menu_lateral.aberto .menu_conteudo {
+    display: flex;
+    max-height: calc(100vh - 5rem);   /* se o menu for mais alto que o ecrã, faz scroll lá dentro */
+    overflow-y: auto;
+    padding-top: 0.75rem;
+  }
+
+  /* ---------- A página: menos espaço à volta ---------- */
+  #pagina { padding: 1rem; }
+  /* (as peças da página, como painéis e tabelas, têm a sua região TELEMÓVEL no fim do componentes.css) */
 }
 /* #endregion */

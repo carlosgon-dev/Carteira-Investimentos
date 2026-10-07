@@ -37,11 +37,28 @@ export function ativar_eventos(dependencias) {
 
 // #region ==================== EVENTO 1: CLIQUE NO MENU ====================
 
-// Abre a página do botão clicado (o botão diz qual, no data-pagina)
+// O ☰ abre/fecha o menu (telemóvel). Um botão de página abre essa página (o botão diz qual, no data-pagina)
+// e fecha o menu, para se ver logo a página escolhida.
 function tratar_clique_menu(evento) {
+  if (evento.target.closest(".menu_hamburguer")) {
+    const menu_esta_aberto = document.querySelector(".menu_lateral").classList.contains("aberto");
+    mostrar_menu_telemovel(!menu_esta_aberto);
+    return;
+  }
+
   const botao = evento.target.closest("[data-pagina]");
   if (!botao) return; // clicou fora de um botão
   mostrar_pagina(botao.dataset.pagina);
+  mostrar_menu_telemovel(false);
+}
+
+/* ---------- Auxiliares do ☰ (menu do telemóvel) ---------- */
+
+// Abre (true) ou fecha (false) o menu; o botão mostra ✕ quando está aberto e ☰ quando está fechado.
+// No computador, a classe "aberto" não muda nada (o CSS só a usa em ecrãs estreitos).
+function mostrar_menu_telemovel(abrir) {
+  document.querySelector(".menu_lateral").classList.toggle("aberto", abrir);
+  document.querySelector(".menu_hamburguer").textContent = abrir ? "✕" : "☰";
 }
 
 // #endregion
