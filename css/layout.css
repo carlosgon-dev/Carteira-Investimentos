@@ -134,11 +134,20 @@ details[open]::details-content {animation: abrir_submenu 0.25s ease-out;}
 /* ==========================================================
                               ZONA DO RODAPÉ
    ========================================================== */
+/* A faixa das cotações: sempre colada ao fundo do ecrã (sticky), mesmo quando a página faz scroll */
 .rodape {
   grid-area: rodape;
-  padding: 0.5rem var(--espaco);
-  font-size: 0.8rem;
-  color: var(--cor_suave);
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  overflow: hidden;
+  font-size: 0.85rem;
+  color: var(--cor_texto_secundario);
+  background: var(--cor_cartao);
   border-top: 1px solid var(--cor_linha);
 }
 /* #endregion */

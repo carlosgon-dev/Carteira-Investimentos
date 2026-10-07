@@ -534,3 +534,53 @@
   transform: translateY(0);
 }
 /* #endregion */
+
+/* #region ==================== RODAPÉ DAS COTAÇÕES ==================== */
+/* A etiqueta fixa à esquerda: "AO VIVO · 14:05" ou "EXEMPLO" */
+.rodape_etiqueta {
+  flex-shrink: 0;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--cor_destaque_suave);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--cor_destaque);
+}
+
+/* A janela por onde a faixa passa (o que sai dos lados fica escondido e esbatido) */
+.rodape_faixa {
+  flex: 1;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+}
+
+/* A faixa: tem o conteúdo duas vezes seguidas e anda para a esquerda até meio (-50%), sem parar.
+   Nesse momento a 2.ª cópia está onde estava a 1.ª, e a animação recomeça sem se notar. */
+.rodape_faixa_conteudo {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: deslizar_cotacoes 40s linear infinite;
+  &:hover { animation-play-state: paused; }   /* com o rato em cima, para (para se poder ler) */
+}
+
+@keyframes deslizar_cotacoes {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Uma cotação; o espaço à direita separa-a da seguinte */
+.cotacao {
+  display: inline-flex;
+  gap: 0.4rem;
+  padding-right: 2.5rem;
+  font-variant-numeric: tabular-nums;
+  & strong { color: var(--cor_texto); }
+}
+
+/* Para quem pediu menos movimento nas definições do computador: a faixa fica parada */
+@media (prefers-reduced-motion: reduce) {
+  .rodape_faixa_conteudo { animation: none; }
+}
+/* #endregion */

@@ -3,6 +3,7 @@
 import { carregar_dados } from "./gestor_dados.js";
 import { ativar_eventos } from "./eventos.js";
 import { mostrar_surpresa_depois_de_esperar } from "./surpresa.js";
+import { ativar_rodape_cotacoes } from "./cotacoes.js";
 import { desenhar_pagina_carteira } from "./paginas/carteira.js";
 import { desenhar_pagina_fundos } from "./paginas/fundos.js";
 import { desenhar_pagina_depositos } from "./paginas/depositos.js";
@@ -88,6 +89,7 @@ async function arrancar() {
     // Abre a página que estava aberta antes de recarregar (ou a Carteira, se for a 1.ª vez)
     mostrar_pagina(sessionStorage.getItem(CHAVE_PAGINA_ABERTA) ?? PAGINA_INICIAL);
     mostrar_surpresa_depois_de_esperar(); // sem await: a app continua a funcionar enquanto espera
+    ativar_rodape_cotacoes(); // os preços da internet, no rodapé
   } catch (erro) {
     console.error(erro);
     zona_pagina.innerHTML = `<p class="erro">Não consegui carregar os dados. ${erro.message}</p>`;
