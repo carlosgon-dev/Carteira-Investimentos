@@ -1,5 +1,5 @@
 // Contas feitas a partir dos dados. Não tocam no HTML.
-import { somar_lista_chave, obter_mais_recente } from "./ferramentas.js";
+import { somar_lista_chave, obter_objeto_por_data_mais_recente } from "./ferramentas.js";
 
 // #region ==================== FILTROS ====================
 // Todos com o mesmo padrão: filtrar_ + o que fica + o critério. Devolvem uma lista nova (a gaveta não muda).
@@ -44,7 +44,7 @@ export function calcular_total_investido(gaveta_posicoes, gaveta_compras, gaveta
 // A rendibilidade mais recente de cada posição aberta (uma por posição; as posições sem registo ficam de fora)
 export function obter_rendibilidades_atuais(gaveta_posicoes, gaveta_compras, gaveta_vendas, gaveta_rendibilidades) {
   const posicoes_abertas = filtrar_posicoes_abertas(gaveta_posicoes, gaveta_compras, gaveta_vendas);
-  const rendibilidades_mais_recentes = posicoes_abertas.map((objeto_posicao) => obter_mais_recente(filtrar_por_posicao(gaveta_rendibilidades, objeto_posicao.id)));
+  const rendibilidades_mais_recentes = posicoes_abertas.map((objeto_posicao) => obter_objeto_por_data_mais_recente(filtrar_por_posicao(gaveta_rendibilidades, objeto_posicao.id)));
   return rendibilidades_mais_recentes.filter((objeto_rendibilidade) => objeto_rendibilidade !== undefined);
 }
 
@@ -71,7 +71,7 @@ export function agrupar_rendibilidade_por_posicao(gaveta_posicoes, gaveta_compra
 //   investido = soma das suas compras · rendibilidade = o registo mais recente (null = ainda sem registo)
 export function calcular_investido_e_rendibilidade_posicao(objeto_posicao, gaveta_compras, gaveta_rendibilidades) {
   const investido = somar_lista_chave(filtrar_por_posicao(gaveta_compras, objeto_posicao.id), "montante");
-  const rendibilidade_mais_recente = obter_mais_recente(filtrar_por_posicao(gaveta_rendibilidades, objeto_posicao.id));
+  const rendibilidade_mais_recente = obter_objeto_por_data_mais_recente(filtrar_por_posicao(gaveta_rendibilidades, objeto_posicao.id));
   const rendibilidade = rendibilidade_mais_recente ? rendibilidade_mais_recente.valor : null;
   return { investido, rendibilidade };
 }

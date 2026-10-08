@@ -2,7 +2,7 @@
 // #region ==================== IMPORTS ====================
 import { desenhar_cartao, desenhar_painel, desenhar_tabela, desenhar_botoes_linha, desenhar_botao_adicionar } from "../graficos.js";
 import { encontrar_saldo_atual_fundo } from "../calculadores.js";
-import { formatar_euro, formatar_data, ordenar_mais_recente_primeiro } from "../ferramentas.js";
+import { formatar_euro, formatar_data, ordenar_por_data_mais_recente } from "../ferramentas.js";
 // #endregion
 
 // #region ==================== COLUNAS DAS TABELAS ====================
@@ -54,7 +54,7 @@ export function desenhar_pagina_fundos(dados) {
 // Um painel com a tabela dos saldos de um fundo, do mais recente para o mais antigo
 //   nome_gaveta: para os botões ✎ ✕ saberem de que gaveta é cada linha
 function desenhar_painel_fundo(titulo, nome_gaveta, gaveta_fundo) {
-  const saldos_ordenados = ordenar_mais_recente_primeiro(gaveta_fundo);
+  const saldos_ordenados = ordenar_por_data_mais_recente(gaveta_fundo);
   const linhas_saldos = saldos_ordenados.map((objeto_saldo) => [
     formatar_data(objeto_saldo.data),
     formatar_euro(objeto_saldo.saldo),

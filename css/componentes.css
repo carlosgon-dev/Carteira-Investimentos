@@ -486,6 +486,9 @@
     color: var(--cor_texto);
     &:focus-visible { outline: 2px solid var(--cor_destaque); outline-offset: 1px; }
   }
+  /* A mão (👆) nos campos que se clicam para escolher: a lista e o calendário */
+  & select,
+  & input { cursor: pointer; }
 }
 
 /* A linha dos botões ocupa a largura toda, por baixo dos campos */

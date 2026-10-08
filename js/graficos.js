@@ -1,5 +1,5 @@
 // Peças visuais reutilizáveis. Cada função devolve HTML em texto (template string).
-import { formatar_euro, calcular_percentagem, formatar_percentagem, obter_classe_positivo_negativo } from "./ferramentas.js";
+import { formatar_euro, calcular_percentagem, formatar_percentagem, obter_classe_cor_por_sinal } from "./ferramentas.js";
 
 // #region ==================== PAINEL ====================
 
@@ -231,7 +231,7 @@ function desenhar_linha_barra(barra, escala) {
     <li class="barra_linha">
       <span class="barra_nome">${barra.nome}</span>
       <div class="barra_pista" style="--posicao_zero: ${calcular_posicao_na_pista(0, escala)}%">${desenhar_barra(barra.valor, escala)}</div>
-      <span class="barra_valor ${obter_classe_positivo_negativo(barra.valor ?? 0)}">${barra.texto}</span>
+      <span class="barra_valor ${obter_classe_cor_por_sinal(barra.valor ?? 0)}">${barra.texto}</span>
     </li>
   `;
 }
@@ -275,7 +275,7 @@ export function desenhar_alternador({ nome_escolha, opcoes, escolhido }) {
 // Opções (todas opcionais):
 //   legenda:   texto pequeno por baixo do valor, ex.: "+7,0%"
 //   estilo:    uma classe extra, ex.: "cartao_destaque"
-//   cor_valor: "positivo" (verde) ou "negativo" (vermelho), ver obter_classe_positivo_negativo()
+//   cor_valor: "positivo" (verde) ou "negativo" (vermelho), ver obter_classe_cor_por_sinal()
 export function desenhar_cartao({ titulo, valor, legenda = "", estilo = "", cor_valor = "" }) {
   const html_legenda = legenda ? `<p class="cartao_legenda">${legenda}</p>` : "";
   return `

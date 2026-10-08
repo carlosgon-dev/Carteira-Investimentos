@@ -29,11 +29,11 @@ import {
   calcular_percentagem,
   formatar_percentagem,
   acrescentar_sinal,
-  descrever_dias_desde,
-  obter_mais_recente,
+  escrever_ha_quantos_dias,
+  obter_objeto_por_data_mais_recente,
   somar_lista_chave,
-  obter_classe_positivo_negativo,
-  ordenar_mais_recente_primeiro,
+  obter_classe_cor_por_sinal,
+  ordenar_por_data_mais_recente,
 } from "../ferramentas.js";
 // #endregion
 
@@ -104,18 +104,18 @@ function desenhar_cartoes_investimento(posicoes_da_categoria, gaveta_compras, ga
   const total_rendibilidade = somar_lista_chave(rendibilidades_atuais, "valor");
   const valor_atual = total_investido + total_rendibilidade;
   const percentagem_rendibilidade = calcular_percentagem(total_rendibilidade, total_investido);
-  const rendibilidade_mais_recente = obter_mais_recente(rendibilidades_atuais);
+  const rendibilidade_mais_recente = obter_objeto_por_data_mais_recente(rendibilidades_atuais);
 
   const texto_rendibilidade = acrescentar_sinal(formatar_euro(total_rendibilidade), total_rendibilidade);
   const texto_percentagem = acrescentar_sinal(formatar_percentagem(percentagem_rendibilidade), percentagem_rendibilidade);
   const texto_ultima_data = rendibilidade_mais_recente ? formatar_data(rendibilidade_mais_recente.data) : "—";
-  const texto_ha_quantos_dias = rendibilidade_mais_recente ? descrever_dias_desde(rendibilidade_mais_recente.data) : "sem registos";
+  const texto_ha_quantos_dias = rendibilidade_mais_recente ? escrever_ha_quantos_dias(rendibilidade_mais_recente.data) : "sem registos";
 
   return `
     <div class="fila_cartoes">
       ${desenhar_cartao({ titulo: "Valor atual", valor: formatar_euro(valor_atual), legenda: "Investido + rendibilidade", estilo: "cartao_destaque" })}
       ${desenhar_cartao({ titulo: "Investido", valor: formatar_euro(total_investido), legenda: "O que puseste" })}
-      ${desenhar_cartao({ titulo: "Rendibilidade", valor: texto_rendibilidade, legenda: texto_percentagem, cor_valor: obter_classe_positivo_negativo(total_rendibilidade) })}
+      ${desenhar_cartao({ titulo: "Rendibilidade", valor: texto_rendibilidade, legenda: texto_percentagem, cor_valor: obter_classe_cor_por_sinal(total_rendibilidade) })}
       ${desenhar_cartao({ titulo: "Última atualização", valor: texto_ultima_data, legenda: texto_ha_quantos_dias })}
     </div>
   `;
@@ -187,7 +187,7 @@ function transformar_posicao_em_linha(posicao) {
   const tem_rendibilidade = posicao.rendibilidade !== null;
   const rendibilidade = posicao.rendibilidade ?? 0;
   const percentagem = calcular_percentagem(rendibilidade, posicao.investido);
-  const classe_cor = obter_classe_positivo_negativo(rendibilidade);
+  const classe_cor = obter_classe_cor_por_sinal(rendibilidade);
   const texto_rendibilidade = acrescentar_sinal(formatar_euro(rendibilidade), rendibilidade);
   const texto_percentagem = acrescentar_sinal(formatar_percentagem(percentagem), percentagem);
   const celula_rendibilidade = tem_rendibilidade ? `<span class="${classe_cor}">${texto_rendibilidade}</span>` : "—";
@@ -206,7 +206,7 @@ function transformar_posicao_em_linha(posicao) {
 // A tabela das compras de uma posição (aparece ao abrir a linha), da mais recente para a mais antiga.
 // Cada compra tem ✎ ✕, como os saldos dos Fundos: as compras são objetos da gaveta "compras".
 function desenhar_tabela_compras(posicao, gaveta_compras) {
-  const compras_da_posicao = ordenar_mais_recente_primeiro(filtrar_por_posicao(gaveta_compras, posicao.id));
+  const compras_da_posicao = ordenar_por_data_mais_recente(filtrar_por_posicao(gaveta_compras, posicao.id));
   const linhas_compras = compras_da_posicao.map((objeto_compra) => [
     formatar_data(objeto_compra.data),
     formatar_euro(objeto_compra.montante),

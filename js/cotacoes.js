@@ -1,7 +1,7 @@
 // O rodapé das cotações: uma faixa que corre sem parar, com preços em tempo real vindos da internet.
 // Mostra o assincronismo com fetch + .then() + .catch() (a forma "em cadeia" de tratar promessas;
 // o gestor_dados.js usa a outra forma, com async/await + try/catch).
-import { formatar_euro, formatar_percentagem, acrescentar_sinal, obter_classe_positivo_negativo } from "./ferramentas.js";
+import { formatar_euro, formatar_percentagem, acrescentar_sinal, obter_classe_cor_por_sinal } from "./ferramentas.js";
 
 // #region ==================== CONSTANTES ====================
 // As 3 fontes (grátis, sem registo)
@@ -100,7 +100,7 @@ function desenhar_rodape(cotacoes, etiqueta) {
 function desenhar_cotacao(cotacao) {
   const html_variacao = cotacao.variacao === null
     ? ""
-    : `<span class="${obter_classe_positivo_negativo(cotacao.variacao)}">${acrescentar_sinal(formatar_percentagem(cotacao.variacao), cotacao.variacao)}</span>`;
+    : `<span class="${obter_classe_cor_por_sinal(cotacao.variacao)}">${acrescentar_sinal(formatar_percentagem(cotacao.variacao), cotacao.variacao)}</span>`;
   return `<span class="cotacao"><strong>${cotacao.nome}</strong> ${cotacao.texto_valor} ${html_variacao}</span>`;
 }
 

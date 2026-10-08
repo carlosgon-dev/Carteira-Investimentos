@@ -1,7 +1,6 @@
 // Valores fixos da app, partilhados por vários ficheiros. Nunca mudam enquanto a app corre.
 
 // #region ==================== PREFIXOS DOS IDS ====================
-// O prefixo dos ids de cada gaveta (ver gerar_id): um objeto novo em "compras" recebe "com-047"
 export const PREFIXOS_ID = {
   posicoes: "pos",
   compras: "com",
@@ -14,6 +13,8 @@ export const PREFIXOS_ID = {
   governo_utilizado: "uti",
   eventos_economia: "eve",
 };
+
+export const ALGARISMOS_ID = 3;
 // #endregion
 
 // #region ==================== NOMES DAS CATEGORIAS ====================
@@ -36,4 +37,8 @@ export const PAGINA_DA_CATEGORIA = {
   fundos: "fundos_investimento",
   ouro: "ouro",
 };
+// #endregion
+
+// #region ==================== TEMPO ====================
+export const MILISSEGUNDOS_POR_DIA = 24 * 60 * 60 * 1000;
 // #endregion
