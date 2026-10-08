@@ -41,7 +41,7 @@ function desenhar_painel_cartoes(dados, gaveta_posicoes, gaveta_compras, gaveta_
 
   const html_cartoes = `
     <div class="fila_cartoes">
-      ${desenhar_cartao({ titulo: "Carteira", valor: formatar_euro(total_carteira), estilo: "cartao_destaque" })}
+      ${desenhar_cartao({ titulo: "Carteira", valor: formatar_euro(total_carteira), destaque: true })}
       ${desenhar_cartao({ titulo: "Fundo de sobrevivência", valor: formatar_euro(saldo_sobrevivencia), legenda: legenda_da_carteira(saldo_sobrevivencia) })}
       ${desenhar_cartao({ titulo: "Fundo de maneio", valor: formatar_euro(saldo_maneio), legenda: legenda_da_carteira(saldo_maneio) })}
       ${desenhar_cartao({ titulo: "Investimentos", valor: formatar_euro(total_investido), legenda: legenda_da_carteira(total_investido) })}

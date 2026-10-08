@@ -2,6 +2,6 @@
 
 export function desenhar_pagina_calendario(dados) {
   return `
-    <h2>Calendário</h2>
+    <h2>EM CONSTRUÇÃO</h2>
   `;
 }
