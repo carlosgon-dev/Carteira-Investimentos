@@ -46,6 +46,11 @@ function tratar_clique_menu(evento) {
     return;
   }
 
+  if (evento.target.closest('[data-acao="repor_dados"]')) {
+    tratar_clique_repor_dados();
+    return;
+  }
+
   const botao = evento.target.closest("[data-pagina]");
   if (!botao) return; // clicou fora de um botão
   mostrar_pagina(botao.dataset.pagina);
@@ -59,6 +64,24 @@ function tratar_clique_menu(evento) {
 function mostrar_menu_telemovel(abrir) {
   document.querySelector(".menu_lateral").classList.toggle("aberto", abrir);
   document.querySelector(".menu_hamburguer").textContent = abrir ? "✕" : "☰";
+}
+
+/* ---------- Auxiliares do "Repor dados iniciais" ---------- */
+
+// Pergunta primeiro (apaga as alterações todas!); se sim, volta aos dados do dados.json e redesenha a página
+async function tratar_clique_repor_dados() {
+  const quer_repor = confirm("Apagar todas as alterações e voltar aos dados iniciais?");
+  if (!quer_repor) return;
+
+  try {
+    await dados.repor();
+  } catch {
+    mostrar_aviso("✕ Não consegui repor os dados");
+    return;
+  }
+  mostrar_menu_telemovel(false);
+  atualizar_pagina_apos_alteracao();
+  mostrar_aviso("↩ Dados iniciais repostos");
 }
 
 // #endregion
