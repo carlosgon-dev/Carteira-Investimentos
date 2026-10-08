@@ -3,37 +3,37 @@
     {
       "id": "pos-001",
       "categoria": "etf",
-      "nome": "S&P 500",
+      "nome_ativo": "S&P 500",
       "area_negocio": "Mercado - USA"
     },
     {
       "id": "pos-002",
       "categoria": "etf",
-      "nome": "MSCI World",
+      "nome_ativo": "MSCI World",
       "area_negocio": "Mercado - Global"
     },
     {
       "id": "pos-003",
       "categoria": "cripto",
-      "nome": "Bitcoin",
+      "nome_ativo": "Bitcoin",
       "area_negocio": "Blockchain"
     },
     {
       "id": "pos-004",
       "categoria": "cripto",
-      "nome": "Solana",
+      "nome_ativo": "Solana",
       "area_negocio": "Blockchain"
     },
     {
       "id": "pos-005",
       "categoria": "reit",
-      "nome": "Realty Income",
+      "nome_ativo": "Realty Income",
       "area_negocio": "Retalho"
     },
     {
       "id": "pos-006",
       "categoria": "ouro",
-      "nome": "Bitcoin (cashback)",
+      "nome_ativo": "Bitcoin (cashback)",
       "area_negocio": "Reserva de ouro digital"
     }
   ],

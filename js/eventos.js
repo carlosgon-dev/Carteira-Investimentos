@@ -301,9 +301,9 @@ function tratar_envio_formulario(evento) {
 
 // Guarda a compra e abre a página da categoria dela (ex.: ETF's), onde já aparece
 function tratar_envio_novo_registo(formulario) {
-  const { categoria, nome } = guardar_novo_registo(dados, formulario);
+  const { categoria, nome_ativo } = guardar_novo_registo(dados, formulario);
   mostrar_pagina(PAGINA_DA_CATEGORIA[categoria]);
-  mostrar_aviso(`✓ Compra de ${nome} guardada`);
+  mostrar_aviso(`✓ Compra de ${nome_ativo} guardada`);
 }
 // #endregion
 

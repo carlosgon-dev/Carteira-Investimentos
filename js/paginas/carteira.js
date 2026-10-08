@@ -3,7 +3,7 @@
 import {
   calcular_total_investido,
   encontrar_saldo_atual_fundo,
-  agrupar_investido_por_posicao,
+  agrupar_investido_por_chave,
   agrupar_investido_por_origem,
 } from "../calculadores.js";
 import { desenhar_cartao, desenhar_painel, desenhar_grafico_circular } from "../graficos.js";
@@ -57,14 +57,14 @@ function desenhar_painel_cartoes(dados, gaveta_posicoes, gaveta_compras, gaveta_
 
 // Gráfico: os investimentos por categoria (ETF's, Criptomoedas…), com o nome que aparece na app
 function desenhar_painel_por_categoria(gaveta_posicoes, gaveta_compras, gaveta_vendas) {
-  const fatias = agrupar_investido_por_posicao(gaveta_posicoes, gaveta_compras, gaveta_vendas, "categoria");
+  const fatias = agrupar_investido_por_chave(gaveta_posicoes, gaveta_compras, gaveta_vendas, "categoria");
   const fatias_com_nome = fatias.map((fatia) => ({ ...fatia, nome: NOMES_CATEGORIAS[fatia.nome] ?? fatia.nome }));
   return desenhar_painel({ titulo: "Por categoria", conteudo: desenhar_grafico_circular(fatias_com_nome) });
 }
 
 // Gráfico: os investimentos por área de negócio (Mercado - USA, Bancos…), de todas as categorias juntas
 function desenhar_painel_por_area_negocio(gaveta_posicoes, gaveta_compras, gaveta_vendas) {
-  const fatias = agrupar_investido_por_posicao(gaveta_posicoes, gaveta_compras, gaveta_vendas, "area_negocio");
+  const fatias = agrupar_investido_por_chave(gaveta_posicoes, gaveta_compras, gaveta_vendas, "area_negocio");
   return desenhar_painel({ titulo: "Por área de negócio", conteudo: desenhar_grafico_circular(fatias) });
 }
 

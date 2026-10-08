@@ -6,11 +6,11 @@ import {
   calcular_total_investido,
   filtrar_posicoes_por_categoria,
   obter_rendibilidades_atuais,
-  agrupar_investido_por_posicao,
-  agrupar_rendibilidade_por_posicao,
+  agrupar_investido_por_chave,
+  agrupar_investido_e_rendibilidade_por_chave,
   filtrar_posicoes_abertas,
   filtrar_por_posicao,
-  calcular_investido_e_rendibilidade_posicao,
+  calcular_investido_e_rendibilidade_por_posicao,
 } from "../calculadores.js";
 import {
   desenhar_cartao,
@@ -58,10 +58,10 @@ const COLUNAS_COMPRAS = [
 // #endregion
 
 // #region ==================== ESCOLHAS DO GRÁFICO DE BARRAS ====================
-//   agrupar_por: "nome" (por ativo) ou "area_negocio" · mostrar_em: "euros" ou "percentagem"
+//   agrupar_por: "nome_ativo" (por ativo) ou "area_negocio" · mostrar_em: "euros" ou "percentagem"
 
 // O ponto de partida, quando a app abre: por ativo e em euros (fixo, nunca muda)
-const ESCOLHAS_INICIAIS_GRAFICO_BARRAS = { agrupar_por: "nome", mostrar_em: "euros" };
+const ESCOLHAS_INICIAIS_GRAFICO_BARRAS = { agrupar_por: "nome_ativo", mostrar_em: "euros" };
 
 // As escolhas de agora: começam nas iniciais e mudam com os cliques nos botões (enquanto a app está aberta)
 let escolhas_grafico_barras = { ...ESCOLHAS_INICIAIS_GRAFICO_BARRAS };
@@ -88,7 +88,7 @@ export function desenhar_pagina_investimento(dados, categoria) {
   return `
     ${painel_cartoes}
     <div class="lado_a_lado">
-      ${desenhar_painel_grafico("Por ativo", posicoes_da_categoria, gaveta_compras, gaveta_vendas, "nome")}
+      ${desenhar_painel_grafico("Por ativo", posicoes_da_categoria, gaveta_compras, gaveta_vendas, "nome_ativo")}
       ${desenhar_painel_grafico("Por área de negócio", posicoes_da_categoria, gaveta_compras, gaveta_vendas, "area_negocio")}
     </div>
     ${desenhar_painel_barras(posicoes_da_categoria, gaveta_compras, gaveta_vendas, gaveta_rendibilidades)}
@@ -121,15 +121,15 @@ function desenhar_cartoes_investimento(posicoes_da_categoria, gaveta_compras, ga
   `;
 }
 
-// Um painel com um gráfico circular do dinheiro investido, agrupado por uma chave da posição ("nome" ou "area_negocio")
+// Um painel com um gráfico circular do dinheiro investido, agrupado por uma chave da posição ("nome_ativo" ou "area_negocio")
 function desenhar_painel_grafico(titulo, posicoes_da_categoria, gaveta_compras, gaveta_vendas, chave) {
-  const fatias = agrupar_investido_por_posicao(posicoes_da_categoria, gaveta_compras, gaveta_vendas, chave);
+  const fatias = agrupar_investido_por_chave(posicoes_da_categoria, gaveta_compras, gaveta_vendas, chave);
   return desenhar_painel({ titulo, conteudo: desenhar_grafico_circular(fatias) });
 }
 
 // O painel das barras: a rendibilidade por ativo ou por área de negócio, em € ou em % (conforme as escolhas feitas nos botões)
 function desenhar_painel_barras(posicoes_da_categoria, gaveta_compras, gaveta_vendas, gaveta_rendibilidades) {
-  const grupos = agrupar_rendibilidade_por_posicao(posicoes_da_categoria, gaveta_compras, gaveta_vendas, gaveta_rendibilidades, escolhas_grafico_barras.agrupar_por);
+  const grupos = agrupar_investido_e_rendibilidade_por_chave(posicoes_da_categoria, gaveta_compras, gaveta_vendas, gaveta_rendibilidades, escolhas_grafico_barras.agrupar_por);
   const barras = grupos.map(transformar_grupo_em_barra);
   const barras_ordenadas = barras.sort((barra_a, barra_b) => (barra_b.valor ?? -Infinity) - (barra_a.valor ?? -Infinity)); // sem registo: no fim
   return desenhar_painel({ titulo: "Rendibilidade", acoes: desenhar_botoes_escolhas_grafico_barras(), conteudo: desenhar_grafico_barras(barras_ordenadas) });
@@ -148,7 +148,7 @@ function transformar_grupo_em_barra(grupo) {
 function desenhar_botoes_escolhas_grafico_barras() {
   const alternador_grupo = desenhar_alternador({
     nome_escolha: "agrupar_por",
-    opcoes: [{ valor: "nome", texto: "Ativo" }, { valor: "area_negocio", texto: "Área" }],
+    opcoes: [{ valor: "nome_ativo", texto: "Ativo" }, { valor: "area_negocio", texto: "Área" }],
     escolhido: escolhas_grafico_barras.agrupar_por,
   });
   const alternador_unidade = desenhar_alternador({
@@ -164,7 +164,7 @@ function desenhar_painel_posicoes(posicoes_da_categoria, gaveta_compras, gaveta_
   const posicoes_abertas = filtrar_posicoes_abertas(posicoes_da_categoria, gaveta_compras, gaveta_vendas);
   const posicoes_com_investido_e_rendibilidade = posicoes_abertas.map((objeto_posicao) => ({
     ...objeto_posicao,
-    ...calcular_investido_e_rendibilidade_posicao(objeto_posicao, gaveta_compras, gaveta_rendibilidades),
+    ...calcular_investido_e_rendibilidade_por_posicao(objeto_posicao, gaveta_compras, gaveta_rendibilidades),
   }));
   const posicoes_ordenadas = posicoes_com_investido_e_rendibilidade.sort((posicao_a, posicao_b) => posicao_b.investido - posicao_a.investido);
 
@@ -194,7 +194,7 @@ function transformar_posicao_em_linha(posicao) {
   const celula_percentagem = tem_rendibilidade ? `<span class="${classe_cor}">${texto_percentagem}</span>` : "—";
 
   return [
-    posicao.nome,
+    posicao.nome_ativo,
     posicao.area_negocio,
     formatar_euro(posicao.investido),
     celula_rendibilidade,
