@@ -88,8 +88,8 @@ async function arrancar() {
     });
     // Abre a página que estava aberta antes de recarregar (ou a Carteira, se for a 1.ª vez)
     mostrar_pagina(sessionStorage.getItem(CHAVE_PAGINA_ABERTA) ?? PAGINA_INICIAL);
-    mostrar_surpresa_depois_de_esperar(); // sem await: a app continua a funcionar enquanto espera
-    ativar_rodape_cotacoes(); // os preços da internet, no rodapé
+/*     mostrar_surpresa_depois_de_esperar(); // sem await: a app continua a funcionar enquanto espera
+ */    ativar_rodape_cotacoes(); // os preços da internet, no rodapé
   } catch (erro) {
     console.error(erro);
     zona_pagina.innerHTML = `<p class="erro">Não consegui carregar os dados. ${erro.message}</p>`;
