@@ -77,7 +77,7 @@ export function desenhar_tabela_acordeao({ colunas_cabecalho, linhas_conteudo })
 
 // Uma linha do acordeão: o <summary> (sempre visível) com as células, e o conteúdo que aparece ao abrir
 function desenhar_linha_acordeao(linha, colunas_cabecalho) {
-  const html_celulas = linha.celulas.map((celula, posicao) => `<span class="${obter_classe_coluna(colunas_cabecalho[posicao])}">${celula}</span>`).join("");
+  const html_celulas = linha.celulas.map((celula, indice) => `<span class="${obter_classe_coluna(colunas_cabecalho[indice])}">${celula}</span>`).join("");
   return `
     <details class="acordeao_linha">
       <summary>${html_celulas}</summary>
@@ -105,8 +105,8 @@ function obter_atributos_edicao(coluna) {
 
 // Uma linha da tabela: cada célula recebe o alinhamento e as pistas de edição da sua coluna
 function desenhar_linha_tabela(linha, colunas_cabecalho) {
-  const html_celulas = linha.map((celula, posicao) => {
-    const coluna = colunas_cabecalho[posicao];
+  const html_celulas = linha.map((celula, indice) => {
+    const coluna = colunas_cabecalho[indice];
     return `<td class="${obter_classe_coluna(coluna)}" ${obter_atributos_edicao(coluna)}>${celula}</td>`;
   }).join("");
   return `<tr>${html_celulas}</tr>`;
@@ -169,7 +169,7 @@ export function desenhar_grafico_circular(fatias) {
 // Dá a cada fatia a sua cor, pela ordem (1.ª fatia → cor 1, 2.ª → cor 2…). Todas as fatias aparecem.
 // O % (resto da divisão) faz a 9.ª voltar à cor 1, a 10.ª à cor 2, e assim por diante.
 function dar_cor_as_fatias(fatias) {
-  return fatias.map((fatia, posicao) => ({ ...fatia, cor: `var(--cor_grafico_${(posicao % NUMERO_CORES) + 1})` }));
+  return fatias.map((fatia, indice) => ({ ...fatia, cor: `var(--cor_grafico_${(indice % NUMERO_CORES) + 1})` }));
 }
 
 // O círculo em SVG: cada fatia é um anel (<circle>) com a sua cor, a começar onde a anterior acabou.
@@ -257,7 +257,7 @@ function desenhar_barra(valor, escala) {
 // #region ==================== ALTERNADOR ====================
 
 // Um grupo de botões em que só um está escolhido (ex.: [Ativo | Área] ou [€ | %]).
-//   nome_escolha: o que o grupo muda (ex.: "agrupar_por") · opcoes: [{ valor: "nome", texto: "Ativo" }, …]
+//   nome_escolha: o que o grupo muda (ex.: "agrupar_por") · opcoes: [{ valor: "nome_ativo", texto: "Ativo" }, …]
 //   escolhido: o valor que está ativo agora
 // Cada botão leva data-acao="mudar_escolha": o eventos.js trata do clique.
 export function desenhar_alternador({ nome_escolha, opcoes, escolhido }) {

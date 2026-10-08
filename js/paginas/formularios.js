@@ -17,7 +17,7 @@ function obter_chave_rascunho(nome_formulario) {
 
 // Guarda tudo o que está escrito no formulário (o eventos.js chama isto a cada letra escrita)
 export function guardar_rascunho(formulario) {
-  const valores_escritos = Object.fromEntries(new FormData(formulario)); // { categoria: "etf", nome: "S&P 500", … }
+  const valores_escritos = Object.fromEntries(new FormData(formulario)); // { categoria: "etf", nome_ativo: "S&P 500", … }
   sessionStorage.setItem(obter_chave_rascunho(formulario.dataset.formulario), JSON.stringify(valores_escritos));
 }
 
@@ -48,7 +48,7 @@ export function desenhar_pagina_novo_registo(dados) {
         <select name="categoria" required>${desenhar_opcoes_categorias(rascunho.categoria)}</select>
       </label>
       <label>Ativo
-        <input name="nome" list="sugestoes_ativos" required placeholder="ex.: S&P 500" value="${rascunho.nome ?? ""}">
+        <input name="nome_ativo" list="sugestoes_ativos" required placeholder="ex.: S&P 500" value="${rascunho.nome_ativo ?? ""}">
       </label>
       <label>Área de negócio
         <input name="area_negocio" list="sugestoes_areas_negocio" placeholder="ex.: Mercado - USA" value="${rascunho.area_negocio ?? ""}">
@@ -63,7 +63,7 @@ export function desenhar_pagina_novo_registo(dados) {
         <input name="origem" list="sugestoes_origens" placeholder="ex.: Salário" value="${rascunho.origem ?? ""}">
       </label>
 
-      ${desenhar_sugestoes("sugestoes_ativos", gaveta_posicoes.map((objeto_posicao) => objeto_posicao.nome))}
+      ${desenhar_sugestoes("sugestoes_ativos", gaveta_posicoes.map((objeto_posicao) => objeto_posicao.nome_ativo))}
       ${desenhar_sugestoes("sugestoes_areas_negocio", gaveta_posicoes.map((objeto_posicao) => objeto_posicao.area_negocio))}
       ${desenhar_sugestoes("sugestoes_origens", gaveta_compras.map((objeto_compra) => objeto_compra.origem))}
 
@@ -81,13 +81,13 @@ export function desenhar_pagina_novo_registo(dados) {
   });
 }
 
-// Guarda a compra. Se já houver uma posição ABERTA com a mesma categoria e nome, a compra junta-se a ela;
-// se não houver, cria-se uma posição nova. Devolve a categoria e o nome (para a app abrir a página da categoria e avisar).
+// Guarda a compra. Se já houver uma posição ABERTA com a mesma categoria e nome_ativo, a compra junta-se a ela;
+// se não houver, cria-se uma posição nova. Devolve a categoria e o nome_ativo (para a app abrir a página da categoria e avisar).
 export function guardar_novo_registo(dados, formulario) {
   const valores = new FormData(formulario);
   const categoria = valores.get("categoria");
-  const nome = valores.get("nome").trim();
-  const id_posicao = encontrar_ou_criar_posicao(dados, categoria, nome, valores.get("area_negocio").trim());
+  const nome_ativo = valores.get("nome_ativo").trim();
+  const id_posicao = encontrar_ou_criar_posicao(dados, categoria, nome_ativo, valores.get("area_negocio").trim());
 
   dados.adicionar("compras", {
     id: gerar_id(dados.ler("compras"), PREFIXOS_ID.compras),
@@ -97,7 +97,7 @@ export function guardar_novo_registo(dados, formulario) {
     origem: valores.get("origem").trim(),
   });
   apagar_rascunho("novo_registo");
-  return { categoria, nome };
+  return { categoria, nome_ativo };
 }
 // #endregion
 
@@ -116,16 +116,16 @@ function desenhar_sugestoes(id_lista, textos) {
   return `<datalist id="${id_lista}">${html_opcoes}</datalist>`;
 }
 
-// O id da posição ABERTA com esta categoria e nome; se não houver, cria uma posição nova e devolve o id dela
-function encontrar_ou_criar_posicao(dados, categoria, nome, area_negocio) {
+// O id da posição ABERTA com esta categoria e nome_ativo; se não houver, cria uma posição nova e devolve o id dela
+function encontrar_ou_criar_posicao(dados, categoria, nome_ativo, area_negocio) {
   const posicoes_abertas = filtrar_posicoes_abertas(dados.ler("posicoes"), dados.ler("compras"), dados.ler("vendas"));
   const posicao_existente = posicoes_abertas.find(
-    (objeto_posicao) => objeto_posicao.categoria === categoria && objeto_posicao.nome.toLowerCase() === nome.toLowerCase(),
+    (objeto_posicao) => objeto_posicao.categoria === categoria && objeto_posicao.nome_ativo.toLowerCase() === nome_ativo.toLowerCase(),
   );
   if (posicao_existente) return posicao_existente.id;
 
   const id_novo = gerar_id(dados.ler("posicoes"), PREFIXOS_ID.posicoes);
-  dados.adicionar("posicoes", { id: id_novo, categoria, nome, area_negocio });
+  dados.adicionar("posicoes", { id: id_novo, categoria, nome_ativo, area_negocio });
   return id_novo;
 }
 // #endregion
