@@ -1,5 +1,3 @@
-// Valores fixos da app, partilhados por vários ficheiros. Nunca mudam enquanto a app corre.
-
 // #region ==================== PREFIXOS DOS IDS ====================
 export const PREFIXOS_ID = {
   posicoes: "pos",
@@ -41,4 +39,9 @@ export const PAGINA_DA_CATEGORIA = {
 
 // #region ==================== TEMPO ====================
 export const MILISSEGUNDOS_POR_DIA = 24 * 60 * 60 * 1000;
+// #endregion
+
+// #region ==================== GRÁFICO CIRCULAR ====================
+export const NUMERO_CORES = 15;          
+export const ESPACO_ENTRE_FATIAS = 0.4;   
 // #endregion

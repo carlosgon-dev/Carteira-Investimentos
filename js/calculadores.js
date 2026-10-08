@@ -1,4 +1,3 @@
-// Contas feitas a partir dos dados. Não tocam no HTML.
 import { somar_lista_chave, obter_objeto_por_data_mais_recente } from "./ferramentas.js";
 
 // #region ==================== FILTROS ====================

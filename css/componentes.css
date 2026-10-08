@@ -262,14 +262,14 @@
   white-space: nowrap;
 }
 
-/* A pista: a faixa onde a barra cresce; a linha fina é o zero (a posição vem do JS, em --posicao_zero) */
+/* A pista: a faixa onde a barra cresce; a linha fina é o zero (o ponto vem do JS, em --ponto_zero) */
 .barra_pista {
   position: relative;
   height: 0.9rem;
   &::before {
     content: "";
     position: absolute;
-    left: var(--posicao_zero);
+    left: var(--ponto_zero);
     top: -0.2rem;
     bottom: -0.2rem;
     border-left: 1px solid var(--cor_linha);

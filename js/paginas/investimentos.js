@@ -113,7 +113,7 @@ function desenhar_cartoes_investimento(posicoes_da_categoria, gaveta_compras, ga
 
   return `
     <div class="fila_cartoes">
-      ${desenhar_cartao({ titulo: "Valor atual", valor: formatar_euro(valor_atual), legenda: "Investido + rendibilidade", estilo: "cartao_destaque" })}
+      ${desenhar_cartao({ titulo: "Valor atual", valor: formatar_euro(valor_atual), legenda: "Investido + rendibilidade", destaque: true })}
       ${desenhar_cartao({ titulo: "Investido", valor: formatar_euro(total_investido), legenda: "O que puseste" })}
       ${desenhar_cartao({ titulo: "Rendibilidade", valor: texto_rendibilidade, legenda: texto_percentagem, cor_valor: obter_classe_cor_por_sinal(total_rendibilidade) })}
       ${desenhar_cartao({ titulo: "Última atualização", valor: texto_ultima_data, legenda: texto_ha_quantos_dias })}
@@ -173,7 +173,7 @@ function desenhar_painel_posicoes(posicoes_da_categoria, gaveta_compras, gaveta_
     celulas: transformar_posicao_em_linha(posicao),
     conteudo_aberto: desenhar_tabela_compras(posicao, gaveta_compras),
   }));
-  const html_tabela = desenhar_tabela_acordeao({ colunas_cabecalho: COLUNAS_POSICOES, linhas_conteudo: linhas_posicoes });
+  const html_tabela = desenhar_tabela_acordeao({ definicoes_colunas: COLUNAS_POSICOES, linhas_conteudo: linhas_posicoes });
   const html_botoes = `
     ${desenhar_botao_abrir_pagina("novo_registo", "+ Novo registo/compra")}
     ${desenhar_botao_abrir_pagina("registar_rendibilidade", "+ Registar rendibilidade")}
@@ -213,6 +213,6 @@ function desenhar_tabela_compras(posicao, gaveta_compras) {
     objeto_compra.origem || "—",
     desenhar_botoes_linha("compras", objeto_compra.id),
   ]);
-  return desenhar_tabela({ colunas_cabecalho: COLUNAS_COMPRAS, linhas_conteudo: linhas_compras });
+  return desenhar_tabela({ definicoes_colunas: COLUNAS_COMPRAS, linhas_conteudo: linhas_compras });
 }
 // #endregion

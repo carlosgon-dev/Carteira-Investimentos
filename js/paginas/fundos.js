@@ -27,7 +27,7 @@ export function desenhar_pagina_fundos(dados) {
 
   const html_cartoes = `
     <div class="fila_cartoes">
-      ${desenhar_cartao({ titulo: "Total dos fundos", valor: formatar_euro(total_fundos), estilo: "cartao_destaque" })}
+      ${desenhar_cartao({ titulo: "Total dos fundos", valor: formatar_euro(total_fundos), destaque: true })}
       ${desenhar_cartao({ titulo: "Fundo de sobrevivência", valor: formatar_euro(saldo_sobrevivencia) })}
       ${desenhar_cartao({ titulo: "Fundo de maneio", valor: formatar_euro(saldo_maneio) })}
     </div>
@@ -60,7 +60,7 @@ function desenhar_painel_fundo(titulo, nome_gaveta, gaveta_fundo) {
     formatar_euro(objeto_saldo.saldo),
     desenhar_botoes_linha(nome_gaveta, objeto_saldo.id),
   ]);
-  const html_tabela = desenhar_tabela({ colunas_cabecalho: COLUNAS_FUNDO, linhas_conteudo: linhas_saldos });
+  const html_tabela = desenhar_tabela({ definicoes_colunas: COLUNAS_FUNDO, linhas_conteudo: linhas_saldos });
   const html_botao_adicionar = desenhar_botao_adicionar(nome_gaveta, "+ Atualizar saldo");
   return desenhar_painel({ titulo, acoes: html_botao_adicionar, conteudo: html_tabela });
 }
