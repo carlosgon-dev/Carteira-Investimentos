@@ -4,7 +4,7 @@ import { obter_data_hoje, gerar_id } from "./ferramentas.js";
 import { PREFIXOS_ID } from "./constantes.js";
 import { desenhar_botao_cancelar } from "./graficos.js";
 import { guardar_escolha_grafico_barras } from "./paginas/investimentos.js";
-import { guardar_novo_registo, guardar_rascunho, apagar_rascunho } from "./paginas/formularios.js";
+import { guardar_novo_registo, guardar_rascunho_sessionstorage, apagar_rascunho_sessionstorage } from "./paginas/formularios.js";
 import { mostrar_notificacao } from "./notificacoes.js";
 
 // #region ==================== CONSTANTES ====================
@@ -164,7 +164,7 @@ function atualizar_pagina_apos_alteracao() {
 
 // Desiste do formulário: apaga o que estava escrito, volta à página anterior e avisa
 function tratar_clique_cancelar_formulario(botao) {
-  apagar_rascunho(botao.dataset.formulario);
+  apagar_rascunho_sessionstorage(botao.dataset.formulario);
   voltar_pagina_anterior();
   mostrar_notificacao("↩ Operação cancelada");
 }
@@ -348,6 +348,6 @@ function tratar_envio_novo_registo(formulario) {
 function tratar_escrita_formulario(evento) {
   const formulario = evento.target.closest("form[data-formulario]");
   if (!formulario) return; // escreveu noutro sítio (ex.: num campo de uma tabela a editar)
-  guardar_rascunho(formulario);
+  guardar_rascunho_sessionstorage(formulario);
 }
 // #endregion
