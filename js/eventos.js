@@ -5,7 +5,7 @@ import { PREFIXOS_ID } from "./constantes.js";
 import { desenhar_botao_cancelar } from "./graficos.js";
 import { guardar_escolha_grafico_barras } from "./paginas/investimentos.js";
 import { guardar_novo_registo, guardar_rascunho, apagar_rascunho } from "./paginas/formularios.js";
-import { mostrar_aviso } from "./avisos.js";
+import { mostrar_notificacao } from "./notificacoes.js";
 
 // #region ==================== CONSTANTES ====================
 // A página do menu de cada categoria (o data-pagina do botão): depois de uma compra, a app abre a página dessa categoria
@@ -88,12 +88,12 @@ async function tratar_clique_repor_dados() {
   try {
     await dados.repor();
   } catch {
-    mostrar_aviso("✕ Não consegui repor os dados");
+    mostrar_notificacao("✕ Não consegui repor os dados");
     return;
   }
   mostrar_menu_telemovel(false);
   atualizar_pagina_apos_alteracao();
-  mostrar_aviso("↩ Dados iniciais repostos");
+  mostrar_notificacao("↩ Dados iniciais repostos");
 }
 
 // #endregion
@@ -166,7 +166,7 @@ function atualizar_pagina_apos_alteracao() {
 function tratar_clique_cancelar_formulario(botao) {
   apagar_rascunho(botao.dataset.formulario);
   voltar_pagina_anterior();
-  mostrar_aviso("↩ Operação cancelada");
+  mostrar_notificacao("↩ Operação cancelada");
 }
 
 /* ---------- Auxiliares do alternador (ex.: [Ativo | Área], [€ | %]) ---------- */
@@ -258,7 +258,7 @@ function tratar_clique_guardar(botao) {
 
   dados.editar(botao.dataset.gaveta, botao.dataset.id, ler_valores_linha(linha));
   atualizar_pagina_apos_alteracao();
-  mostrar_aviso("✓ Alteração guardada");
+  mostrar_notificacao("✓ Alteração guardada");
 }
 
 // O ✓ da linha nova (do "+ …"): cria o objeto com um id novo e acrescenta-o à gaveta
@@ -271,7 +271,7 @@ function tratar_clique_guardar_novo(botao) {
   const novo_objeto = { id: id_novo, ...ler_valores_linha(linha) };
   dados.adicionar(nome_gaveta, novo_objeto);
   atualizar_pagina_apos_alteracao();
-  mostrar_aviso("✓ Registo adicionado");
+  mostrar_notificacao("✓ Registo adicionado");
 }
 
 // Os campos da linha estão bem preenchidos? Se algum não estiver (vazio, ou fora dos limites),
@@ -315,7 +315,7 @@ function tratar_clique_apagar(botao) {
   }
   dados.apagar(botao.dataset.gaveta, botao.dataset.id);
   atualizar_pagina_apos_alteracao();
-  mostrar_aviso("✓ Registo apagado");
+  mostrar_notificacao("✓ Registo apagado");
 }
 // #endregion
 
@@ -338,7 +338,7 @@ function tratar_envio_formulario(evento) {
 function tratar_envio_novo_registo(formulario) {
   const { categoria, nome_ativo } = guardar_novo_registo(dados, formulario);
   mostrar_pagina(PAGINA_DA_CATEGORIA[categoria]);
-  mostrar_aviso(`✓ Compra de ${nome_ativo} guardada`);
+  mostrar_notificacao(`✓ Compra de ${nome_ativo} guardada`);
 }
 // #endregion
 

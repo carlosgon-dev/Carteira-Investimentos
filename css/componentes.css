@@ -513,10 +513,10 @@
 }
 /* #endregion */
 
-/* #region ==================== AVISO FLUTUANTE ("✓ Compra guardada") ==================== */
+/* #region ==================== NOTIFICAÇÃO FLUTUANTE ("✓ Compra guardada") ==================== */
 /* No canto de baixo, à direita, por cima de tudo. Começa invisível e um pouco abaixo;
-   com a classe "visivel", sobe e aparece (em 0.3s, o mesmo TEMPO_ANIMACAO do avisos.js) */
-.aviso_flutuante {
+   com a classe "visivel", sobe e aparece (em 0.3s, o mesmo TEMPO_ANIMACAO do notificacoes.js) */
+.notificacao_flutuante {
   position: fixed;
   right: 1.5rem;
   bottom: 1.5rem;
@@ -529,10 +529,10 @@
   box-shadow: var(--sombra);
   opacity: 0;
   transform: translateY(1rem);
-  transition: opacity 0.3s, transform 0.3s;
+  transition: opacity 1s, transform 1s;
 }
 
-.aviso_flutuante.visivel {
+.notificacao_flutuante.visivel {
   opacity: 1;
   transform: translateY(0);
 }

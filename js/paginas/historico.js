@@ -2,6 +2,6 @@
 
 export function desenhar_pagina_historico(dados) {
   return `
-    <h2>Histórico de rendibilidade</h2>
+    <h2>EM CONSTRUÇÃO</h2>
   `;
 }
