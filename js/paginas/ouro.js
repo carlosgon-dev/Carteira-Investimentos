@@ -2,6 +2,6 @@
 
 export function desenhar_pagina_ouro(dados) {
   return `
-    <h2>Ouro digital</h2>
+    <h2>EM CONSTRUÇÃO</h2>
   `;
 }

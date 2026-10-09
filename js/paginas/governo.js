@@ -2,6 +2,6 @@
 
 export function desenhar_pagina_governo(dados) {
   return `
-    <h2>Dinheiro do governo</h2>
+    <h2>EM CONSTRUÇÃO</h2>
   `;
 }

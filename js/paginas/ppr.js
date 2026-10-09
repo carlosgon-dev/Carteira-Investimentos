@@ -2,6 +2,6 @@
 
 export function desenhar_pagina_ppr(dados) {
   return `
-    <h2>PPR</h2>
+    <h2>EM CONSTRUÇÃO</h2>
   `;
 }
