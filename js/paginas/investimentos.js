@@ -39,7 +39,7 @@ import {
 
 // #region ==================== COLUNAS DA TABELA ====================
 // As colunas da tabela das posições (só leitura: estes valores são calculados)
-const COLUNAS_POSICOES = [
+const DEFINICOES_COLUNAS_POSICOES = [
   { titulo: "Nome" },
   { titulo: "Área de negócio" },
   { titulo: "Investido", numero: true },
@@ -49,7 +49,7 @@ const COLUNAS_POSICOES = [
 ];
 
 // As colunas da tabela das compras (dentro de cada posição). Estas editam-se com o ✎, como nos Fundos.
-const COLUNAS_COMPRAS = [
+const DEFINICOES_COLUNAS_COMPRAS = [
   { titulo: "Data", campo_editavel: "data", tipo_campo: "date", maximo: "hoje" },
   { titulo: "Montante", campo_editavel: "montante", tipo_campo: "number", minimo: 0, numero: true },
   { titulo: "Origem", campo_editavel: "origem", tipo_campo: "text" },
@@ -173,7 +173,7 @@ function desenhar_painel_posicoes(posicoes_da_categoria, gaveta_compras, gaveta_
     celulas: transformar_posicao_em_linha(posicao),
     conteudo_aberto: desenhar_tabela_compras(posicao, gaveta_compras),
   }));
-  const html_tabela = desenhar_tabela_acordeao({ definicoes_colunas: COLUNAS_POSICOES, linhas_conteudo: linhas_posicoes });
+  const html_tabela = desenhar_tabela_acordeao({ definicoes_colunas: DEFINICOES_COLUNAS_POSICOES, linhas_conteudo: linhas_posicoes });
   const html_botoes = `
     ${desenhar_botao_abrir_pagina("novo_registo", "+ Novo registo/compra")}
     ${desenhar_botao_abrir_pagina("registar_rendibilidade", "+ Registar rendibilidade")}
@@ -213,6 +213,6 @@ function desenhar_tabela_compras(posicao, gaveta_compras) {
     objeto_compra.origem || "—",
     desenhar_botoes_linha("compras", objeto_compra.id),
   ]);
-  return desenhar_tabela({ definicoes_colunas: COLUNAS_COMPRAS, linhas_conteudo: linhas_compras });
+  return desenhar_tabela({ definicoes_colunas: DEFINICOES_COLUNAS_COMPRAS, linhas_conteudo: linhas_compras });
 }
 // #endregion

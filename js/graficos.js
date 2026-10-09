@@ -1,5 +1,9 @@
 import { formatar_euro, calcular_percentagem, formatar_percentagem, obter_classe_cor_por_sinal, somar_lista_chave } from "./ferramentas.js";
-import { NUMERO_CORES, ESPACO_ENTRE_FATIAS } from "./constantes.js";
+
+// #region ==================== CONSTANTES ====================
+const NUMERO_CORES = 15;           // as cores das fatias (--cor_grafico_1 a 15, no base.css)
+const ESPACO_ENTRE_FATIAS = 0.4;   // o espaço vazio entre duas fatias
+// #endregion
 
 // #region ==================== PAINEL ====================
 export function desenhar_painel({ titulo, info = "", nota = "", acoes = "", conteudo }) {

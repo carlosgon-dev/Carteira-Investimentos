@@ -1,11 +1,23 @@
 // Os eventos da app: os cliques no menu e nos botões das tabelas (✎ ✓ ✕ ↩ e "+ …") e os formulários.
 // Organização: o MOTOR liga 5 eventos; cada evento tem por baixo as suas funções auxiliares.
 import { obter_data_hoje, gerar_id } from "./ferramentas.js";
-import { PREFIXOS_ID, PAGINA_DA_CATEGORIA } from "./constantes.js";
+import { PREFIXOS_ID } from "./constantes.js";
 import { desenhar_botao_cancelar } from "./graficos.js";
 import { guardar_escolha_grafico_barras } from "./paginas/investimentos.js";
 import { guardar_novo_registo, guardar_rascunho, apagar_rascunho } from "./paginas/formularios.js";
 import { mostrar_aviso } from "./avisos.js";
+
+// #region ==================== CONSTANTES ====================
+// A página do menu de cada categoria (o data-pagina do botão): depois de uma compra, a app abre a página dessa categoria
+const PAGINA_DA_CATEGORIA = {
+  etf: "etf",
+  cripto: "cripto",
+  reit: "reit",
+  acoes: "acoes",
+  fundos: "fundos_investimento",
+  ouro: "ouro",
+};
+// #endregion
 
 // O que o main.js entrega no arranque (injeção de dependências), em ativar_eventos()
 let dados;            // o gestor dos dados (ler, adicionar, editar, apagar)
