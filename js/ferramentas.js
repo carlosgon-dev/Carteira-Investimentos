@@ -1,5 +1,9 @@
 // Ferramentas genéricas, que serviriam para qualquer app.
-import { MILISSEGUNDOS_POR_DIA, ALGARISMOS_ID } from "./constantes.js";
+
+// #region ==================== CONSTANTES ====================
+const MILISSEGUNDOS_POR_DIA = 24 * 60 * 60 * 1000;
+const ALGARISMOS_ID = 3; // quantos algarismos tem o número de um id ("sal-003")
+// #endregion
 
 // #region ==================== FORMATAR (EUROS E DATAS) ====================
 export function formatar_euro(valor) {

@@ -1,4 +1,3 @@
-// Página "Fundos": fundo de sobrevivência e fundo de maneio.
 // #region ==================== IMPORTS ====================
 import { desenhar_cartao, desenhar_painel, desenhar_tabela, desenhar_botoes_linha, desenhar_botao_adicionar } from "../graficos.js";
 import { encontrar_saldo_atual_fundo } from "../calculadores.js";
@@ -6,11 +5,7 @@ import { formatar_euro, formatar_data, ordenar_por_data_mais_recente } from "../
 // #endregion
 
 // #region ==================== COLUNAS DAS TABELAS ====================
-// As colunas das duas tabelas dos fundos (a última, sem título, é a dos botões ✎ ✕).
-// campo_editavel + tipo_campo: estas colunas podem ser editadas com o ✎
-// minimo: o valor mais baixo aceite (um saldo nunca é negativo)
-// maximo: o valor mais alto aceite ("hoje": um saldo não pode ter data no futuro)
-const COLUNAS_FUNDO = [
+const DEFINICOES_COLUNAS_FUNDO = [
   { titulo: "Data", campo_editavel: "data", tipo_campo: "date", maximo: "hoje" },
   { titulo: "Saldo", campo_editavel: "saldo", tipo_campo: "number", minimo: 0, numero: true },
   { titulo: "" },
@@ -51,8 +46,6 @@ export function desenhar_pagina_fundos(dados) {
 // #endregion
 
 // #region ==================== AUXILIARES DA PÁGINA ====================
-// Um painel com a tabela dos saldos de um fundo, do mais recente para o mais antigo
-//   nome_gaveta: para os botões ✎ ✕ saberem de que gaveta é cada linha
 function desenhar_painel_fundo(titulo, nome_gaveta, gaveta_fundo) {
   const saldos_ordenados = ordenar_por_data_mais_recente(gaveta_fundo);
   const linhas_saldos = saldos_ordenados.map((objeto_saldo) => [
@@ -60,7 +53,7 @@ function desenhar_painel_fundo(titulo, nome_gaveta, gaveta_fundo) {
     formatar_euro(objeto_saldo.saldo),
     desenhar_botoes_linha(nome_gaveta, objeto_saldo.id),
   ]);
-  const html_tabela = desenhar_tabela({ definicoes_colunas: COLUNAS_FUNDO, linhas_conteudo: linhas_saldos });
+  const html_tabela = desenhar_tabela({ definicoes_colunas: DEFINICOES_COLUNAS_FUNDO, linhas_conteudo: linhas_saldos });
   const html_botao_adicionar = desenhar_botao_adicionar(nome_gaveta, "+ Atualizar saldo");
   return desenhar_painel({ titulo, acoes: html_botao_adicionar, conteudo: html_tabela });
 }

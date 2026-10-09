@@ -1,3 +1,6 @@
+// Constantes PARTILHADAS: só ficam aqui as que são usadas por 2 ou mais ficheiros.
+// As que só um ficheiro usa ficam no topo desse ficheiro (região CONSTANTES).
+
 // #region ==================== PREFIXOS DOS IDS ====================
 export const PREFIXOS_ID = {
   posicoes: "pos",
@@ -11,8 +14,6 @@ export const PREFIXOS_ID = {
   governo_utilizado: "uti",
   eventos_economia: "eve",
 };
-
-export const ALGARISMOS_ID = 3;
 // #endregion
 
 // #region ==================== NOMES DAS CATEGORIAS ====================
@@ -25,23 +26,4 @@ export const NOMES_CATEGORIAS = {
   fundos: "Fundos de investimento",
   ouro: "Ouro digital",
 };
-
-// A página do menu de cada categoria (o data-pagina do botão): depois de uma compra, a app abre a página dessa categoria
-export const PAGINA_DA_CATEGORIA = {
-  etf: "etf",
-  cripto: "cripto",
-  reit: "reit",
-  acoes: "acoes",
-  fundos: "fundos_investimento",
-  ouro: "ouro",
-};
-// #endregion
-
-// #region ==================== TEMPO ====================
-export const MILISSEGUNDOS_POR_DIA = 24 * 60 * 60 * 1000;
-// #endregion
-
-// #region ==================== GRÁFICO CIRCULAR ====================
-export const NUMERO_CORES = 15;          
-export const ESPACO_ENTRE_FATIAS = 0.4;   
 // #endregion
