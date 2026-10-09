@@ -1,4 +1,3 @@
-// Páginas dos investimentos: ETF's, Criptomoedas, REIT's, Ações e Fundos de investimento.
 // São todas iguais (cartões + tabela), só muda a categoria. Por isso, uma função serve as 5.
 // #region ==================== IMPORTS ====================
 import { NOMES_CATEGORIAS } from "../constantes.js";
@@ -38,7 +37,6 @@ import {
 // #endregion
 
 // #region ==================== COLUNAS DA TABELA ====================
-// As colunas da tabela das posições (só leitura: estes valores são calculados)
 const DEFINICOES_COLUNAS_POSICOES = [
   { titulo: "Nome" },
   { titulo: "Área de negócio" },
@@ -48,7 +46,6 @@ const DEFINICOES_COLUNAS_POSICOES = [
   { titulo: "Valor atual", numero: true },
 ];
 
-// As colunas da tabela das compras (dentro de cada posição). Estas editam-se com o ✎, como nos Fundos.
 const DEFINICOES_COLUNAS_COMPRAS = [
   { titulo: "Data", campo_editavel: "data", tipo_campo: "date", maximo: "hoje" },
   { titulo: "Montante", campo_editavel: "montante", tipo_campo: "number", minimo: 0, numero: true },
@@ -58,15 +55,11 @@ const DEFINICOES_COLUNAS_COMPRAS = [
 // #endregion
 
 // #region ==================== ESCOLHAS DO GRÁFICO DE BARRAS ====================
-//   agrupar_por: "nome_ativo" (por ativo) ou "area_negocio" · mostrar_em: "euros" ou "percentagem"
 
-// O ponto de partida, quando a app abre: por ativo e em euros (fixo, nunca muda)
 const ESCOLHAS_INICIAIS_GRAFICO_BARRAS = { agrupar_por: "nome_ativo", mostrar_em: "euros" };
 
-// As escolhas de agora: começam nas iniciais e mudam com os cliques nos botões (enquanto a app está aberta)
 let escolhas_grafico_barras = { ...ESCOLHAS_INICIAIS_GRAFICO_BARRAS };
 
-// Muda uma das escolhas (o eventos.js chama isto quando se clica num botão do alternador)
 export function guardar_escolha_grafico_barras(nome_escolha, valor) {
   escolhas_grafico_barras = { ...escolhas_grafico_barras, [nome_escolha]: valor };
 }
@@ -98,7 +91,6 @@ export function desenhar_pagina_investimento(dados, categoria) {
 // #endregion
 
 // #region ==================== AUXILIARES DA PÁGINA ====================
-// Os 4 cartões: Valor atual (destaque) · Investido · Rendibilidade · Última atualização
 function desenhar_cartoes_investimento(posicoes_da_categoria, gaveta_compras, gaveta_vendas, rendibilidades_atuais) {
   const total_investido = calcular_total_investido(posicoes_da_categoria, gaveta_compras, gaveta_vendas);
   const total_rendibilidade = somar_lista_chave(rendibilidades_atuais, "valor");
@@ -106,28 +98,27 @@ function desenhar_cartoes_investimento(posicoes_da_categoria, gaveta_compras, ga
   const percentagem_rendibilidade = calcular_percentagem(total_rendibilidade, total_investido);
   const rendibilidade_mais_recente = obter_objeto_por_data_mais_recente(rendibilidades_atuais);
 
-  const texto_rendibilidade = acrescentar_sinal(formatar_euro(total_rendibilidade), total_rendibilidade);
-  const texto_percentagem = acrescentar_sinal(formatar_percentagem(percentagem_rendibilidade), percentagem_rendibilidade);
-  const texto_ultima_data = rendibilidade_mais_recente ? formatar_data(rendibilidade_mais_recente.data) : "—";
-  const texto_ha_quantos_dias = rendibilidade_mais_recente ? escrever_ha_quantos_dias(rendibilidade_mais_recente.data) : "sem registos";
+  const texto_principal_cartao_rendibilidade = acrescentar_sinal(formatar_euro(total_rendibilidade), total_rendibilidade);
+  const texto_legenda_cartao_rendibilidade = acrescentar_sinal(formatar_percentagem(percentagem_rendibilidade), percentagem_rendibilidade);
+  const texto_principal_cartao_ultima_atualizacao = rendibilidade_mais_recente ? formatar_data(rendibilidade_mais_recente.data) : "—";
+  const texto_legenda_cartao_ultima_atualizacao = rendibilidade_mais_recente ? escrever_ha_quantos_dias(rendibilidade_mais_recente.data) : "sem registos";
 
   return `
     <div class="fila_cartoes">
       ${desenhar_cartao({ titulo: "Valor atual", valor: formatar_euro(valor_atual), legenda: "Investido + rendibilidade", destaque: true })}
       ${desenhar_cartao({ titulo: "Investido", valor: formatar_euro(total_investido), legenda: "O que puseste" })}
-      ${desenhar_cartao({ titulo: "Rendibilidade", valor: texto_rendibilidade, legenda: texto_percentagem, cor_valor: obter_classe_cor_por_sinal(total_rendibilidade) })}
-      ${desenhar_cartao({ titulo: "Última atualização", valor: texto_ultima_data, legenda: texto_ha_quantos_dias })}
+      ${desenhar_cartao({ titulo: "Rendibilidade", valor: texto_principal_cartao_rendibilidade, legenda: texto_legenda_cartao_rendibilidade, cor_valor: obter_classe_cor_por_sinal(total_rendibilidade) })}
+      ${desenhar_cartao({ titulo: "Última atualização", valor: texto_principal_cartao_ultima_atualizacao, legenda: texto_legenda_cartao_ultima_atualizacao })}
     </div>
   `;
 }
 
-// Um painel com um gráfico circular do dinheiro investido, agrupado por uma chave da posição ("nome_ativo" ou "area_negocio")
 function desenhar_painel_grafico(titulo, posicoes_da_categoria, gaveta_compras, gaveta_vendas, chave) {
   const fatias = agrupar_investido_por_chave(posicoes_da_categoria, gaveta_compras, gaveta_vendas, chave);
   return desenhar_painel({ titulo, conteudo: desenhar_grafico_circular(fatias) });
 }
 
-// O painel das barras: a rendibilidade por ativo ou por área de negócio, em € ou em % (conforme as escolhas feitas nos botões)
+
 function desenhar_painel_barras(posicoes_da_categoria, gaveta_compras, gaveta_vendas, gaveta_rendibilidades) {
   const grupos = agrupar_investido_e_rendibilidade_por_chave(posicoes_da_categoria, gaveta_compras, gaveta_vendas, gaveta_rendibilidades, escolhas_grafico_barras.agrupar_por);
   const barras = grupos.map(transformar_grupo_em_barra);
@@ -135,16 +126,14 @@ function desenhar_painel_barras(posicoes_da_categoria, gaveta_compras, gaveta_ve
   return desenhar_painel({ titulo: "Rendibilidade", acoes: desenhar_botoes_escolhas_grafico_barras(), conteudo: desenhar_grafico_barras(barras_ordenadas) });
 }
 
-// Um grupo → uma barra: o valor (em € ou em %) e o texto já formatado, com sinal
 function transformar_grupo_em_barra(grupo) {
   if (grupo.rendibilidade === null) return { nome: grupo.nome, valor: null, texto: "—" };
   const em_percentagem = escolhas_grafico_barras.mostrar_em === "percentagem";
   const valor = em_percentagem ? calcular_percentagem(grupo.rendibilidade, grupo.investido) : grupo.rendibilidade;
   const texto_sem_sinal = em_percentagem ? formatar_percentagem(valor) : formatar_euro(valor);
-  return { nome: grupo.nome, valor, texto: acrescentar_sinal(texto_sem_sinal, valor) };
+  return { nome: grupo.nome, valor, texto: acrescentar_sinal(texto_sem_sinal, valor) }; // → { nome: "S&P 500", valor: 162.9, texto: "+162,90 €" }  (em %: valor 10.3, texto "+10,3 %")
 }
 
-// Os 2 alternadores do painel: [Ativo | Área] e [€ | %]
 function desenhar_botoes_escolhas_grafico_barras() {
   const alternador_grupo = desenhar_alternador({
     nome_escolha: "agrupar_por",
@@ -159,7 +148,6 @@ function desenhar_botoes_escolhas_grafico_barras() {
   return alternador_grupo + alternador_unidade;
 }
 
-// O painel da tabela: uma linha por posição aberta, da que tem mais dinheiro investido para a que tem menos
 function desenhar_painel_posicoes(posicoes_da_categoria, gaveta_compras, gaveta_vendas, gaveta_rendibilidades) {
   const posicoes_abertas = filtrar_posicoes_abertas(posicoes_da_categoria, gaveta_compras, gaveta_vendas);
   const posicoes_com_investido_e_rendibilidade = posicoes_abertas.map((objeto_posicao) => ({
@@ -168,12 +156,11 @@ function desenhar_painel_posicoes(posicoes_da_categoria, gaveta_compras, gaveta_
   }));
   const posicoes_ordenadas = posicoes_com_investido_e_rendibilidade.sort((posicao_a, posicao_b) => posicao_b.investido - posicao_a.investido);
 
-  // Cada posição → uma linha que abre: em cima, os valores da posição; ao abrir, a tabela das suas compras
-  const linhas_posicoes = posicoes_ordenadas.map((posicao) => ({
-    celulas: transformar_posicao_em_linha(posicao),
+  const linhas_acordeao_posicoes = posicoes_ordenadas.map((posicao) => ({
+    celulas: transformar_posicao_em_linha_acordeao_fechada(posicao),
     conteudo_aberto: desenhar_tabela_compras(posicao, gaveta_compras),
   }));
-  const html_tabela = desenhar_tabela_acordeao({ definicoes_colunas: DEFINICOES_COLUNAS_POSICOES, linhas_conteudo: linhas_posicoes });
+  const html_tabela = desenhar_tabela_acordeao({ definicoes_colunas: DEFINICOES_COLUNAS_POSICOES, linhas_conteudo: linhas_acordeao_posicoes });
   const html_botoes = `
     ${desenhar_botao_abrir_pagina("novo_registo", "+ Novo registo/compra")}
     ${desenhar_botao_abrir_pagina("registar_rendibilidade", "+ Registar rendibilidade")}
@@ -182,8 +169,7 @@ function desenhar_painel_posicoes(posicoes_da_categoria, gaveta_compras, gaveta_
   return desenhar_painel({ titulo: "Posições", acoes: html_botoes, conteudo: html_tabela });
 }
 
-// Uma posição → uma linha da tabela (as células pela ordem das colunas). Sem registo de rendibilidade: "—"
-function transformar_posicao_em_linha(posicao) {
+function transformar_posicao_em_linha_acordeao_fechada(posicao) {
   const tem_rendibilidade = posicao.rendibilidade !== null;
   const rendibilidade = posicao.rendibilidade ?? 0;
   const percentagem = calcular_percentagem(rendibilidade, posicao.investido);
@@ -193,6 +179,7 @@ function transformar_posicao_em_linha(posicao) {
   const celula_rendibilidade = tem_rendibilidade ? `<span class="${classe_cor}">${texto_rendibilidade}</span>` : "—";
   const celula_percentagem = tem_rendibilidade ? `<span class="${classe_cor}">${texto_percentagem}</span>` : "—";
 
+  // → ["S&P 500", "Mercado - USA", "1 580,25 €", "<span class='positivo'>+162,90 €</span>", "<span class='positivo'>+10,3 %</span>", "1 743,15 €"]
   return [
     posicao.nome_ativo,
     posicao.area_negocio,
@@ -203,8 +190,6 @@ function transformar_posicao_em_linha(posicao) {
   ];
 }
 
-// A tabela das compras de uma posição (aparece ao abrir a linha), da mais recente para a mais antiga.
-// Cada compra tem ✎ ✕, como os saldos dos Fundos: as compras são objetos da gaveta "compras".
 function desenhar_tabela_compras(posicao, gaveta_compras) {
   const compras_da_posicao = ordenar_por_data_mais_recente(filtrar_por_posicao(gaveta_compras, posicao.id));
   const linhas_compras = compras_da_posicao.map((objeto_compra) => [
