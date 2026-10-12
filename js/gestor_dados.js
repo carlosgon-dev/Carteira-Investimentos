@@ -1,6 +1,6 @@
 // #region ==================== CONSTANTES ====================
 const FICHEIRO_DADOS = "data/dados.json";
-const CHAVE_GUARDADA = "carteira_investimentos";
+const CHAVE_LOCALSTORAGE_DADOS = "carteira_investimentos";
 // #endregion
 
 // #region ==================== LER O FICHEIRO ====================
@@ -13,10 +13,10 @@ async function ler_ficheiro() {
 
 // #region ==================== O COFRE DOS DADOS (CLOSURE) ====================
 export async function carregar_dados() {
-  const dados_no_browser = localStorage.getItem(CHAVE_GUARDADA);
+  const dados_no_browser = localStorage.getItem(CHAVE_LOCALSTORAGE_DADOS);
   let arquivo = dados_no_browser ? JSON.parse(dados_no_browser) : await ler_ficheiro();
 
-  const guardar = () => localStorage.setItem(CHAVE_GUARDADA, JSON.stringify(arquivo));
+  const guardar = () => localStorage.setItem(CHAVE_LOCALSTORAGE_DADOS, JSON.stringify(arquivo));
   if (!dados_no_browser) guardar(); 
 
   return {
