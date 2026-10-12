@@ -1,4 +1,3 @@
-// 🚀 Ponto de entrada: arranque da app + navegação entre páginas. Os cliques estão no eventos.js.
 // #region ==================== IMPORTS ====================
 import { carregar_dados } from "./gestor_dados.js";
 import { ativar_eventos } from "./eventos.js";
@@ -18,7 +17,6 @@ import { desenhar_pagina_novo_registo, desenhar_pagina_registar_rendibilidade, d
 // #endregion
 
 // #region ==================== PÁGINAS DO MENU ====================
-// Cada botão do menu (data-pagina) → a função que desenha essa página
 const PAGINAS = {
   carteira: desenhar_pagina_carteira,
   fundos: desenhar_pagina_fundos,
@@ -28,7 +26,7 @@ const PAGINAS = {
   governo: desenhar_pagina_governo,
   mais_valias: desenhar_pagina_mais_valias,
 
-  // Investimentos (os 5 primeiros usam a mesma função, só muda a categoria)
+  // Investimentos 
   etf: (dados) => desenhar_pagina_investimento(dados, "etf"),
   cripto: (dados) => desenhar_pagina_investimento(dados, "cripto"),
   reit: (dados) => desenhar_pagina_investimento(dados, "reit"),
@@ -48,26 +46,24 @@ const PAGINAS = {
 
 // #region ==================== VARIÁVEIS PARTILHADAS ====================
 const zona_pagina = document.querySelector("#pagina");
-let dados; // o cofre dos dados: fica preenchido no arranque
-let pagina_atual; // a página que está aberta (para a redesenhar depois de guardar ou apagar)
-let pagina_anterior; // a página que estava aberta antes desta (para o "Cancelar" dos formulários voltar a ela)
+let dados; 
+let pagina_atual; 
+let pagina_anterior; 
 
-// Onde fica guardada a página aberta no sessionStorage: ao recarregar (F5), a app volta a ela
-const CHAVE_PAGINA_ABERTA = "pagina_aberta";
+const CHAVE_SESSIONSTORAGE_PAGINA_ABERTA = "pagina_aberta";
 const PAGINA_INICIAL = "carteira";
 // #endregion
 
 // #region ==================== NAVEGAÇÃO ====================
 function mostrar_pagina(nome_pagina) {
-  if (nome_pagina !== pagina_atual) pagina_anterior = pagina_atual; // ao mudar de página, a de agora passa a ser a anterior
+  if (nome_pagina !== pagina_atual) pagina_anterior = pagina_atual; 
   pagina_atual = nome_pagina;
-  sessionStorage.setItem(CHAVE_PAGINA_ABERTA, nome_pagina); // lembra-a, para o caso de a página recarregar
-  const funcao_desenhar_pagina = PAGINAS[nome_pagina]; // a função que desenha esta página (ou undefined)
+  sessionStorage.setItem(CHAVE_SESSIONSTORAGE_PAGINA_ABERTA, nome_pagina); 
+  const funcao_desenhar_pagina = PAGINAS[nome_pagina];
   zona_pagina.innerHTML = funcao_desenhar_pagina ? funcao_desenhar_pagina(dados) : `<h2>EM CONSTRUÇÃO</h2>`;
   marcar_botao_ativo(nome_pagina);
 }
 
-// Pinta no menu só o botão da página aberta
 function marcar_botao_ativo(nome_pagina) {
   document.querySelectorAll("[data-pagina]").forEach((botao) => {
     botao.classList.toggle("ativo", botao.dataset.pagina === nome_pagina);
@@ -79,17 +75,15 @@ function marcar_botao_ativo(nome_pagina) {
 async function arrancar() {
   try {
     dados = await carregar_dados();
-    // Entrega ao eventos.js o que ele precisa (injeção de dependências)
     ativar_eventos({
       dados,
       mostrar_pagina,
       redesenhar_pagina_atual: () => mostrar_pagina(pagina_atual),
       voltar_pagina_anterior: () => mostrar_pagina(pagina_anterior ?? PAGINA_INICIAL),
     });
-    // Abre a página que estava aberta antes de recarregar (ou a Carteira, se for a 1.ª vez)
-    mostrar_pagina(sessionStorage.getItem(CHAVE_PAGINA_ABERTA) ?? PAGINA_INICIAL);
-/*     mostrar_surpresa_depois_de_esperar(); // sem await: a app continua a funcionar enquanto espera
- */    ativar_rodape_cotacoes(); // os preços da internet, no rodapé
+    mostrar_pagina(sessionStorage.getItem(CHAVE_SESSIONSTORAGE_PAGINA_ABERTA) ?? PAGINA_INICIAL);
+    mostrar_surpresa_depois_de_esperar(); 
+    ativar_rodape_cotacoes(); 
   } catch (erro) {
     console.error(erro);
     zona_pagina.innerHTML = `<p class="erro">Não consegui carregar os dados. ${erro.message}</p>`;

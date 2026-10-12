@@ -3,11 +3,9 @@
    ========================================================== */
 
 /* #region ==================== GRELHA DA APP ==================== */
-/* Menu à esquerda, página à direita, rodapé a toda a largura */
 body {
   display: grid;
-  grid-template-columns: 20rem minmax(0, 1fr);   /* minmax(0, …): a faixa das cotações (muito comprida) não alarga a página */
-  grid-template-rows: 1fr auto;
+  grid-template-columns: 20rem minmax(0, 1fr);  
   grid-template-areas:
     "menu pagina"
     "rodape rodape";
@@ -17,21 +15,19 @@ body {
 
 /* #region ==================== MENU LATERAL ==================== */
 .menu_lateral {
-  grid-area: menu;              /* ← onde fica */
-  display: flex;                /* ← como é (daqui para baixo) */
+  grid-area: menu;              
+  display: flex;                
   flex-direction: column;
   gap: 0.3rem;
   padding: 1.5rem 1rem;
 }
 
-/* Título no topo do menu, com uma linha por baixo */
 .marca {
   margin: 0 0 0.5rem;
   padding: 0 0.85rem 1rem;
   border-bottom: 1px solid var(--cor_linha);
 }
 
-/* O botão ☰: no computador fica escondido (só aparece no telemóvel, ver a região TELEMÓVEL) */
 .menu_hamburguer {
   display: none;
   padding: 0.4rem 0.7rem;
@@ -44,12 +40,9 @@ body {
   cursor: pointer;
 }
 
-/* Tudo o que está por baixo do título (os botões e as ações): no telemóvel, é isto que se esconde */
-/* Um grupo de botões em coluna (o nav, cada details e as ações) */
 .menu_conteudo,
 .menu_grupo { display: flex; flex-direction: column; gap: 0.3rem; }
 
-/* Botões principais: Carteira, Fundos, Calendário + "Rendimentos", "Investimentos" */
 .menu_botao,
 .menu_titulo {
   width: 100%;
@@ -67,31 +60,25 @@ body {
   &:focus-visible { outline: 2px solid var(--cor_destaque); outline-offset: 2px; }
 }
 
-/* A página que está aberta ("pinta" com recurso a JS")*/
 .menu_botao.ativo { 
   background: var(--cor_texto); 
   color: var(--cor_fundo); }
 
-/* "Rendimentos", "Investimentos": sem o triângulo do browser */
 .menu_titulo {
-  list-style: none;                                   /* Chrome, Edge, Firefox */
-  &::-webkit-details-marker { display: none; }        /* Safari */
+  list-style: none;                                   
+  &::-webkit-details-marker { display: none; }        
 
-  /* A nossa seta, à direita do texto */
   display: flex;
   justify-content: space-between;
   align-items: center;
   &::after {
     content: "▸";
     font-size: 0.85rem;
-    transition: transform 0.2s;                       /* roda devagar */
+    transition: transform 0.2s;
   }
+  details[open] &::after { transform: rotate(90deg); }
 }
 
-/* Grupo aberto: a seta roda para baixo */
-details[open] .menu_titulo::after { transform: rotate(90deg); }
-
-/* Os botões de dentro de um grupo: mais pequenos, com uma linha à esquerda */
 .submenu {
   display: flex;
   flex-direction: column;
@@ -101,13 +88,11 @@ details[open] .menu_titulo::after { transform: rotate(90deg); }
   border-left: 2px solid var(--cor_linha);
 }
 
-/* Quando o grupo abre, o submenu aparece devagar (em vez de saltar) */
-/* ::details-content = a caixa com tudo o que está dentro do details, menos o summary */
 details[open]::details-content {animation: abrir_submenu 0.25s ease-out;}
 
 @keyframes abrir_submenu {
-  from { opacity: 0; transform: translateY(-0.5rem); }  /* começa invisível e um pouco acima */
-  to   { opacity: 1; transform: translateY(0); }        /* acaba visível, no sítio certo */
+  from { opacity: 0; transform: translateY(-0.5rem); } 
+  to   { opacity: 1; transform: translateY(0); }      
 }
 
 .submenu_botao {
@@ -116,9 +101,8 @@ details[open]::details-content {animation: abrir_submenu 0.25s ease-out;}
   font-weight: 500;
 }
 
-/* As 3 ações em baixo: separadas por uma linha e com contorno */
 .acoes {
-  list-style: none;             /* a <menu> é uma lista: tira as bolinhas */
+  list-style: none;            
   margin: 1rem 0 0;
   padding: 1rem 0 0;
   border-top: 1px solid var(--cor_linha);
@@ -135,7 +119,6 @@ details[open]::details-content {animation: abrir_submenu 0.25s ease-out;}
 
 
 
-/* #region ==================== ZONA DA PÁGINA ==================== */
 /* ==========================================================
                               ZONA DA PÁGINA
    ========================================================== */
@@ -143,13 +126,10 @@ details[open]::details-content {animation: abrir_submenu 0.25s ease-out;}
   grid-area: pagina;
   padding: calc(var(--espaco) * 2);
 }
-/* #endregion */
 
-/* #region ==================== ZONA DO RODAPÉ ==================== */
 /* ==========================================================
                               ZONA DO RODAPÉ
    ========================================================== */
-/* A faixa das cotações: sempre colada ao fundo do ecrã (sticky), mesmo quando a página faz scroll */
 .rodape {
   grid-area: rodape;
   position: sticky;
@@ -168,13 +148,10 @@ details[open]::details-content {animation: abrir_submenu 0.25s ease-out;}
 /* #endregion */
 
 /* #region ==================== TELEMÓVEL (ecrãs até 600px) ==================== */
-/* Tudo o que está aqui dentro SÓ conta em ecrãs estreitos; no computador, é ignorado */
 @media (max-width: 600px) {
 
-  /* ---------- Tudo mais pequeno: todos os rem dependem daqui (no computador são 14px, ver base.css) ---------- */
-  :root { font-size: 12px; }   /* não descer mais: os botões ficavam pequenos demais para o dedo */
+  :root { font-size: 12px; }   
 
-  /* ---------- A grelha: tudo numa coluna (menu em cima, página, rodapé) ---------- */
   body {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto 1fr auto;
@@ -184,7 +161,6 @@ details[open]::details-content {animation: abrir_submenu 0.25s ease-out;}
       "rodape";
   }
 
-  /* ---------- O menu: uma barra colada ao topo, com o título e o ☰ ---------- */
   .menu_lateral {
     position: sticky;
     top: 0;
@@ -208,19 +184,15 @@ details[open]::details-content {animation: abrir_submenu 0.25s ease-out;}
 
   .menu_hamburguer { display: block; }
 
-  /* Os botões do menu: escondidos… */
   .menu_conteudo { display: none; }
 
-  /* …até se carregar no ☰ (o JS põe a classe "aberto" no menu) */
   .menu_lateral.aberto .menu_conteudo {
     display: flex;
-    max-height: calc(100vh - 5rem);   /* se o menu for mais alto que o ecrã, faz scroll lá dentro */
+    max-height: calc(100vh - 5rem);   
     overflow-y: auto;
     padding-top: 0.75rem;
   }
 
-  /* ---------- A página: menos espaço à volta ---------- */
   #pagina { padding: 1rem; }
-  /* (as peças da página, como painéis e tabelas, têm a sua região TELEMÓVEL no fim do componentes.css) */
 }
 /* #endregion */

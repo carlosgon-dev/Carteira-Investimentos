@@ -114,322 +114,322 @@
       "id": "com-001",
       "id_posicao": "pos-001",
       "data": "2024-03-15",
-      "montante": 150,
+      "montante": 500.27,
       "origem": "Explicações"
     },
     {
       "id": "com-002",
       "id_posicao": "pos-001",
       "data": "2024-09-10",
-      "montante": 192.3,
+      "montante": 351.05,
       "origem": "Explicações"
     },
     {
       "id": "com-003",
       "id_posicao": "pos-001",
       "data": "2025-02-12",
-      "montante": 400,
+      "montante": 1495.18,
       "origem": "Explicações"
     },
     {
       "id": "com-004",
       "id_posicao": "pos-001",
       "data": "2025-06-18",
-      "montante": 437.95,
+      "montante": 1377.83,
       "origem": "Explicações"
     },
     {
       "id": "com-005",
       "id_posicao": "pos-001",
       "data": "2025-11-05",
-      "montante": 400,
+      "montante": 729.26,
       "origem": "Explicações"
     },
     {
       "id": "com-006",
       "id_posicao": "pos-002",
       "data": "2025-01-20",
-      "montante": 300,
+      "montante": 615.98,
       "origem": "Juros bancários"
     },
     {
       "id": "com-007",
       "id_posicao": "pos-002",
       "data": "2025-05-14",
-      "montante": 286.85,
+      "montante": 325.18,
       "origem": "Juros bancários"
     },
     {
       "id": "com-008",
       "id_posicao": "pos-002",
       "data": "2025-07-02",
-      "montante": 14.53,
+      "montante": 20.4,
       "origem": "Dividendos"
     },
     {
       "id": "com-009",
       "id_posicao": "pos-002",
       "data": "2025-09-15",
-      "montante": 8.85,
+      "montante": 2.74,
       "origem": "Lucro ETF"
     },
     {
       "id": "com-010",
       "id_posicao": "pos-002",
       "data": "2026-01-10",
-      "montante": 34.54,
+      "montante": 12.15,
       "origem": "Lucro ETF"
     },
     {
       "id": "com-011",
       "id_posicao": "pos-003",
       "data": "2022-04-08",
-      "montante": 200,
+      "montante": 1558.41,
       "origem": "Explicações"
     },
     {
       "id": "com-012",
       "id_posicao": "pos-003",
       "data": "2022-10-21",
-      "montante": 240,
+      "montante": 3169.82,
       "origem": "Explicações"
     },
     {
       "id": "com-013",
       "id_posicao": "pos-004",
       "data": "2023-02-01",
-      "montante": 100,
+      "montante": 228.15,
       "origem": "Trocos de universidade"
     },
     {
       "id": "com-014",
       "id_posicao": "pos-004",
       "data": "2023-06-15",
-      "montante": 80,
+      "montante": 175.45,
       "origem": "Trocos de universidade"
     },
     {
       "id": "com-015",
       "id_posicao": "pos-004",
       "data": "2023-11-30",
-      "montante": 100,
+      "montante": 187.07,
       "origem": "Trocos de universidade"
     },
     {
       "id": "com-016",
       "id_posicao": "pos-005",
       "data": "2026-03-31",
-      "montante": 32.4,
+      "montante": 32.14,
       "origem": "Arredondamentos (roundup)"
     },
     {
       "id": "com-017",
       "id_posicao": "pos-005",
       "data": "2026-05-31",
-      "montante": 35.1,
+      "montante": 18.42,
       "origem": "Arredondamentos (roundup)"
     },
     {
       "id": "com-018",
       "id_posicao": "pos-005",
       "data": "2026-07-31",
-      "montante": 33,
+      "montante": 45.79,
       "origem": "Arredondamentos (roundup)"
     },
     {
       "id": "com-019",
       "id_posicao": "pos-006",
       "data": "2024-11-15",
-      "montante": 600,
+      "montante": 5176.52,
       "origem": "Salário"
     },
     {
       "id": "com-020",
       "id_posicao": "pos-006",
       "data": "2025-04-22",
-      "montante": 700,
+      "montante": 6251.5,
       "origem": "Salário"
     },
     {
       "id": "com-021",
       "id_posicao": "pos-006",
       "data": "2026-01-10",
-      "montante": 500,
+      "montante": 5960.89,
       "origem": "Salário"
     },
     {
       "id": "com-022",
       "id_posicao": "pos-007",
       "data": "2025-01-10",
-      "montante": 400,
+      "montante": 1479.77,
       "origem": "Salário"
     },
     {
       "id": "com-023",
       "id_posicao": "pos-007",
       "data": "2025-10-03",
-      "montante": 600,
+      "montante": 1927.15,
       "origem": "Salário"
     },
     {
       "id": "com-024",
       "id_posicao": "pos-008",
       "data": "2025-03-10",
-      "montante": 300,
+      "montante": 1012.33,
       "origem": "Salário"
     },
     {
       "id": "com-025",
       "id_posicao": "pos-008",
       "data": "2026-06-17",
-      "montante": 300,
+      "montante": 1760.62,
       "origem": "Salário"
     },
     {
       "id": "com-026",
       "id_posicao": "pos-009",
       "data": "2025-08-12",
-      "montante": 250,
+      "montante": 1649.87,
       "origem": "Salário"
     },
     {
       "id": "com-027",
       "id_posicao": "pos-009",
       "data": "2026-02-05",
-      "montante": 200,
+      "montante": 2743.85,
       "origem": "Salário"
     },
     {
       "id": "com-028",
       "id_posicao": "pos-010",
       "data": "2025-05-20",
-      "montante": 200,
+      "montante": 1440.55,
       "origem": "Salário"
     },
     {
       "id": "com-029",
       "id_posicao": "pos-010",
       "data": "2026-03-12",
-      "montante": 200,
+      "montante": 964.93,
       "origem": "Salário"
     },
     {
       "id": "com-030",
       "id_posicao": "pos-011",
       "data": "2025-03-10",
-      "montante": 60,
+      "montante": 46.38,
       "origem": "Salário"
     },
     {
       "id": "com-031",
       "id_posicao": "pos-011",
       "data": "2025-09-01",
-      "montante": 60,
+      "montante": 115.61,
       "origem": "Salário"
     },
     {
       "id": "com-032",
       "id_posicao": "pos-012",
       "data": "2025-06-15",
-      "montante": 40,
+      "montante": 106.73,
       "origem": "Salário"
     },
     {
       "id": "com-033",
       "id_posicao": "pos-012",
       "data": "2026-04-02",
-      "montante": 40,
+      "montante": 114.14,
       "origem": "Salário"
     },
     {
       "id": "com-034",
       "id_posicao": "pos-013",
       "data": "2026-01-15",
-      "montante": 5,
+      "montante": 63.36,
       "origem": "Salário"
     },
     {
       "id": "com-035",
       "id_posicao": "pos-013",
       "data": "2026-04-15",
-      "montante": 5,
+      "montante": 44.09,
       "origem": "Salário"
     },
     {
       "id": "com-036",
       "id_posicao": "pos-014",
       "data": "2026-01-15",
-      "montante": 5,
+      "montante": 28.72,
       "origem": "Salário"
     },
     {
       "id": "com-037",
       "id_posicao": "pos-014",
       "data": "2026-04-15",
-      "montante": 5,
+      "montante": 36.94,
       "origem": "Salário"
     },
     {
       "id": "com-038",
       "id_posicao": "pos-015",
       "data": "2026-02-15",
-      "montante": 4,
+      "montante": 12.54,
       "origem": "Salário"
     },
     {
       "id": "com-039",
       "id_posicao": "pos-015",
       "data": "2026-05-15",
-      "montante": 3,
+      "montante": 10.47,
       "origem": "Salário"
     },
     {
       "id": "com-040",
       "id_posicao": "pos-015",
       "data": "2026-08-15",
-      "montante": 3,
+      "montante": 7.17,
       "origem": "Salário"
     },
     {
       "id": "com-041",
       "id_posicao": "pos-016",
       "data": "2026-02-15",
-      "montante": 5,
+      "montante": 43.62,
       "origem": "Salário"
     },
     {
       "id": "com-042",
       "id_posicao": "pos-016",
       "data": "2026-06-15",
-      "montante": 5,
+      "montante": 29.04,
       "origem": "Salário"
     },
     {
       "id": "com-043",
       "id_posicao": "pos-017",
       "data": "2026-03-15",
-      "montante": 4,
+      "montante": 47.09,
       "origem": "Salário"
     },
     {
       "id": "com-044",
       "id_posicao": "pos-017",
       "data": "2026-06-15",
-      "montante": 3,
+      "montante": 22.08,
       "origem": "Salário"
     },
     {
       "id": "com-045",
       "id_posicao": "pos-017",
       "data": "2026-09-15",
-      "montante": 3,
+      "montante": 22.17,
       "origem": "Salário"
     },
     {
       "id": "com-046",
       "id_posicao": "pos-018",
       "data": "2025-12-31",
-      "montante": 49.37,
+      "montante": 327.46,
       "origem": "Cashback Trade Republic"
     }
   ],
@@ -438,409 +438,409 @@
       "id": "ren-001",
       "id_posicao": "pos-001",
       "data": "2026-06-30",
-      "valor": 96.4
+      "valor": 89.6
     },
     {
       "id": "ren-002",
       "id_posicao": "pos-001",
       "data": "2026-07-31",
-      "valor": 131.2
+      "valor": 121.94
     },
     {
       "id": "ren-003",
       "id_posicao": "pos-001",
       "data": "2026-08-31",
-      "valor": 118.7
+      "valor": 110.33
     },
     {
       "id": "ren-004",
       "id_posicao": "pos-001",
       "data": "2026-09-28",
-      "valor": 162.9
+      "valor": 151.41
     },
     {
       "id": "ren-005",
       "id_posicao": "pos-002",
       "data": "2026-06-30",
-      "valor": 58.1
+      "valor": 86.84
     },
     {
       "id": "ren-006",
       "id_posicao": "pos-002",
       "data": "2026-07-31",
-      "valor": 71.6
+      "valor": 107.01
     },
     {
       "id": "ren-007",
       "id_posicao": "pos-002",
       "data": "2026-08-31",
-      "valor": 66
+      "valor": 98.64
     },
     {
       "id": "ren-008",
       "id_posicao": "pos-002",
       "data": "2026-09-28",
-      "valor": 84.3
+      "valor": 126
     },
     {
       "id": "ren-009",
       "id_posicao": "pos-003",
       "data": "2026-06-30",
-      "valor": 52.7
+      "valor": 549.31
     },
     {
       "id": "ren-010",
       "id_posicao": "pos-003",
       "data": "2026-07-31",
-      "valor": 61.9
+      "valor": 645.21
     },
     {
       "id": "ren-011",
       "id_posicao": "pos-003",
       "data": "2026-08-31",
-      "valor": 58.3
+      "valor": 607.68
     },
     {
       "id": "ren-012",
       "id_posicao": "pos-003",
       "data": "2026-09-28",
-      "valor": 70.4
+      "valor": 733.81
     },
     {
       "id": "ren-013",
       "id_posicao": "pos-004",
       "data": "2026-06-30",
-      "valor": 18.2
+      "valor": 20.58
     },
     {
       "id": "ren-014",
       "id_posicao": "pos-004",
       "data": "2026-07-31",
-      "valor": 22.5
+      "valor": 25.44
     },
     {
       "id": "ren-015",
       "id_posicao": "pos-004",
       "data": "2026-08-31",
-      "valor": 20.9
+      "valor": 23.63
     },
     {
       "id": "ren-016",
       "id_posicao": "pos-004",
       "data": "2026-09-28",
-      "valor": 26.1
+      "valor": 29.51
     },
     {
       "id": "ren-017",
       "id_posicao": "pos-005",
       "data": "2026-06-30",
-      "valor": -8.4
+      "valor": -3.27
     },
     {
       "id": "ren-018",
       "id_posicao": "pos-005",
       "data": "2026-07-31",
-      "valor": 4.1
+      "valor": 1.59
     },
     {
       "id": "ren-019",
       "id_posicao": "pos-005",
       "data": "2026-08-31",
-      "valor": 12.7
+      "valor": 4.94
     },
     {
       "id": "ren-020",
       "id_posicao": "pos-005",
       "data": "2026-09-28",
-      "valor": 19.8
+      "valor": 7.7
     },
     {
       "id": "ren-021",
       "id_posicao": "pos-006",
       "data": "2026-06-30",
-      "valor": 120.5
+      "valor": 1081.38
     },
     {
       "id": "ren-022",
       "id_posicao": "pos-006",
       "data": "2026-07-31",
-      "valor": 188.3
+      "valor": 1689.83
     },
     {
       "id": "ren-023",
       "id_posicao": "pos-006",
       "data": "2026-08-31",
-      "valor": 142.7
+      "valor": 1280.61
     },
     {
       "id": "ren-024",
       "id_posicao": "pos-006",
       "data": "2026-09-28",
-      "valor": 215.4
+      "valor": 1933.02
     },
     {
       "id": "ren-025",
       "id_posicao": "pos-007",
       "data": "2026-06-30",
-      "valor": -35.2
+      "valor": -36.53
     },
     {
       "id": "ren-026",
       "id_posicao": "pos-007",
       "data": "2026-07-31",
-      "valor": 22.8
+      "valor": 23.66
     },
     {
       "id": "ren-027",
       "id_posicao": "pos-007",
       "data": "2026-08-31",
-      "valor": -12.4
+      "valor": -12.87
     },
     {
       "id": "ren-028",
       "id_posicao": "pos-007",
       "data": "2026-09-28",
-      "valor": 48.9
+      "valor": 50.75
     },
     {
       "id": "ren-029",
       "id_posicao": "pos-008",
       "data": "2026-06-30",
-      "valor": 44.1
+      "valor": 278.33
     },
     {
       "id": "ren-030",
       "id_posicao": "pos-008",
       "data": "2026-07-31",
-      "valor": 71.5
+      "valor": 451.27
     },
     {
       "id": "ren-031",
       "id_posicao": "pos-008",
       "data": "2026-08-31",
-      "valor": 38.2
+      "valor": 241.1
     },
     {
       "id": "ren-032",
       "id_posicao": "pos-008",
       "data": "2026-09-28",
-      "valor": 62
+      "valor": 391.31
     },
     {
       "id": "ren-033",
       "id_posicao": "pos-009",
       "data": "2026-06-30",
-      "valor": -60.3
+      "valor": -795.57
     },
     {
       "id": "ren-034",
       "id_posicao": "pos-009",
       "data": "2026-07-31",
-      "valor": -22.7
+      "valor": -299.49
     },
     {
       "id": "ren-035",
       "id_posicao": "pos-009",
       "data": "2026-08-31",
-      "valor": 15.4
+      "valor": 203.18
     },
     {
       "id": "ren-036",
       "id_posicao": "pos-009",
       "data": "2026-09-28",
-      "valor": 58.6
+      "valor": 773.14
     },
     {
       "id": "ren-037",
       "id_posicao": "pos-010",
       "data": "2026-06-30",
-      "valor": 12.2
+      "valor": 75.46
     },
     {
       "id": "ren-038",
       "id_posicao": "pos-010",
       "data": "2026-07-31",
-      "valor": -8.5
+      "valor": -52.58
     },
     {
       "id": "ren-039",
       "id_posicao": "pos-010",
       "data": "2026-08-31",
-      "valor": 20.1
+      "valor": 124.33
     },
     {
       "id": "ren-040",
       "id_posicao": "pos-010",
       "data": "2026-09-28",
-      "valor": 31.7
+      "valor": 196.08
     },
     {
       "id": "ren-041",
       "id_posicao": "pos-011",
       "data": "2026-06-30",
-      "valor": -18.4
+      "valor": -7.55
     },
     {
       "id": "ren-042",
       "id_posicao": "pos-011",
       "data": "2026-07-31",
-      "valor": -9.1
+      "valor": -3.73
     },
     {
       "id": "ren-043",
       "id_posicao": "pos-011",
       "data": "2026-08-31",
-      "valor": -14.6
+      "valor": -5.99
     },
     {
       "id": "ren-044",
       "id_posicao": "pos-011",
       "data": "2026-09-28",
-      "valor": -6.2
+      "valor": -2.54
     },
     {
       "id": "ren-045",
       "id_posicao": "pos-012",
       "data": "2026-06-30",
-      "valor": 5.3
+      "valor": 15.03
     },
     {
       "id": "ren-046",
       "id_posicao": "pos-012",
       "data": "2026-07-31",
-      "valor": 9.8
+      "valor": 27.79
     },
     {
       "id": "ren-047",
       "id_posicao": "pos-012",
       "data": "2026-08-31",
-      "valor": 2.1
+      "valor": 5.96
     },
     {
       "id": "ren-048",
       "id_posicao": "pos-012",
       "data": "2026-09-28",
-      "valor": -3.4
+      "valor": -9.64
     },
     {
       "id": "ren-049",
       "id_posicao": "pos-013",
       "data": "2026-06-30",
-      "valor": 0.4
+      "valor": 5.57
     },
     {
       "id": "ren-050",
       "id_posicao": "pos-013",
       "data": "2026-07-31",
-      "valor": -0.3
+      "valor": -4.17
     },
     {
       "id": "ren-051",
       "id_posicao": "pos-013",
       "data": "2026-08-31",
-      "valor": 0.6
+      "valor": 8.35
     },
     {
       "id": "ren-052",
       "id_posicao": "pos-013",
       "data": "2026-09-28",
-      "valor": 0.9
+      "valor": 12.52
     },
     {
       "id": "ren-053",
       "id_posicao": "pos-014",
       "data": "2026-06-30",
-      "valor": 0.2
+      "valor": 0.92
     },
     {
       "id": "ren-054",
       "id_posicao": "pos-014",
       "data": "2026-07-31",
-      "valor": 0.5
+      "valor": 2.3
     },
     {
       "id": "ren-055",
       "id_posicao": "pos-014",
       "data": "2026-08-31",
-      "valor": -0.1
+      "valor": -0.46
     },
     {
       "id": "ren-056",
       "id_posicao": "pos-014",
       "data": "2026-09-28",
-      "valor": 0.7
+      "valor": 3.22
     },
     {
       "id": "ren-057",
       "id_posicao": "pos-015",
       "data": "2026-06-30",
-      "valor": -0.4
+      "valor": -0.57
     },
     {
       "id": "ren-058",
       "id_posicao": "pos-015",
       "data": "2026-07-31",
-      "valor": 0.1
+      "valor": 0.14
     },
     {
       "id": "ren-059",
       "id_posicao": "pos-015",
       "data": "2026-08-31",
-      "valor": 0.3
+      "valor": 0.42
     },
     {
       "id": "ren-060",
       "id_posicao": "pos-015",
       "data": "2026-09-28",
-      "valor": 0.6
+      "valor": 0.85
     },
     {
       "id": "ren-061",
       "id_posicao": "pos-016",
       "data": "2026-06-30",
-      "valor": 0.3
+      "valor": 2.52
     },
     {
       "id": "ren-062",
       "id_posicao": "pos-016",
       "data": "2026-07-31",
-      "valor": 0.4
+      "valor": 3.35
     },
     {
       "id": "ren-063",
       "id_posicao": "pos-016",
       "data": "2026-08-31",
-      "valor": 0.2
+      "valor": 1.68
     },
     {
       "id": "ren-064",
       "id_posicao": "pos-016",
       "data": "2026-09-28",
-      "valor": 0.5
+      "valor": 4.19
     },
     {
       "id": "ren-065",
       "id_posicao": "pos-017",
       "data": "2026-06-30",
-      "valor": -0.6
+      "valor": -6.54
     },
     {
       "id": "ren-066",
       "id_posicao": "pos-017",
       "data": "2026-07-31",
-      "valor": -0.2
+      "valor": -2.18
     },
     {
       "id": "ren-067",
       "id_posicao": "pos-017",
       "data": "2026-08-31",
-      "valor": -0.5
+      "valor": -5.45
     },
     {
       "id": "ren-068",
       "id_posicao": "pos-017",
       "data": "2026-09-28",
-      "valor": -0.3
+      "valor": -3.27
     }
   ],
   "vendas": [],
@@ -848,14 +848,14 @@
     {
       "id": "sal-001",
       "data": "2026-09-30",
-      "saldo": 16700
+      "saldo": 33900
     }
   ],
   "fundo_maneio": [
     {
       "id": "sal-002",
       "data": "2026-09-30",
-      "saldo": 2500
+      "saldo": 4100
     }
   ],
   "depositos": [
@@ -867,47 +867,47 @@
       "origem": "Fundo emergência",
       "prazo_meses": 6,
       "vencimento": "2024-06-13",
-      "juros": 53.22
+      "juros": 131.89
     },
     {
       "id": "dep-002",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 10242.75,
+      "montante": 18210.97,
       "data": "2024-05-30",
       "origem": "Fundo emergência",
       "prazo_meses": 3,
       "vencimento": "2024-08-30",
-      "juros": 53.22
+      "juros": 94.62
     },
     {
       "id": "dep-003",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 1000,
+      "montante": 3929.97,
       "data": "2024-04-12",
       "origem": "Fundo emergência",
       "prazo_meses": 6,
       "vencimento": "2024-10-12",
-      "juros": 10.98
+      "juros": 43.15
     },
     {
       "id": "dep-004",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 5000,
+      "montante": 6235.79,
       "data": "2024-08-18",
       "origem": "Fundo emergência",
       "prazo_meses": 3,
       "vencimento": "2024-11-18",
-      "juros": 27.14
+      "juros": 33.85
     },
     {
       "id": "dep-005",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 3000,
+      "montante": 10372.74,
       "data": "2024-08-25",
       "origem": "Fundo emergência",
       "prazo_meses": 3,
       "vencimento": "2024-11-25",
-      "juros": 16.29
+      "juros": 56.32
     },
     {
       "id": "dep-006",
@@ -917,67 +917,67 @@
       "origem": "Fundo emergência",
       "prazo_meses": 6,
       "vencimento": "2024-12-11",
-      "juros": 4.18
+      "juros": 5.15
     },
     {
       "id": "dep-007",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 5068.12,
+      "montante": 7957.75,
       "data": "2024-11-18",
       "origem": "Fundo emergência",
       "prazo_meses": 3,
       "vencimento": "2025-02-18",
-      "juros": 25.65
+      "juros": 40.27
     },
     {
       "id": "dep-008",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 3000,
+      "montante": 7373.62,
       "data": "2024-11-25",
       "origem": "Fundo emergência",
       "prazo_meses": 3,
       "vencimento": "2025-02-25",
-      "juros": 15.18
+      "juros": 37.31
     },
     {
       "id": "dep-009",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 10354.4,
+      "montante": 26359.31,
       "data": "2024-09-01",
       "origem": "Fundo emergência",
       "prazo_meses": 6,
       "vencimento": "2025-03-01",
-      "juros": 113.69
+      "juros": 289.42
     },
     {
       "id": "dep-010",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 4000,
+      "montante": 12099.59,
       "data": "2025-02-18",
       "origem": "Fundo emergência",
       "prazo_meses": 3,
       "vencimento": "2025-05-18",
-      "juros": 11.75
+      "juros": 35.54
     },
     {
       "id": "dep-011",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 2000,
+      "montante": 4442.8,
       "data": "2025-02-18",
       "origem": "Fundo emergência",
       "prazo_meses": 3,
       "vencimento": "2025-05-18",
-      "juros": 5.88
+      "juros": 13.06
     },
     {
       "id": "dep-012",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 10000,
+      "montante": 26498.82,
       "data": "2025-03-01",
       "origem": "Fundo emergência",
       "prazo_meses": 3,
       "vencimento": "2025-05-29",
-      "juros": 29.73
+      "juros": 78.78
     },
     {
       "id": "dep-013",
@@ -987,37 +987,37 @@
       "origem": "Fundo emergência",
       "prazo_meses": 6,
       "vencimento": "2025-06-10",
-      "juros": 4.72
+      "juros": 9.01
     },
     {
       "id": "dep-014",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 4000,
+      "montante": 14602.17,
       "data": "2025-05-23",
       "origem": "Fundo emergência",
       "prazo_meses": 3,
       "vencimento": "2025-08-23",
-      "juros": 9.94
+      "juros": 36.29
     },
     {
       "id": "dep-015",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 2000,
+      "montante": 5108.19,
       "data": "2025-05-23",
       "origem": "Fundo emergência",
       "prazo_meses": 3,
       "vencimento": "2025-08-23",
-      "juros": 4.97
+      "juros": 12.69
     },
     {
       "id": "dep-016",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 10000,
+      "montante": 26441.6,
       "data": "2025-05-29",
       "origem": "Fundo emergência",
       "prazo_meses": 6,
       "vencimento": "2025-11-29",
-      "juros": 47.84
+      "juros": 126.5
     },
     {
       "id": "dep-017",
@@ -1027,7 +1027,7 @@
       "origem": "Fundo emergência",
       "prazo_meses": 6,
       "vencimento": "2025-12-08",
-      "juros": 1.09
+      "juros": 2.34
     },
     {
       "id": "dep-018",
@@ -1037,7 +1037,7 @@
       "origem": "Fundo emergência",
       "prazo_meses": 12,
       "vencimento": "2025-12-31",
-      "juros": 3.41
+      "juros": 8.41
     },
     {
       "id": "dep-019",
@@ -1047,57 +1047,57 @@
       "origem": "Fundo emergência",
       "prazo_meses": 12,
       "vencimento": "2025-12-31",
-      "juros": 4.74
+      "juros": 10.35
     },
     {
       "id": "dep-020",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 6000,
+      "montante": 17322.38,
       "data": "2025-08-23",
       "origem": "Fundo emergência",
       "prazo_meses": 6,
       "vencimento": "2026-02-23",
-      "juros": 29.81
+      "juros": 86.06
     },
     {
       "id": "dep-021",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 700,
+      "montante": 1198.02,
       "data": "2026-01-23",
       "origem": "Fundo emergência",
       "prazo_meses": 3,
       "vencimento": "2026-04-23",
-      "juros": 2.02
+      "juros": 3.46
     },
     {
       "id": "dep-022",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 6000,
+      "montante": 15005.47,
       "data": "2026-02-23",
       "origem": "Fundo emergência",
       "prazo_meses": 3,
       "vencimento": "2026-05-23",
-      "juros": 16.02
+      "juros": 40.06
     },
     {
       "id": "dep-023",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 3000,
+      "montante": 5143.21,
       "data": "2025-11-29",
       "origem": "Fundo emergência",
       "prazo_meses": 6,
       "vencimento": "2026-05-29",
-      "juros": 17.37
+      "juros": 29.78
     },
     {
       "id": "dep-024",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 7000,
+      "montante": 25981.79,
       "data": "2025-11-29",
       "origem": "Fundo emergência",
       "prazo_meses": 6,
       "vencimento": "2026-05-29",
-      "juros": 34.21
+      "juros": 126.98
     },
     {
       "id": "dep-025",
@@ -1107,22 +1107,22 @@
       "origem": "Fundo emergência",
       "prazo_meses": 6,
       "vencimento": "2026-06-08",
-      "juros": 5.16
+      "juros": 17.03
     },
     {
       "id": "dep-026",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 6000,
+      "montante": 7359.47,
       "data": "2026-05-31",
       "origem": "Fundo emergência",
       "prazo_meses": 3,
       "vencimento": "2026-08-31",
-      "juros": 16.56
+      "juros": 20.31
     },
     {
       "id": "dep-027",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 6000,
+      "montante": 11635.11,
       "data": "2026-09-05",
       "origem": "Fundo emergência",
       "prazo_meses": 4,
@@ -1132,7 +1132,7 @@
     {
       "id": "dep-028",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 6700,
+      "montante": 16535.48,
       "data": "2026-05-25",
       "origem": "Fundo emergência",
       "prazo_meses": 9,
@@ -1142,7 +1142,7 @@
     {
       "id": "dep-029",
       "nome": "Juros Caixa Geral de Depósitos",
-      "montante": 4000,
+      "montante": 8769.39,
       "data": "2026-06-01",
       "origem": "Fundo emergência",
       "prazo_meses": 9,
@@ -1155,328 +1155,328 @@
       "id": "rec-001",
       "data": "2020-12-01",
       "descricao": "Outro apoio",
-      "valor": 275
+      "valor": 873.26
     },
     {
       "id": "rec-002",
       "data": "2021-05-01",
       "descricao": "IRS 2020",
-      "valor": 392.06
+      "valor": 489.91
     },
     {
       "id": "rec-003",
       "data": "2022-05-01",
       "descricao": "IRS 2021",
-      "valor": 200.24
+      "valor": 349.77
     },
     {
       "id": "rec-004",
       "data": "2023-05-01",
       "descricao": "IRS 2022",
-      "valor": 954.57
+      "valor": 3423.88
     },
     {
       "id": "rec-005",
       "data": "2024-05-01",
       "descricao": "IRS 2023",
-      "valor": 341.34
+      "valor": 805.52
     },
     {
       "id": "rec-006",
       "data": "2024-09-01",
       "descricao": "Prémio qualificações",
-      "valor": 1500
+      "valor": 4804.21
     },
     {
       "id": "rec-007",
       "data": "2024-10-01",
       "descricao": "Não cobrança do IRS",
-      "valor": 185
+      "valor": 663.63
     },
     {
       "id": "rec-008",
       "data": "2024-11-01",
       "descricao": "Não cobrança do IRS",
-      "valor": 185
+      "valor": 364.34
     },
     {
       "id": "rec-009",
       "data": "2025-05-01",
       "descricao": "IRS 2024",
-      "valor": 520.35
+      "valor": 1076.33
     },
     {
       "id": "rec-010",
       "data": "2025-08-01",
       "descricao": "Não cobrança do IRS",
-      "valor": 124
+      "valor": 408.95
     },
     {
       "id": "rec-011",
       "data": "2025-09-01",
       "descricao": "Não cobrança do IRS",
-      "valor": 165
+      "valor": 214.39
     },
     {
       "id": "rec-012",
       "data": "2026-01-01",
       "descricao": "Retroativos IRS 2023",
-      "valor": 706.26
+      "valor": 2465.52
     },
     {
       "id": "rec-013",
       "data": "2026-01-01",
       "descricao": "Retroativos IRS 2024",
-      "valor": 892.03
+      "valor": 970.76
     },
     {
       "id": "rec-014",
       "data": "2026-05-01",
       "descricao": "IRS 2025",
-      "valor": 1343.12
+      "valor": 3601.92
     }
   ],
   "governo_utilizado": [
     {
       "id": "uti-001",
       "data": "2024-09-01",
-      "destino": "Abate do crédito do carro",
-      "valor": 1500
+      "destino": "Exemplo de utilização",
+      "valor": 4902.21
     }
   ],
   "plano_ppr": {
     "taxa": 0.04,
-    "idade_inicial": 28,
-    "estrategia": "Dinheiro recebido de IRS será reinvestido no PPR do próprio ano + ajudas \"pequenas\" do Estado. Depois, completar com dinheiro do salário.",
+    "idade_inicial": 30,
+    "estrategia": "Exemplo: reinvestir os reembolsos e apoios do Estado no PPR do próprio ano e completar com dinheiro do salário.",
     "anos": [
       {
         "ano": 2024,
-        "governo": 2000,
+        "governo": 6523.68,
         "pessoal": 0,
-        "real": 2031.23,
+        "real": 6625.55,
         "real_data": "2024-12-31"
       },
       {
         "ano": 2025,
-        "governo": 2000,
+        "governo": 6523.68,
         "pessoal": 0,
-        "real": 4315.58,
+        "real": 14076.74,
         "real_data": "2025-12-31"
       },
       {
         "ano": 2026,
-        "governo": 1500,
-        "pessoal": 500,
+        "governo": 4892.76,
+        "pessoal": 1630.92,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2027,
         "governo": 0,
-        "pessoal": 2000,
+        "pessoal": 6523.68,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2028,
         "governo": 0,
-        "pessoal": 2000,
+        "pessoal": 6523.68,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2029,
         "governo": 0,
-        "pessoal": 2000,
+        "pessoal": 6523.68,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2030,
         "governo": 0,
-        "pessoal": 2000,
+        "pessoal": 6523.68,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2031,
         "governo": 0,
-        "pessoal": 2000,
+        "pessoal": 6523.68,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2032,
         "governo": 0,
-        "pessoal": 1750,
+        "pessoal": 5708.22,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2033,
         "governo": 0,
-        "pessoal": 1750,
+        "pessoal": 5708.22,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2034,
         "governo": 0,
-        "pessoal": 1750,
+        "pessoal": 5708.22,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2035,
         "governo": 0,
-        "pessoal": 1750,
+        "pessoal": 5708.22,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2036,
         "governo": 0,
-        "pessoal": 1750,
+        "pessoal": 5708.22,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2037,
         "governo": 0,
-        "pessoal": 1750,
+        "pessoal": 5708.22,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2038,
         "governo": 0,
-        "pessoal": 1750,
+        "pessoal": 5708.22,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2039,
         "governo": 0,
-        "pessoal": 1750,
+        "pessoal": 5708.22,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2040,
         "governo": 0,
-        "pessoal": 1750,
+        "pessoal": 5708.22,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2041,
         "governo": 0,
-        "pessoal": 1750,
+        "pessoal": 5708.22,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2042,
         "governo": 0,
-        "pessoal": 1750,
+        "pessoal": 5708.22,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2043,
         "governo": 0,
-        "pessoal": 1750,
+        "pessoal": 5708.22,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2044,
         "governo": 0,
-        "pessoal": 1750,
+        "pessoal": 5708.22,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2045,
         "governo": 0,
-        "pessoal": 1750,
+        "pessoal": 5708.22,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2046,
         "governo": 0,
-        "pessoal": 1750,
+        "pessoal": 5708.22,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2047,
         "governo": 0,
-        "pessoal": 1500,
+        "pessoal": 4892.76,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2048,
         "governo": 0,
-        "pessoal": 1500,
+        "pessoal": 4892.76,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2049,
         "governo": 0,
-        "pessoal": 1500,
+        "pessoal": 4892.76,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2050,
         "governo": 0,
-        "pessoal": 1500,
+        "pessoal": 4892.76,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2051,
         "governo": 0,
-        "pessoal": 1500,
+        "pessoal": 4892.76,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2052,
         "governo": 0,
-        "pessoal": 1500,
+        "pessoal": 4892.76,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2053,
         "governo": 0,
-        "pessoal": 1500,
+        "pessoal": 4892.76,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2054,
         "governo": 0,
-        "pessoal": 1500,
+        "pessoal": 4892.76,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2055,
         "governo": 0,
-        "pessoal": 1500,
+        "pessoal": 4892.76,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2056,
         "governo": 0,
-        "pessoal": 1500,
+        "pessoal": 4892.76,
         "real": null,
         "real_data": null
       }
@@ -1487,252 +1487,252 @@
     "anos": [
       {
         "ano": 2025,
-        "previsto": 59.35,
+        "previsto": 45.28,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2026,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2027,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2028,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2029,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2030,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2031,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2032,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2033,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2034,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2035,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2036,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2037,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2038,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2039,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2040,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2041,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2042,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2043,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2044,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2045,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2046,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2047,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2048,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2049,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2050,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2051,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2052,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2053,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2054,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2055,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2056,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2057,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2058,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2059,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null
       },
       {
         "ano": 2060,
-        "previsto": 36,
+        "previsto": 27.46,
         "cashback": null,
         "real": null,
         "real_data": null

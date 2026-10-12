@@ -4,29 +4,28 @@
 
 /* #region ==================== CORES E MEDIDAS ==================== */
 :root {
-  font-size: 14px; /* tamanho base: todos os rem dependem daqui */
+  font-size: 14px; 
 
   /* Fundos e linhas */
-  --cor_fundo: #f2f4f1;          /* fundo da página */
-  --cor_cartao: #fcfcfb;         /* cartões, menu, tabelas */
-  --cor_cartao_suave: #f7f8f6;   /* cabeçalhos de tabela, hover */
-  --cor_linha: #dde3de;          /* bordas */
+  --cor_fundo: #f2f4f1;          
+  --cor_cartao: #fcfcfb;         
+  --cor_cartao_suave: #f7f8f6;   
+  --cor_linha: #dde3de;          
 
   /* Texto */
-  --cor_texto: #14201b;          /* texto principal */
+  --cor_texto: #14201b;          
   --cor_texto_secundario: #4d5a53;
-  --cor_suave: #7a847e;          /* notas, rodapé */
-
+  --cor_suave: #7a847e;          
   /* Destaque (o verde da app) */
-  --cor_destaque: #0e6b5c;       /* botão ativo, botões principais */
-  --cor_destaque_texto: #ffffff; /* texto em cima do destaque */
-  --cor_destaque_suave: #e1eee8; /* fundos leves */
+  --cor_destaque: #0e6b5c;       
+  --cor_destaque_texto: #ffffff; 
+  --cor_destaque_suave: #e1eee8; 
 
   /* Estados: ganho, aviso, perda */
   --cor_positivo: #0ca30c;
   --cor_aviso: #fab219;
   --cor_negativo: #d03b3b;
-  --cor_positivo_texto: #006300; /* versões mais escuras, para ler em texto */
+  --cor_positivo_texto: #006300; 
   --cor_aviso_texto: #946300;
   --cor_negativo_texto: #b42f2f;
 
@@ -53,7 +52,7 @@
 
   /* O ecrã escuro da surpresa (por cima de tudo) */
   --cor_ecra_surpresa: rgba(0, 0, 0, 0.88);
-  --cor_texto_surpresa: #ffffff;   /* o texto por cima do ecrã escuro (igual nos 2 modos) */
+  --cor_texto_surpresa: #ffffff;   
 
   /* Medidas */
   --espaco: 0.5rem;
@@ -61,11 +60,9 @@
 /* #endregion */
 
 /* #region ==================== MODO ESCURO ==================== */
-/* Só mudam as cores; os nomes das variáveis são os mesmos */
 @media (prefers-color-scheme: dark) {
   :root {
-    color-scheme: dark;          /* barras de scroll e campos também ficam escuros */
-
+    color-scheme: dark;          
     --cor_fundo: #0e1311;
     --cor_cartao: #161c19;
     --cor_cartao_suave: #1b2320;
@@ -118,7 +115,7 @@ body {
 /* ---------- Títulos (um tamanho por nível) ---------- */
 h1, h2, h3 {margin: 0 0 var(--espaco);}
 
-h1 { font-size: 1.25rem; }   /* marca */
-h2 { font-size: 1.5rem; }    /* título da página */
-h3 { font-size: 1.1rem; }    /* título de cartão ou secção */
+h1 { font-size: 1.25rem; }   
+h2 { font-size: 1.5rem; }    
+h3 { font-size: 1.1rem; }    
 /* #endregion */
