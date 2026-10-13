@@ -128,22 +128,21 @@
       "recebido": 260
     }
   ],
-  "saldos_fundos": [
+  "fundo_sobrevivencia": [
     {
       "id": "sal-001",
-      "fundo": "sobrevivencia",
       "data": "2026-08-31",
       "saldo": 9500
     },
     {
       "id": "sal-002",
-      "fundo": "sobrevivencia",
       "data": "2026-09-30",
       "saldo": 10000
-    },
+    }
+  ],
+  "fundo_maneio": [
     {
       "id": "sal-003",
-      "fundo": "maneio",
       "data": "2026-09-30",
       "saldo": 1800
     }
