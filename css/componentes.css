@@ -415,7 +415,7 @@
   place-items: center;              
   background: var(--cor_ecra_surpresa);
   opacity: 0;
-  transition: opacity 3s ease-in;
+  transition: opacity 5s ease-in;
 }
 
 .ecra_surpresa.visivel { opacity: 1; }
@@ -425,7 +425,7 @@
   max-height: 80vh;
   border-radius: 0.85rem;
   opacity: 0;
-  transition: opacity 2s ease-in 2.5s;
+  transition: opacity 2s ease-in 4s;  
 }
 
 .visivel .video_surpresa { opacity: 1; }
