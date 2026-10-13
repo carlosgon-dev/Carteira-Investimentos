@@ -4,7 +4,7 @@ import { esperar } from "./ferramentas.js";
 const SEGUNDOS_ATE_SURPRESA = 30;
 const FICHEIRO_VIDEO = "data/eder.mp4";
 const MILISSEGUNDOS_POR_SEGUNDO = 1000;
-const SEGUNDOS_ATE_O_VIDEO_APARECER = 2.5;
+const SEGUNDOS_ATE_O_VIDEO_APARECER = 4;
 // #endregion
 
 // #region ==================== MOTOR ====================
@@ -18,6 +18,7 @@ export async function mostrar_surpresa_depois_de_esperar() {
   ecra_surpresa.classList.add("visivel"); 
 
   await esperar(SEGUNDOS_ATE_O_VIDEO_APARECER * MILISSEGUNDOS_POR_SEGUNDO);
+  if (!ecra_surpresa.isConnected) return;
   tocar_video(ecra_surpresa.querySelector("video"));
 }
 // #endregion
@@ -29,10 +30,17 @@ function criar_ecra_surpresa() {
   ecra_surpresa.className = "ecra_surpresa";
   ecra_surpresa.innerHTML = `<video class="video_surpresa" src="${FICHEIRO_VIDEO}" controls playsinline></video>`;
 
+  const video = ecra_surpresa.querySelector("video");
+  const fechar_surpresa = () => {
+    video.pause();
+    ecra_surpresa.remove();
+  };
+
   ecra_surpresa.addEventListener("click", (evento) => {
-    if (evento.target === ecra_surpresa) ecra_surpresa.remove();
+    const video_ja_comecou = video.currentTime > 0;
+    if (evento.target === ecra_surpresa && video_ja_comecou) fechar_surpresa();
   });
-  ecra_surpresa.querySelector("video").addEventListener("ended", () => ecra_surpresa.remove());
+  video.addEventListener("ended", fechar_surpresa);
 
   return ecra_surpresa;
 }
