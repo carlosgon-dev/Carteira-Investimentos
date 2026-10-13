@@ -127,7 +127,7 @@ export function desenhar_grafico_circular(fatias) {
   return `
     <div class="grafico_circular_caixa">
       ${desenhar_circulo_fatias(fatias_com_cor, total)}
-      <ul class="legenda_grafico">${fatias_com_cor.map((fatia) => desenhar_linha_legenda(fatia, total)).join("")}</ul>
+      <ul class="legenda_grafico">${fatias_com_cor.map((fatia, indice) => desenhar_linha_legenda(fatia, total, indice)).join("")}</ul>
     </div>
   `;
 }
@@ -141,11 +141,11 @@ function dar_cor_as_fatias(fatias) {
 function desenhar_circulo_fatias(fatias_com_cor, total) {
   const html_fatias = [];
   let inicio = 0;
-  for (const fatia of fatias_com_cor) {
+  for (const [indice, fatia] of fatias_com_cor.entries()) {
     const percentagem = calcular_percentagem(fatia.valor, total);
     const tamanho_pintado = Math.max(percentagem - ESPACO_ENTRE_FATIAS, 0);
     html_fatias.push(`
-      <circle class="fatia" cx="50" cy="50" r="38" pathLength="100" style="stroke: ${fatia.cor}"
+      <circle class="fatia" data-acao="destacar_fatia" data-indice="${indice}" cx="50" cy="50" r="38" pathLength="100" style="stroke: ${fatia.cor}"
               stroke-dasharray="${tamanho_pintado} 100" stroke-dashoffset="${-inicio}">
         <title>${fatia.nome}: ${formatar_euro(fatia.valor)} (${formatar_percentagem(percentagem)})</title>
       </circle>
@@ -155,10 +155,10 @@ function desenhar_circulo_fatias(fatias_com_cor, total) {
   return `<svg class="grafico_circular" viewBox="0 0 100 100">${html_fatias.join("")}</svg>`;
 }
 
-function desenhar_linha_legenda(fatia, total) {
+function desenhar_linha_legenda(fatia, total, indice) {
   const percentagem = formatar_percentagem(calcular_percentagem(fatia.valor, total));
   return `
-    <li>
+    <li data-acao="destacar_fatia" data-indice="${indice}">
       <span class="bolinha" style="background: ${fatia.cor}"></span>
       <span class="legenda_nome">${fatia.nome}</span>
       <span class="legenda_valor">${formatar_euro(fatia.valor)}</span>
