@@ -5,7 +5,8 @@
 /* #region ==================== GRELHA DA APP ==================== */
 body {
   display: grid;
-  grid-template-columns: 20rem minmax(0, 1fr);  
+  grid-template-columns: 20rem minmax(0, 1fr);
+  grid-template-rows: 1fr auto;   
   grid-template-areas:
     "menu pagina"
     "rodape rodape";

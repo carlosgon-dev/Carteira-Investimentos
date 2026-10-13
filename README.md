@@ -6,6 +6,22 @@ Projeto final do módulo de JavaScript (UPskill), feito com **HTML5, CSS3 e Java
 
 > Os valores em `data/dados.json` são **fictícios**.
 
+## 🚧 Projeto em construção
+
+Este é um **trabalho em construção**. Dada a extensão da ideia, o objetivo principal deste projeto não foi construir o produto final completo, mas sim **construir uma estrutura sólida para a app poder crescer**:
+
+- **peças reutilizáveis** (painéis, cartões, tabelas editáveis, gráficos, formulários, notificações), que qualquer página nova pode usar;
+- uma **base de dados organizada** em gavetas ligadas entre si (`data/dados.json`), já preparada para os capítulos que faltam;
+- **eventos centralizados**: um botão novo só precisa de um atributo `data-acao` e de um `case` no `eventos.js`.
+
+Por isso, algumas páginas do menu mostram **"EM CONSTRUÇÃO"**. Estão por fazer:
+
+- os formulários **Registar rendibilidade** e **Registar venda**;
+- as páginas **Depósitos a prazo**, **Dinheiro do governo**, **Mais-valias**, **PPR**, **Ouro digital**, **Histórico de rendibilidade** e **Calendário**;
+- **Questionários** e **Programas de fidelidade**.
+
+Os dados de várias destas páginas já existem no `dados.json` (depósitos, dinheiro do governo, planos do PPR e do ouro, eventos da economia), à espera da sua página.
+
 ## 🔗 Ver a app
 
 **https://carlosgon-dev.github.io/Carteira-Investimentos/**
@@ -22,15 +38,10 @@ Projeto final do módulo de JavaScript (UPskill), feito com **HTML5, CSS3 e Java
 
 ## Como correr localmente
 
-A app carrega os dados com `fetch`, por isso **não funciona** se abrires o `index.html` com duplo clique (`file://`). É preciso um servidor local:
+1. Clonar o repositório: `git clone https://github.com/carlosgon-dev/Carteira-Investimentos.git`
+2. Abrir a pasta no VSCode e usar a extensão **Live Server** ("Go Live").
 
-1. Clonar o repositório:
-   ```
-   git clone https://github.com/carlosgon-dev/Carteira-Investimentos.git
-   ```
-2. Abrir a pasta no **VSCode**.
-3. Instalar a extensão **Live Server** (Ritwick Dey).
-4. Abrir o `index.html` e carregar em **"Go Live"** (canto inferior direito). A app abre no browser.
+(Abrir o `index.html` com duplo clique não funciona, porque a app usa `fetch`.)
 
 ## Estrutura do projeto
 
@@ -50,6 +61,7 @@ artifacts/          ← documentação do projeto
 ```
 
 Mais detalhes em `artifacts/`:
+
 - `requisitos-do-enunciado.md`: onde a app cumpre cada requisito;
 - `estrutura_do_javascript.md`: os módulos e como as peças falam entre si;
 - `estrutura_do_css.md`: a organização dos estilos;
@@ -57,17 +69,17 @@ Mais detalhes em `artifacts/`:
 
 ## Conceitos de JavaScript usados
 
-| Requisito | Na app |
-| --------- | ------ |
-| Lógica e controlo de fluxo | `switch`, ternários, *early return*, `map`/`filter`/`reduce`/`find`/`sort` |
-| Dados simples | formatação de euros, percentagens e datas em pt-PT (`toLocaleString`) |
-| Dados imutáveis | o gestor de dados cria sempre listas novas (`[...lista]`, `map`, `filter`) e devolve cópias (`structuredClone`) |
-| DOM dinâmico | template strings, `createElement`, `insertRow` |
-| Eventos | delegação de eventos com atributos `data-…` |
-| Scope e closures | os dados ficam privados dentro de `carregar_dados()` |
-| Assincronismo | `fetch` com `async/await` + `try/catch`, e com `.then` + `Promise.all` + `.catch` nas cotações |
-| Módulos | ES modules (`import` / `export`) |
-| Persistência | `localStorage` (dados) e `sessionStorage` (página aberta e rascunhos) |
+| Requisito                   | Na app                                                                                                                   |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Lógica e controlo de fluxo | `switch`, ternários, *early return*, `map`/`filter`/`reduce`/`find`/`sort`                                |
+| Dados simples               | formatação de euros, percentagens e datas em pt-PT (`toLocaleString`)                                                |
+| Dados imutáveis            | o gestor de dados cria sempre listas novas (`[...lista]`, `map`, `filter`) e devolve cópias (`structuredClone`) |
+| DOM dinâmico               | template strings,`createElement`, `insertRow`                                                                        |
+| Eventos                     | delegação de eventos com atributos`data-…`                                                                          |
+| Scope e closures            | os dados ficam privados dentro de`carregar_dados()`                                                                    |
+| Assincronismo               | `fetch` com `async/await` + `try/catch`, e com `.then` + `Promise.all` + `.catch` nas cotações             |
+| Módulos                    | ES modules (`import` / `export`)                                                                                     |
+| Persistência               | `localStorage` (dados) e `sessionStorage` (página aberta e rascunhos)                                               |
 
 ## APIs públicas usadas
 

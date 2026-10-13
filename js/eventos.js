@@ -133,8 +133,23 @@ function tratar_clique_botao_tabela(evento) {
     case "mudar_escolha": tratar_clique_mudar_escolha(botao); break;
     case "abrir_pagina": mostrar_pagina(botao.dataset.pagina_destino); break;
     case "cancelar_formulario": tratar_clique_cancelar_formulario(botao); break;
+    case "destacar_fatia": tratar_clique_destacar_fatia(botao); break;
   }
 }
+
+// #region ---------- Auxiliares do gráfico circular (tocar numa fatia ou numa linha da legenda) ----------
+
+function tratar_clique_destacar_fatia(elemento_clicado) {
+  const grafico = elemento_clicado.closest(".grafico_circular_caixa");
+  const indice = elemento_clicado.dataset.indice;
+  const ja_estava_destacada = elemento_clicado.classList.contains("destacada");
+
+  grafico.querySelectorAll("[data-indice]").forEach((elemento) => {
+    elemento.classList.toggle("destacada", !ja_estava_destacada && elemento.dataset.indice === indice);
+  });
+}
+
+// #endregion
 
 function atualizar_pagina_apos_alteracao() {
   linha_em_espera = null;

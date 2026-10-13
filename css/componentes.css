@@ -19,11 +19,10 @@
   & .painel { margin-bottom: 0; }   
 }
 
-/* Linha de cima do painel: título (+ "i") à esquerda; nota e botões à direita */
 .painel_cabecalho {
   display: flex;
-  flex-wrap: wrap;                  /* em ecrãs estreitos, o lado direito passa para baixo */
-  justify-content: space-between;   /* empurra um para cada ponta */
+  flex-wrap: wrap;                  
+  justify-content: space-between;   
   align-items: center;
   gap: 1rem;
   margin-bottom: 1rem;
@@ -63,7 +62,6 @@
 /* #endregion */
 
 /* #region ==================== CARTÕES ==================== */
-/* Fila de cartões lado a lado; em ecrãs estreitos passam para a linha de baixo */
 .fila_cartoes {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
@@ -79,7 +77,6 @@
   background: var(--cor_cartao);
 }
 
-/* "TOTAL DOS FUNDOS": pequeno, em maiúsculas e cinzento */
 .cartao_titulo {
   margin: 0;
   font-size: 0.8rem;
@@ -89,23 +86,20 @@
   color: var(--cor_suave);
 }
 
-/* "19 200,00 €": grande */
 .cartao_valor {
   margin: 0;
   font-size: 1.5rem;
   font-weight: 600;
   white-space: nowrap;
-  font-variant-numeric: tabular-nums;   /* algarismos todos da mesma largura */
+  font-variant-numeric: tabular-nums;  
 }
 
-/* "Investido + rendibilidade": texto pequeno por baixo do valor */
 .cartao_legenda {
   margin: 0;
   font-size: 0.85rem;
   color: var(--cor_texto_secundario);
 }
 
-/* O cartão principal da página: escuro e sempre o primeiro (à esquerda) */
 .cartao_destaque {
   background: var(--cor_texto);
   border-color: var(--cor_texto);
@@ -116,7 +110,6 @@
 /* #endregion */
 
 /* #region ==================== TABELA ACORDEÃO ==================== */
-/* Os títulos e cada linha usam a MESMA grelha de colunas (vinda do JS em --grelha_colunas), por isso ficam alinhados */
 .tabela_acordeao {
   font-size: 0.93rem;
   overflow-x: auto;
@@ -132,7 +125,6 @@
   border-bottom: 1px solid var(--cor_linha);
 }
 
-/* Os títulos: pequenos, em maiúsculas e cinzentos (como na tabela normal) */
 .acordeao_cabecalho {
   font-size: 0.8rem;
   font-weight: 600;
@@ -141,7 +133,6 @@
   color: var(--cor_suave);
 }
 
-/* A linha que se clica para abrir: sem o triângulo do browser, com a nossa seta ▸ antes do nome */
 .acordeao_linha > summary {
   cursor: pointer;
   list-style: none;
@@ -157,17 +148,14 @@
   }
 }
 
-/* Linha aberta: a seta roda para baixo */
 .acordeao_linha[open] > summary > span:first-child::before { transform: rotate(90deg); }
 
-/* O que aparece ao abrir: um pouco recuado e com fundo suave */
 .acordeao_conteudo {
   padding: 0.5rem 0.75rem 1rem 2rem;
   background: var(--cor_cartao_suave);
   border-bottom: 1px solid var(--cor_linha);
 }
 
-/* As células de números (alinhadas à direita), como na tabela normal */
 .tabela_acordeao .numero {
   text-align: right;
   font-variant-numeric: tabular-nums;
@@ -176,34 +164,31 @@
 /* #endregion */
 
 /* #region ==================== GRÁFICO CIRCULAR ==================== */
-/* O gráfico em cima, ao centro, e a legenda por baixo, a toda a largura */
 .grafico_circular_caixa {
   display: flex;
-  flex-direction: column;   /* um por baixo do outro */
-  align-items: center;      /* o círculo fica ao centro */
+  flex-direction: column;   
+  align-items: center;      
   gap: 1.5rem;
 }
 
-/* O círculo (SVG): rodado -90° para a 1.ª fatia começar em cima, como os ponteiros de um relógio */
 .grafico_circular {
   flex-shrink: 0;
-  width: 14rem;   /* o tamanho no ecrã: muda-se só aqui (o desenho estica sozinho) */
+  width: 14rem;   
   aspect-ratio: 1;
   transform: rotate(-90deg);
 }
 
-/* Cada fatia é só um contorno grosso, sem enchimento: é isso que deixa o buraco do meio ("donut") */
 .fatia {
   fill: none;
   stroke-width: 18;
   cursor: pointer;
   transition: stroke-width 0.15s;
-  &:hover { stroke-width: 22; }   /* ao passar o rato, a fatia engorda um pouco */
+  &:hover { stroke-width: 22; }
+  &.destacada { stroke-width: 24; }   
 }
 
-/* A legenda: uma linha por fatia → bolinha · nome · valor · % */
 .legenda_grafico {
-  align-self: stretch;      /* a legenda ocupa a largura toda do painel */
+  align-self: stretch;     
   display: grid;
   gap: 0.45rem;
   margin: 0;
@@ -215,6 +200,10 @@
     grid-template-columns: auto 1fr auto auto;
     align-items: center;
     gap: 0.6rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    &.destacada { font-weight: 700; background: var(--cor_cartao_suave); }   /* a linha da fatia tocada */
   }
 }
 
@@ -237,7 +226,6 @@
 /* #endregion */
 
 /* #region ==================== GRÁFICO DE BARRAS ==================== */
-/* Uma linha por ativo: nome · pista com a barra · valor */
 .grafico_barras {
   display: grid;
   gap: 0.6rem;
@@ -249,18 +237,17 @@
 
 .barra_linha {
   display: grid;
-  grid-template-columns: minmax(8rem, 14rem) 1fr 6rem;   /* nome | pista (o resto) | valor */
+  grid-template-columns: minmax(8rem, 14rem) 1fr 6rem;  
   align-items: center;
   gap: 0.85rem;
 }
 
 .barra_nome {
   overflow: hidden;
-  text-overflow: ellipsis;   /* nomes compridos acabam em "…" */
+  text-overflow: ellipsis;   
   white-space: nowrap;
 }
 
-/* A pista: a faixa onde a barra cresce; a linha fina é o zero (o ponto vem do JS, em --ponto_zero) */
 .barra_pista {
   position: relative;
   height: 0.9rem;
@@ -274,7 +261,6 @@
   }
 }
 
-/* A barra: a posição (left) e a largura vêm do JS */
 .barra {
   position: absolute;
   top: 0;
@@ -299,12 +285,11 @@
 /* #endregion */
 
 /* #region ==================== ALTERNADOR ==================== */
-/* Um grupo de botões colados ([Ativo | Tema]); o escolhido fica escuro */
 .alternador {
   display: inline-flex;
   border: 1px solid var(--cor_linha);
   border-radius: 0.55rem;
-  overflow: hidden;   /* os cantos dos botões ficam dentro da borda redonda */
+  overflow: hidden; 
   & button {
     padding: 0.35rem 0.8rem;
     border: none;
@@ -322,12 +307,11 @@
 /* #endregion */
 
 /* #region ==================== TABELAS ==================== */
-/* A caixa deixa a tabela fazer scroll para o lado em ecrãs estreitos, sem alargar a página */
 .tabela_caixa { overflow-x: auto; }
 
 .tabela {
   width: 100%;
-  border-collapse: collapse;   /* as linhas das células juntam-se numa só */
+  border-collapse: collapse;   
   font-size: 0.93rem;
   & th,
   & td {
@@ -335,7 +319,7 @@
     border-bottom: 1px solid var(--cor_linha);
     text-align: left;
   }
-  /* Títulos das colunas: pequenos, em maiúsculas e cinzentos */
+ 
   & th {
     font-size: 0.8rem;
     font-weight: 600;
@@ -345,7 +329,6 @@
     white-space: nowrap;
   }
   & tbody tr:hover td { background: var(--cor_cartao_suave); }
-  /* Colunas de números: à direita e com algarismos da mesma largura */
   & .numero {
     text-align: right;
     font-variant-numeric: tabular-nums;
@@ -353,7 +336,6 @@
   }
 }
 
-/* Campo de escrever dentro de uma célula, quando a linha está a ser editada (✎) */
 .campo_tabela {
   width: 100%;
   min-width: 8rem;
@@ -363,7 +345,7 @@
   background: var(--cor_fundo);
   font: inherit;
   color: var(--cor_texto);
-  text-align: inherit;   /* os números continuam à direita */
+  text-align: inherit;   
   &:focus-visible { outline: 2px solid var(--cor_destaque); outline-offset: 1px; }
 }
 /* #endregion */
@@ -386,7 +368,7 @@
 /* ---------- Botões ✎ ✕ das linhas das tabelas ---------- */
 .botoes_linha {
   display: flex;
-  justify-content: flex-end;   /* encostados à direita da célula */
+  justify-content: flex-end;  
   gap: 0.35rem;
 }
 
@@ -406,10 +388,8 @@
   &:focus-visible { outline: 2px solid var(--cor_destaque); outline-offset: 2px; }
 }
 
-/* O ✕: vermelho, porque apaga */
 .botao_perigo { color: var(--cor_negativo_texto); }
 
-/* Depois do 1.º clique no ✕: fica um ✓ vermelho cheio, à espera do 2.º clique para apagar */
 .botao_perigo.a_confirmar,
 .botao_perigo.a_confirmar:hover {
   background: var(--cor_negativo);
@@ -427,13 +407,12 @@
 /* #endregion */
 
 /* #region ==================== SURPRESA (vídeo do Éder) ==================== */
-/* O ecrã escuro, por cima de tudo. Começa invisível (opacity 0) e, com a classe "visivel", escurece em 3 segundos */
 .ecra_surpresa {
   position: fixed;
-  inset: 0;                         /* ocupa o ecrã inteiro */
-  z-index: 100;                     /* fica por cima de tudo */
+  inset: 0;                         
+  z-index: 100;                     
   display: grid;
-  place-items: center;              /* o vídeo fica ao centro */
+  place-items: center;              
   background: var(--cor_ecra_surpresa);
   opacity: 0;
   transition: opacity 3s ease-in;
@@ -441,7 +420,6 @@
 
 .ecra_surpresa.visivel { opacity: 1; }
 
-/* O vídeo: também começa invisível e só aparece DEPOIS de o ecrã escurecer (espera 2,5 s e demora 2 s) */
 .video_surpresa {
   max-width: 80vw;
   max-height: 80vh;
@@ -451,7 +429,6 @@
 }
 
 .visivel .video_surpresa { opacity: 1; }
-/* O aviso "Clica em qualquer sítio para ligar o som", por baixo do vídeo */
 .aviso_som {
   margin: 1rem 0 0;
   font-size: 1.1rem;
@@ -461,7 +438,6 @@
 /* #endregion */
 
 /* #region ==================== FORMULÁRIOS ==================== */
-/* Os campos lado a lado (passam para baixo em ecrãs estreitos); cada um com o nome por cima */
 .formulario {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
@@ -484,19 +460,16 @@
     color: var(--cor_texto);
     &:focus-visible { outline: 2px solid var(--cor_destaque); outline-offset: 1px; }
   }
-  /* A mão (👆) nos campos que se clicam para escolher: a lista e o calendário */
   & select,
   & input { cursor: pointer; }
 }
 
-/* A linha dos botões ocupa a largura toda, por baixo dos campos */
 .formulario_botoes {
   grid-column: 1 / -1;
   display: flex;
   gap: 0.5rem;
 }
 
-/* O botão principal (ex.: "Guardar compra"): cheio, com a cor de destaque */
 .botao_principal {
   padding: 0.6rem 1.1rem;
   border: 1px solid var(--cor_destaque);
@@ -512,13 +485,11 @@
 /* #endregion */
 
 /* #region ==================== NOTIFICAÇÃO FLUTUANTE ("✓ Compra guardada") ==================== */
-/* No canto de baixo, à direita, por cima de tudo. Começa invisível e um pouco abaixo;
-   com a classe "visivel", sobe e aparece (em 0.3s, o mesmo TEMPO_ANIMACAO do notificacoes.js) */
 .notificacao_flutuante {
   position: fixed;
   right: 1.5rem;
   bottom: 1.5rem;
-  z-index: 90;                        /* por cima da página (a surpresa fica ainda mais acima: 100) */
+  z-index: 90;                        
   padding: 0.8rem 1.2rem;
   border-radius: 0.6rem;
   background: var(--cor_destaque);
@@ -537,7 +508,6 @@
 /* #endregion */
 
 /* #region ==================== RODAPÉ DAS COTAÇÕES ==================== */
-/* A etiqueta fixa à esquerda: "AO VIVO · 14:05" ou "EXEMPLO" */
 .rodape_etiqueta {
   flex-shrink: 0;
   padding: 0.2rem 0.6rem;
@@ -550,15 +520,12 @@
   color: var(--cor_destaque);
 }
 
-/* A janela por onde a faixa passa (o que sai dos lados fica escondido e esbatido) */
 .rodape_faixa {
   flex: 1;
   overflow: hidden;
   mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
 }
 
-/* A faixa: tem o conteúdo duas vezes seguidas e anda para a esquerda até meio (-50%), sem parar.
-   Nesse momento a 2.ª cópia está onde estava a 1.ª, e a animação recomeça sem se notar. */
 .rodape_faixa_conteudo {
   display: inline-flex;
   white-space: nowrap;
@@ -570,7 +537,6 @@
   to   { transform: translateX(-50%); }
 }
 
-/* Uma cotação; o espaço à direita separa-a da seguinte */
 .cotacao {
   display: inline-flex;
   gap: 0.4rem;
@@ -579,31 +545,22 @@
   & strong { color: var(--cor_texto); }
 }
 
-/* Para quem pediu menos movimento nas definições do computador: a faixa fica parada */
 @media (prefers-reduced-motion: reduce) {
   .rodape_faixa_conteudo { animation: none; }
 }
 /* #endregion */
 
 /* #region ==================== TELEMÓVEL (ecrãs até 600px) ==================== */
-/* Fica no FIM do ficheiro de propósito: assim estas regras ganham às de cima */
-/* (os TAMANHOS já encolhem sozinhos: o layout.css põe o :root a 12px. Aqui fica só a ARRUMAÇÃO) */
 @media (max-width: 600px) {
-  /* Cartões: 2 por linha (4 cartões → 2 em cima, 2 em baixo) */
   .fila_cartoes { grid-template-columns: 1fr 1fr; }
 
-  /* Painéis lado a lado → um por baixo do outro */
   .lado_a_lado { grid-template-columns: 1fr; }
 
-  /* Barras: o nome fica com o espaço que sobra (1fr) e a pista das barras é curta (5rem) */
-  .barra_linha { grid-template-columns: minmax(0, 1fr) 5rem 5rem; }   /* nome | pista | valor (larguras fixas: as barras ficam alinhadas) */
-  /* Nomes compridos passam para a linha de baixo, em vez de acabarem em "…" */
+  .barra_linha { grid-template-columns: minmax(0, 1fr) 5rem 5rem; }  
   .barra_nome { white-space: normal; }
 
-  /* Tabela acordeão: não espreme as colunas; em vez disso, faz scroll para o lado */
   .acordeao_cabecalho,
   .acordeao_linha > summary { min-width: 44rem; }
-  /* Os títulos das colunas: um pouco mais pequenos e, se precisarem, em 2 linhas ("VALOR / ATUAL") */
   .acordeao_cabecalho { font-size: 0.7rem; letter-spacing: 0.02em; }
   .acordeao_cabecalho .numero { white-space: normal; }
 }
